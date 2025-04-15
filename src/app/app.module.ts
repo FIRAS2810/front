@@ -1,16 +1,76 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { TableModule } from 'primeng/table';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AcceuilComponent } from './components/acceuil/acceuil.component';
+import { HeaderComponent } from './components/header/header.component';
+import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
+import { FormsModule } from '@angular/forms';
+import { AdminPageComponent } from './components/admin/admin-page/admin-page.component';
+import { DemandeAdhesionComponent } from './components/demande-adhesion/demande-adhesion.component';
+import { HttpClientModule } from '@angular/common/http';
+import { DemandesComponent } from './components/admin/demandes/demandes.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
+import { DialogModule } from 'primeng/dialog';
+import { TagModule } from 'primeng/tag';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+ // Seulement si tu utilises <p-paginator> à part
+import { DropdownModule } from 'primeng/dropdown';   // Pour le dropdown de sélection (10, 25...)
+import Swal from 'sweetalert2';
+import { AdherentPageComponent } from './components/adherent/adherent-page/adherent-page.component';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CarouselModule } from 'primeng/carousel';
+import { ProfilAdherentComponent } from './components/adherent/profil-adherent/profil-adherent.component';
+import { NouveautesComponent } from './components/admin/nouveautes/nouveautes.component';
+import { EditorModule } from 'primeng/editor';
+import { PaginatorModule } from 'primeng/paginator';
+import { FooterComponent } from './components/footer/footer.component';
+
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AcceuilComponent,
+    HeaderComponent,
+    RegisterComponent,
+    LoginComponent,
+    AdminPageComponent,
+    DemandeAdhesionComponent,
+    DemandesComponent,
+    AdherentPageComponent,
+    ProfilAdherentComponent,
+    NouveautesComponent,
+    FooterComponent,
+    
+    
+    
+    
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    TableModule,
+    InputTextModule,
+    ButtonModule,
+    TooltipModule,
+    DialogModule,
+    TagModule,
+    BrowserAnimationsModule,
+    DropdownModule,
+    SplitButtonModule,
+    FontAwesomeModule,
+    CarouselModule,
+    EditorModule,
+    PaginatorModule
+   
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,162 @@
+
+  
+   /* Conteneur principal */
+   .login-container {
+    align-items: center;
+    height: 100vh; /* Occupe toute la hauteur */
+    background-color: #f6f6f0;
+    padding-left: 150px;
+  }
+  
+  /* Logo */
+  .logo img {
+    width: 400px; /* Taille du logo */
+  }
+  
+  /* Boîte de connexion */
+  .login-box {
+    background-color: #f6f6f0;
+    width: 60%;
+    margin-left: 120px;
+    margin-top: 0px;
+  }
+  
+ 
+  
+  /* Ajustement de l'espace sous le titre Connexion au compte */
+  .mb-4 {
+    font-weight: 600;
+    color: #080808;
+    display: block;
+    margin-top: -30px;
+    margin-bottom: 200px;
+    font-size: 30px; /* Taille plus grande pour le titre */
+  text-align: center; /* Centrer le texte si nécessaire */
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; /* Police spécifique */
+  }
+
+  
+  /* Style pour aligner les labels à gauche */
+  label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #000000;
+    display: block;
+    text-align: left;
+    margin-bottom: 2px; /* Augmenter l'espace sous les labels */
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; /* Police spécifique */
+
+  }
+  
+  /* Champs de saisie */
+  .form-control {
+    background-color: #f6f6f0;
+    border: 1px solid #5b3c11;
+    border-radius: 12px;
+    padding: 10px; /* Légèrement plus d'espace à l'intérieur des inputs */
+    width: 100%;
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 15px; /* Augmente l'espace entre les inputs */
+  }
+  
+  /* Placeholder pour email et mot de passe */
+  #email::placeholder,
+  #password::placeholder {
+    color: #999999;
+    font-size: 14px;
+  }
+  
+  /* Bouton de connexion */
+.btn-success {
+    background-color: #6d9b3d; /* Couleur de fond */
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    width: 100%;
+    border-radius: 20px; /* Bords arrondis */
+    margin-top: 10px;
+    color: white; /* Couleur du texte */
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Effet au survol */
+  .btn-success:hover {
+    background-color: #5c8a34;
+  }
+  
+  /* Effet au clic */
+  .btn-success:active {
+    background-color: #4a752b;
+    box-shadow: 0 3px 6px rgba(91, 60, 17, 0.7); /* Ombre plus petite au clic */
+    transform: translateY(2px); /* Effet de pression */
+  }
+  
+  /* Liens sous le formulaire */
+  .links {
+    font-size: 14px;
+    color: #7d7d7d;
+    margin-top: 10px; /* Ajoute un espace au-dessus des liens */
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; /* Police spécifique */
+  }
+  
+
+  
+  /* Effet au survol des champs */
+  .form-control:hover {
+    background-color: #e9f5e9;
+    border-color: #5c8a34;
+  }
+  
+  /* Effet dynamique au focus pour les labels */
+  .form-control:focus + label {
+    color: #5c8a34;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+  
+
+
+
+
+  
+  /* Section droite avec l'image */
+  .right-section {
+    display: flex;
+  justify-content: flex-end; /* Aligner à droite */
+  align-items: center;
+  height: 100vh; /* Occupe toute la hauteur */
+  background-color: #f6f6f0;
+  padding-right: 160px; /* Espace de 30px entre l'image et le bord droit */
+  }
+  
+  /* Conteneur de l'image */
+  .image-container {
+    width: 100%;
+   height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 90px; /* Espace de 30px entre l'image et le bord droit */
+  }
+  
+  /* Image centrée et agrandie */
+  .full-screen-image {
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    object-fit: cover; /* Ajuste l'image sans déformation */
+  }
+  
+  /* Pour cacher l'image sur les petits écrans */
+  @media (max-width: 768px) {
+    .right-section {
+      display: none;
+    }
+  }
+  
+
+  
+  
+  

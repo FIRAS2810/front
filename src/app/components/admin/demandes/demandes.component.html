@@ -1,0 +1,158 @@
+<div class="demandes-container">
+  <h2 class="title">Liste des Demandes</h2>
+</div>
+
+<div class="fil-cherch">
+  <!-- Barre de recherche -->
+  <div class="search-wrapper">
+    <i class="pi pi-search search-icon"></i>
+    <input type="text" placeholder="Rechercher..." class="search-input" (input)="onGlobalSearch($event)" />
+  </div>
+
+  <!-- Bouton filtre -->
+  <p-splitButton 
+    label="Filtrer par état" 
+    icon="pi pi-filter" 
+    [model]="etatOptions"
+    class="filter-btn p-button-sm p-button-success">
+  </p-splitButton>
+</div>
+
+
+<!-- ✅ Table PrimeNG -->
+<p-table #dt [value]="demandes" [tableStyle]="{ 'height': '13rem' }" [paginator]="true" [rows]="5"
+  [rowsPerPageOptions]="[5, 10, 15]" [globalFilterFields]="['nom', 'prenom','cinPersonne']"
+  [responsiveLayout]="'scroll'" [loading]="loading">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>#</th>
+      <th>Nom et Prénom</th>
+      <th>Cin</th>
+      <th>Activité</th>
+      <th>Statut</th>
+      <th>Date décision</th>
+      <th>Date de demande</th>
+      <th>Pièce jointe</th>
+      <th>Action</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-demande let-i="rowIndex">
+    <tr>
+      <td>{{ i + 1 }}</td>
+      <td (click)="openPopup(demande)">
+        <img src="avatar.jpg" class="avatar" />
+        {{ demande.nom }} {{ demande.prenom }}
+      </td>
+      <td>{{ demande.cinPersonne}}</td>
+      <td>{{ demande.activite }}</td>
+      <td>{{ demande.etat }}</td>
+      <td>{{ demande.dateDecision || 'Pas décidé' }}</td>
+      <td>{{ demande.dateDemande }}</td>
+
+      <td>
+
+        <!-- Cas IMAGE -->
+        <div *ngIf="!isPdf(demande.typeFichier)">
+          <button class="btn btn-sm btn-outline-success" (click)="ouvrirPopupImage(demande)">
+            <i class="pi pi-eye"></i> Voir
+          </button>
+        </div>
+      </td>
+      <!-- Popup image -->
+      <div class="popup-overlay" *ngIf="imagePopupVisible" (click)="fermerPopupImage()">
+        <div class="popup-content" (click)="$event.stopPropagation()">
+          <img [src]="imagePopupSrc" alt="Image détaillée" class="popup-image" />
+          <button class="close-btn" (click)="fermerPopupImage()">✖</button>
+        </div>
+      </div>
+
+
+
+
+      <td class="actions">
+        <div class="btn-group">
+          <button type="button" class="btn" [ngClass]="{
+              'btn-success': demande.etat === 'EN_ATTENTE',
+              'btn-secondary': demande.etat !== 'EN_ATTENTE'
+            }" [disabled]="demande.etat !== 'EN_ATTENTE'" (click)="accepterDemande(demande.id)">
+            Accepter
+          </button>
+
+          <button type="button" class="btn dropdown-toggle dropdown-toggle-split" [ngClass]="{
+              'btn-success': demande.etat === 'EN_ATTENTE',
+              'btn-secondary': demande.etat !== 'EN_ATTENTE'
+            }" [disabled]="demande.etat !== 'EN_ATTENTE'" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="visually-hidden">Toggle Dropdown</span>
+          </button>
+
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item text-danger" href="#" (click)="refuserDemande(demande.id)"
+                [class.disabled]="demande.etat !== 'EN_ATTENTE'"
+                [style.pointerEvents]="demande.etat !== 'EN_ATTENTE' ? 'none' : 'auto'">
+                <i class="fas fa-trash-alt me-2"></i>Refuser
+              </a>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="8">Aucune demande trouvée.</td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<!-- ✅ POPUP -->
+<div class="popup-overlay" *ngIf="selectedDemande" (click)="closePopup()">
+  <div class="popup-card" (click)="$event.stopPropagation()">
+    <button class="close-btn" (click)="closePopup()">✖</button>
+
+    <div class="profile-header">
+      <img src="avatar.jpg" class="popup-avatar" />
+      <h3 class="user-name">{{ selectedDemande.nom }} {{ selectedDemande.prenom }}</h3>
+    </div>
+
+    <div class="detail-item">
+      <i class="fa-solid fa-id-card icon-vert"></i>
+      {{ selectedDemande.cinPersonne }}
+    </div>
+
+    <div class="detail-item">
+      <i class="fa-solid fa-envelope icon-vert"></i>
+      {{ selectedDemande.email }}
+    </div>
+
+    <div class="detail-item">
+      <i class="fa-solid fa-phone icon-vert"></i>
+      {{ selectedDemande.tel }}
+    </div>
+
+    <div class="detail-item">
+      <i class="fa-solid fa-location-dot icon-vert"></i>
+      {{ selectedDemande.ville }}
+    </div>
+
+    <div class="detail-item">
+      <i class="fa-solid fa-calendar-days icon-vert"></i>
+      <span class="label">Date de demande :</span>
+      {{ selectedDemande.dateDemande }}
+    </div>
+
+    <div class="detail-item">
+      <i class="fa-solid fa-clock icon-vert"></i>
+      <span class="label">Date décision :</span>
+      {{ selectedDemande.dateDecision || 'Pas décidé' }}
+    </div>
+
+
+    <div class="detail-item">
+      <i class="fa-solid fa-circle-info icon-vert"></i>
+      {{ selectedDemande.etat }}
+    </div>
+
+  </div>

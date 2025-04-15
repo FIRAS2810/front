@@ -1,0 +1,685 @@
+/* Conteneur global de la bannière */
+.banner {
+    position: relative;
+    height: 89vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background-color: #f7f7f7;
+  }
+  
+  /* Arrière-plan bannière (image décorative) */
+  .bg-banner {
+    position: absolute;
+    margin-top: 90px;
+    margin-left:110px ;
+    width: 80%;
+    height: 75%;
+    object-fit: cover;
+    opacity:5;
+    z-index: 1;
+  }
+  
+  /* Contenu positionné au-dessus */
+  .content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
+  
+  /* Texte principal */
+  .text-content h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #3b3b3b;
+    margin-bottom: 40px;
+    margin-top: -70px;
+    width: max-content;
+    font-family: 'Lato', sans-serif;
+  }
+  
+  .text-content .highlight {
+    color: #6d9b3d;
+    font-family: 'Lato', sans-serif;
+  }
+  
+  .text-content p {
+    color: #395538;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-family: 'Lato', sans-serif;
+  }
+  
+  /* Boutons */
+  .btn-brown {
+    background-color: #5b3c11;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-right: 30px;
+    border: none;
+    margin-top: 30px;
+    font-family: 'Lato', sans-serif;
+  
+  }
+  
+  .btn-brown:hover {
+    background-color: #4b2d0d;
+  }
+  
+  .btn-link {
+    background: transparent;
+    border: none;
+    color: #3b3b3b;
+    font-weight: bold;
+    margin-top: 30px;
+    font-family: 'Lato', sans-serif;
+  
+  
+  }
+  
+  /* Plante (image indépendante) */
+  .image-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .plant-image {
+    width: 80%;
+    max-height: 600px;
+    object-fit: contain;
+    margin-top:-50px ;
+    margin-right: -50px;
+    margin-bottom: -12px;
+  }
+  
+    /* Hero Section */
+    .hero-section {
+      background-color: #f6f6f0;
+      padding: 80px 0;
+      text-align: left;
+    }
+    
+    .hero-section h1 {
+      font-size: 36px;
+      color: #5b3c11;
+      font-family: 'Lato', sans-serif;
+  
+    }
+    
+    .hero-section .highlight {
+      color: #6d9b3d;
+    }
+    
+    .hero-section p {
+      color: #333333;
+      margin-top: 10px;
+    }
+    
+    /* Image principale */
+    .main-image {
+      max-width: 100%;
+      height: auto;
+    }
+    
+    /* Section Nouveautés */
+    .nouveautes-section {
+      background-color: #fff;
+      padding: 50px 0;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #5b3c11;
+    }
+    
+    /* Cartes de nouveautés */
+    .nouveaute-card {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .nouveaute-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .nouveaute-card .card-img-top {
+      height: 180px;
+      object-fit: cover;
+    }
+    
+    .nouveaute-card .card-body {
+      padding: 15px;
+    }
+    
+    .nouveaute-card .date {
+      font-size: 12px;
+      color: #999;
+    }
+  
+  
+  
+    
+    
+    /* Services */
+  
+    .section-title {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 45px;
+      color: #000000;
+      font-weight: bold;
+    }
+  
+    .services-section {
+      padding: 80px 30px;
+      background: #fff;
+    }
+  
+  
+    .service-cards {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    
+    .service-card {
+      background: #f7f7f7;
+      padding: 20px;
+      border-radius: 12px;
+      width: 295px;
+      text-align: left;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .service-card i {
+      font-size: 32px;
+      color: #6d9b3d;
+      margin-bottom: 30px;
+      background: transparent;
+   
+    }
+  
+    .btn-links {
+     color: #5b3c11;
+     border: none;
+     font-weight: bold;
+     margin-top: 10px;
+    }
+  
+  
+    
+   /* Pourquoi nous rejoindre */
+  
+    .reasons-section {
+      background: #ffffff;
+      padding: 20px 20px;
+      text-align: center;
+    }
+    
+    .reasons-cards {
+      background: #f7f7f7;
+      border-radius: 12px;
+      padding: 40px 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    
+    .section-title {
+      font-size: 32px;
+      font-weight: bold;
+      color: #000000;
+      margin-bottom: 60px;
+    }
+    
+    .reasons-list {
+      display: flex;
+      justify-content: center;
+      gap: 70px;
+      flex-wrap: wrap;
+    }
+    
+    .reason {
+      max-width: 300px;
+      text-align: center;
+    }
+    
+    .reason i {
+      font-size: 36px;
+      color: #6d9b3d;
+      margin-bottom: 30px;
+    }
+    
+    .reason h5 {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    
+    .reason p {
+      font-size: 16px;
+      color: #666;
+    }
+  
+    
+    
+    
+  /* Témoignages */
+  .testimonials-section {
+    padding: 80px 20px;
+    background: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .section-titlep {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 50px;
+  }
+  
+  .testimonials {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    flex-wrap: wrap;
+  }
+  
+  .testimonial {
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 800px;
+    min-height: 150px;
+    text-align: left;
+    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .author {
+    display: flex;
+    align-items: center;
+    margin-top: -200px;
+  }
+  
+  .author img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 12px;
+    object-fit: cover;
+  }
+  
+  .author .info strong {
+    font-size: 15px;
+    display: block;
+    color: #222;
+  }
+  
+  .author .info span {
+    font-size: 14px;
+    color: #777;
+  }
+  
+    
+  
+  
+  
+    /* Section Comment adhérer */
+    .adhesion-section {
+      background-color: #ffffff;
+      padding: 10px 20px;
+    }
+  
+    .containe{
+      background: #f7f7f7;
+      border-radius: 12px;
+      padding: 40px 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      max-width: 1300px;
+      margin: 0 auto;
+  
+    }
+    
+    .adhesion-title {
+      text-align: center;
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 65px;
+      margin-top: 0px;
+      color: #222;
+  
+    }
+    
+    .highlight {
+      color: #3b910b;
+      font-family: 'Lato', sans-serif;
+  
+    }
+    
+    /* Wrapper pour tous les steps */
+    .steps-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+      max-width: 800px;
+      margin: 0 auto;
+      margin-bottom: 40px;
+      font-family: 'Lato', sans-serif;
+  
+    }
+    
+    /* Step individuel */
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    
+    /* Cercle contenant l'icône */
+    .icon-circle {
+      background-color: #d8edcc;
+      border-radius: 70%;
+      width: 70px;
+      height: 70px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      margin-top: -10px;
+    }
+    
+    .icon-circle i {
+      font-size: 30px;
+      color: #3b910b;
+  
+    }
+    
+    /* Texte de l’étape */
+    .text-step h5 {
+      font-size: 16px;
+      font-weight: bold;
+      margin: 0 0 5px;
+      color: #222;
+      font-family: 'Lato', sans-serif;
+  
+    }
+    
+    .text-step p {
+      font-size: 14px;
+      color: #666;
+      margin: 0;
+      font-family: 'Lato', sans-serif;
+  
+    }
+  
+  
+  
+  
+    /* Section investissement */
+  .invest-section {
+    background-color: #ffffff;
+    padding: 60px 20px;
+    text-align: center;
+  }
+  
+  .containerr{
+    background: #f7f7f7;
+      border-radius: 12px;
+      padding: 40px 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      max-width: 1300px;
+      margin: 0 auto;
+  }
+  
+  .invest-content .intro-text {
+    font-size: 24px;
+    color: #222;
+    margin-bottom: 40px;
+    line-height: 1.6;
+    margin-top: 0px;
+    font-family: 'Lato', sans-serif;
+  
+  }
+  
+  .green-bold {
+    font-size: 30px;
+    font-weight: bold;
+    color: #8abd53;
+    font-family: 'Lato', sans-serif;
+  
+  }
+  
+  /* Bouton de demande */
+  .btn-brown {
+    background-color: #5b3c11;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 16px;
+    border: none;
+    transition: background-color 0.3s;
+    margin-bottom: 20px;
+    font-family: 'Lato', sans-serif;
+  
+  }
+  
+  .btn-brown:hover {
+    background-color: #4a2e0f;
+  }
+  
+  /* Avantages */
+  .advantages {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    gap: 20px;
+    font-family: 'Lato', sans-serif;
+  
+  }
+  
+  .advantage {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #333;
+    font-family: 'Lato', sans-serif;
+  
+  }
+  
+  .advantage i {
+    color: #6d9b3d;
+  }
+
+  .btn-details {
+    background-color: lch(12.88% 15.81 54.37);  /* Vert clair agréable */
+    color: white;
+    font-size: 14px;
+    font-family:  monospace;
+    padding: 6px 15px;
+    border: none;
+    border-radius: 30px;  /* Bouton arrondi */
+    transition: background-color 0.3s, transform 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .btn-details i {
+    font-size: 14px;
+  }
+  
+  /* Effet au survol */
+  .btn-details:hover {
+    background-color: #689f38;  /* Vert un peu plus foncé */
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  }
+  
+  
+    
+    /* Responsive pour petits écrans */
+    @media (max-width: 768px) {
+      .banner {
+        height: auto;
+        padding: 50px 20px;
+      }
+      .main-image {
+        max-width: 250px;
+      }
+    }
+
+    :host ::ng-deep .p-carousel-item {
+      padding: 0 10px; /* ou 12px / 15px selon ton goût */
+    }
+    
+  
+    .nouveautes-section .card {
+      height: 420px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+    
+    .image-style  {
+      width: 100%;
+      height: 290px;
+      object-fit: cover;
+      display: block;
+      margin: auto;
+    }
+    
+    .card-body {
+      padding: 15px;
+      text-align: center;
+    }
+    
+    .card-title {
+      font-size: 1rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      word-break: break-word;
+    }
+    
+    .download-link {
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+      color: #333;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    
+    .download-link:hover {
+      color: #6d9b3d;
+    }
+    
+    .date {
+      font-size: 0.85rem;
+      color: grey;
+      margin-top: 10px;
+    }
+    
+    .p-carousel .p-carousel-content {
+      padding: 10px;
+    }
+    
+
+/* Personnalisation des indicateurs du carousel PrimeNG */
+:host ::ng-deep .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+  background-color: #6d9b3d !important;  /* Ton vert */
+  height: 4px;
+  border-radius: 10px;
+  transition: 0.3s ease;
+}
+
+/* Couleur des indicateurs inactifs */
+:host ::ng-deep .p-carousel .p-carousel-indicators .p-carousel-indicator button {
+  background-color: #c4c4c4;
+  height: 4px;
+  border-radius: 10px;
+}
+
+/* Amélioration globale des espacements */
+.container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.row {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+/* Harmoniser les titres */
+.section-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 50px;
+  color: #4b2d0d;
+  position: relative;
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background-color: #6d9b3d;
+  margin: 12px auto 0;
+}
+
+/* Harmoniser les paragraphes */
+p {
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* Responsive petit écran */
+@media (max-width: 768px) {
+  .text-content h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .text-content p {
+    text-align: center;
+  }
+
+  .btn-brown, .btn-link {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .service-cards {
+    gap: 20px;
+  }
+
+  .reason {
+    margin-bottom: 20px;
+  }
+}
+
+
+
+/* Style global du texte sur toute la page */
+

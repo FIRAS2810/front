@@ -1,0 +1,66 @@
+<div class="admin-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" [class.closed]="isSidebarClosed">
+      
+      <!-- Toggle menu button -->
+      <button class="toggle-btn" (click)="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+      </button>
+  
+      <!-- Logo uniquement si le menu est ouvert -->
+      <div class="logo-section custom-navbar" *ngIf="!isSidebarClosed">
+        <img src="admin-logo.jpg" alt="Logo" class="logo-img" />
+        <p class="brand-name" >Administrateur</p>
+      </div>
+
+      <hr />
+  
+      <!-- Navigation -->
+      <nav class="nav-links  ">
+        <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <i class="fas fa-home"></i>
+            <span *ngIf="!isSidebarClosed">Tableau de bord</span>
+          </a>
+          
+        
+        <a routerLink="demandes" routerLinkActive="active">
+          <i class="fas fa-chalkboard-teacher"></i>
+          <span *ngIf="!isSidebarClosed">Les demandes</span>
+        </a>
+
+        <a routerLink="/adherents" routerLinkActive="active">
+          <i class="fas fa-users"></i>
+          <span *ngIf="!isSidebarClosed">Adhérents</span>
+        </a>
+
+        <a routerLink="nouveautes" routerLinkActive="active">
+          <i class="fas fa-credit-card"></i>
+          <span *ngIf="!isSidebarClosed">Les nouveautées</span>
+        </a>
+        <a routerLink="/profil" routerLinkActive="active">
+          <i class="fas fa-cog"></i>
+          <span *ngIf="!isSidebarClosed">Paramètres et profil</span>
+        </a>
+        <a routerLink="/stats" routerLinkActive="active">
+          <i class="fas fa-chart-bar"></i>
+          <span *ngIf="!isSidebarClosed">Statistique</span>
+        </a>
+      </nav>
+    </aside>
+  
+    <!-- Main content -->
+    <div class="main-content">
+      <header class="top-bar">
+        <div class="notification">
+          <i class="fas fa-bell"></i>
+          <span class="badge">{{ nombreDemandesEnAttente }}</span>
+        </div>
+        <button class="logout-btn" (click)="onLogout()">Deconexion</button>
+      </header>
+  
+      <div class="router-outlet">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+  

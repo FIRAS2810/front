@@ -1,0 +1,126 @@
+
+/* Conteneur principal */
+.register-container {
+    align-items: center;
+    height: 100vh; /* Occupe toute la hauteur */
+    background-color: #f6f6f0;
+    padding-left: 150px;
+  }
+    
+    /* Logo */
+    .logo img {
+      width: 400px;
+      margin-bottom: 0px;
+      margin-top: 0px;
+    }
+    
+    /* Boîte d'inscription */
+    .register-box,
+    .error-box {
+      background-color: #f6f6f0;
+      padding: 20px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    
+    /* Titre principal */
+    h2 {
+      font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+      font-weight: 600;
+      color: #080808;
+    }
+  
+    
+    /* Style pour aligner les labels à gauche */
+    label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #000000;
+      display: block;
+      text-align: left;
+      margin-bottom: 2px; /* Augmenter l'espace sous les labels */
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; /* Police spécifique */
+  
+    }
+  
+    #email::placeholder,
+    #password::placeholder,
+    #confirmPassword::placeholder {
+      color: #999999;
+      font-size: 14px;
+    }
+    
+    /* Champs de saisie */
+    .form-control {
+      background-color: #f6f6f0;
+      border: 1px solid #5b3c11;
+      border-radius: 12px;
+      padding: 10px;
+      width: 100%;
+      font-size: 14px;
+    }
+    
+    /* Bouton de connexion */
+    .btn-success {
+      background-color: #6d9b3d;
+      border: none;
+      padding: 10px;
+      font-size: 16px;
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 5px 10px rgba(91, 60, 17, 0.8);
+    }
+    
+    /* Effet au survol */
+    .btn-success:hover {
+      background-color: #5c8a34;
+      box-shadow: 0 8px 15px rgba(91, 60, 17, 1); /* Augmenter l'ombre au survol */
+    }
+    
+    /* Effet au clic */
+    .btn-success:active {
+      background-color: #4a752b;
+      box-shadow: 0 3px 6px rgba(91, 60, 17, 0.7); /* Ombre plus petite au clic */
+      transform: translateY(2px); /* Effet de pression */
+    }
+    
+  
+  
+  
+  
+    
+    /* Section droite avec l'image */
+    .right-section {
+      display: flex;
+    justify-content: flex-end; /* Aligner à droite */
+    align-items: center;
+    height: 100vh; /* Occupe toute la hauteur */
+    background-color: #f6f6f0;
+    padding-right: 160px; /* Espace de 30px entre l'image et le bord droit */
+    }
+    
+    /* Conteneur de l'image */
+    .image-container {
+      width: 100%;
+      height: 100%;
+     display: flex;
+     justify-content: flex-end;
+     align-items: center;
+     margin-right: 90px; /* Espace de 30px entre l'image et le bord droit */
+    }
+    
+    /* Image centrée */
+    .full-screen-image {
+      width: auto;
+      height: 100%;
+      max-width: 100%;
+      object-fit: cover;
+    }
+    
+    /* Pour cacher l'image sur les petits écrans */
+    @media (max-width: 768px) {
+      .right-section {
+        display: none;
+      }
+    }
+    

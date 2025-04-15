@@ -1,0 +1,65 @@
+<div class="nouveautes-container">
+  <h2 class="title">Gérer les actualités</h2>
+  <button class="btn-ajouter" (click)="openAddModal()">Ajouter une actualité</button>
+
+  <div class="cards-container">
+    <div class="card"
+      *ngFor="let nouveaute of nouveautes | slice:(currentPage * itemsPerPage):(currentPage * itemsPerPage + itemsPerPage)">
+
+      <div class="card-header">
+        <button class="btn-icon blue" (click)="openEditModal(nouveaute)">
+          <i class="fas fa-pen"></i>
+        </button>
+        <button class="btn-icon red" (click)="deleteNouveaute(nouveaute)">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+
+      <img [src]="nouveaute.typeFichier === 'IMAGE' 
+           ? 'data:image/png;base64,' + nouveaute.fichierBase64 
+           : 'annoncement.jpg'" class="card-img" alt="Fichier nouveauté">
+
+      <a *ngIf="nouveaute.typeFichier === 'PDF'" [href]="'data:application/pdf;base64,' + nouveaute.fichierBase64"
+        [download]="nouveaute.nomFichier">
+        Télécharger le PDF
+      </a>
+
+      <h4 class="card-title" *ngIf="nouveaute.titre">{{ nouveaute.titre }}</h4>
+      <h4 class="card-title">{{ nouveaute.description }}</h4>
+      <p class="card-content">{{ nouveaute.datePublication }}</p>
+    </div>
+
+  </div>
+
+
+  <p-paginator [rows]="itemsPerPage" [totalRecords]="nouveautes.length" [rowsPerPageOptions]="[3, 6, 9]"
+    (onPageChange)="onPageChange($event)">
+  </p-paginator>
+
+  <!-- Modal -->
+  <div class="overlay" *ngIf="showModal">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="close-btn" (click)="closeModal()">✖</button>
+      <h3>Ajouter une actualité</h3>
+
+
+      <form (ngSubmit)="save()">
+
+        <div class="form-row">
+          <label>Titre</label>
+          <input type="text" [(ngModel)]="formData.titre" name="titre" class="form-control">
+        </div>
+        <label>Description</label>
+        <textarea style="height: 200px;" [(ngModel)]="formData.description" name="description"></textarea>
+
+        <label>Fichier</label>
+        <input type="file" (change)="handleFile($event)">
+
+        <div class="form-buttons">
+          <button type="button" class="cancel-btn" (click)="closeModal()">Annuler</button>
+          <button type="submit" class="confirm-btn">Publier</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

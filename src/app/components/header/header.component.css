@@ -1,0 +1,53 @@
+/* Style global de la navbar */
+.custom-navbar {
+    background-color: #f7f7f7; /* Couleur de fond */
+    height: 100px; /* Hauteur réduite du header */
+    display: flex;
+    padding-top: 35px;
+    justify-content: space-between; /* Logo à gauche, liens à droite */
+    border-bottom: 2px solid #f7f7f7;
+  }
+  
+  /* Logo */
+  .logo {
+    width: 135px; 
+    height: auto;
+    margin-top: 1px;
+    margin-left: -30px;
+    margin-bottom: 39px;
+    margin-right: 200px;
+  }
+  
+  /* Style des liens */
+  .nav-link {
+    color: #5b3c11;
+    margin-bottom: 35px;
+    font-weight: 600;
+    margin-left: 20px;
+    font-size: 14px;
+    text-transform: capitalize;
+    text-decoration: none;
+  }
+  
+  /* Lien actif ou au survol */
+  .nav-link.active,
+  .nav-link:hover {
+    color: #6d9b3d;
+  }
+  
+  /* Conteneur des liens */
+  .navbar-nav {
+    display: flex;
+    align-items: center; /* Centrer les liens verticalement */
+  }
+  
+  /* Bouton pour mobile */
+  .navbar-toggler {
+    border: none;
+  }
+  
+  .navbar-toggler:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  

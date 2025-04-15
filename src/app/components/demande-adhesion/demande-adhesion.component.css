@@ -1,0 +1,163 @@
+/* ===================== OVERLAY ===================== */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(230, 230, 230, 0.5);
+  backdrop-filter: blur(3px);  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
+  overflow: hidden;
+}
+
+select{
+  font-family: monospace;
+}
+
+
+
+/* ===================== MODAL ===================== */
+.demande-form-container {
+  background: #f7f7f7;
+  padding: 15px 40px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 98vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  z-index: 10000;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===================== BOUTON FERMETURE X ===================== */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+.close-btn:hover {
+  color: red;
+}
+
+/* ===================== TITRE ===================== */
+.title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 2px solid #000000;
+  padding-bottom: 10px;
+}
+
+/* ===================== CHAMPS DU FORMULAIRE ===================== */
+.form-row {
+  display: flex;
+  align-items: flex-start; 
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+.form-row label {
+  flex: 1;
+  font-weight: bold;
+  color: #7b7b7b;
+  text-align: left; 
+}
+.form-row input,
+.form-row select {
+  flex: 2;
+  padding: 10px;
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: 12px;
+  width: 100%;
+}
+
+
+
+/* ===================== DATE SELECT ===================== */
+.date-group {
+  flex: 2;
+  display: flex;
+  gap: 10px;
+}
+.date-group select {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* ===================== ZONE D'UPLOAD ===================== */
+.upload-zone {
+  flex: 2;
+  border: 2px dashed #ccc;
+  padding: 2px;
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+.upload-zone:hover {
+  border-color: #6d9b3d;
+}
+
+/* ===================== BOUTONS ===================== */
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.cancel-btn,
+.confirm-btn {
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+}
+.cancel-btn {
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  color: #333;
+}
+.confirm-btn {
+  background-color: #6d9b3d;
+  color: white;
+  margin-left: 1rem;
+}
+.confirm-btn:hover {
+  background-color: #58703f;
+}
+.cancel-btn:hover {
+  background-color: #fff5f5;
+}
+body.modal-open {
+  overflow: hidden;
+}
+
+input[type="date"] {
+  flex: 2;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 100%;
+}

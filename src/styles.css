@@ -1,1 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+/* Styles de Quill */
+@import 'quill/dist/quill.snow.css';  /* ou quill.bubble.css selon le style que tu préfères */
+
+/* Styles de PrimeNG */
+@import 'primeng/resources/themes/lara-light-indigo/theme.css'; /* Choisis un thème parmi ceux fournis par PrimeNG */
+@import 'primeng/resources/primeng.min.css';

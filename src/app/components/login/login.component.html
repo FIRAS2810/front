@@ -1,0 +1,57 @@
+<div class="container-fluid login-container">
+    <div class="row  vh-100">
+      <!-- Section Gauche : Logo et Formulaire -->
+      <div class="col-md-6 text-center">
+        <div class="logo">
+          <img src="Logo.png" alt="SMBSA Logo" class="img-fluid mb-3" />
+        </div>
+  
+        <!-- Formulaire de Connexion -->
+        <div class="login-box">
+          <h2 class="mb-4">Connexion au compte</h2>
+          <form  (ngSubmit)="onLogin()">
+            <div class="form-group mb-3">
+              <label for="email" class="form-label">Adresse e-mail</label>
+              <input
+  type="email"
+  class="form-control"
+  id="email"
+  placeholder="Entrez votre email"
+  [(ngModel)]="email"
+  name="email"
+/>
+            </div>
+            <div class="form-group mb-3">
+              <label for="password" class="form-label">Mot de passe</label>
+              <input
+  type="password"
+  class="form-control"
+  id="password"
+  placeholder="**********"
+  [(ngModel)]="password"
+  name="password"
+/>
+            </div>
+            <button type="submit" class="btn btn-success btn-block">
+              Connexion
+            </button>
+          </form>
+  
+          <div class="links mt-3">
+            <a href="#" class="text-muted">Vous n'avez pas de compte ?</a>
+            <span class="mx-2">|</span>
+            <a href="#" class="text-muted">Mot de passe oublié ?</a>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Section Droite : Image -->
+<div class="col-md-6 d-none d-md-block right-section">
+    <div class="image-container">
+      <img src="hand-leaf.png" alt="Nature" class="img-fluid full-screen-image" />
+    </div>
+  </div>
+  
+    </div>
+  </div>
+  

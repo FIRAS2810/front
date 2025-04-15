@@ -1,0 +1,371 @@
+/* Container global */
+.nouveautes-container {
+  padding: 30px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Titre */
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', sans-serif;
+}
+
+/* Bouton Ajouter */
+.btn-ajouter {
+  background-color: #6d9b3d;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  font-family: monospace;
+  transition: background-color 0.3s ease;
+}
+
+.btn-ajouter:hover {
+  background-color: #5a8631;
+}
+
+/* Grille des cartes */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+/* Card général */
+.card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  height: 420px;
+  position: relative;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Header des boutons dans la carte */
+/* Header des boutons */
+.card-header {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 5px;
+  border-radius: 20px;
+}
+
+.btn-icon {
+  border: none;
+  background: #ffffff;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+}
+
+.btn-icon:hover {
+  background: #f0f0f0;
+  transform: scale(1.1);
+}
+
+/* Couleur de l'icone Modifier */
+.btn-icon.blue i {
+  color: #3498db;
+  font-size: 16px;
+}
+
+/* Couleur de l'icone Supprimer */
+.btn-icon.red i {
+  color: #e74c3c;
+  font-size: 16px;
+}
+
+/* Image des cartes */
+.card-img {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: 60%;
+  object-fit: cover;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+/* Titre & contenu */
+.card-title {
+  font-size: 19px;
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+  color: #333;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.card-content {
+  font-size: 13px;
+  color: #555;
+  text-align: left;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+
+/* Modal */
+/* Overlay flouté et centré */
+.overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Contenu du modal */
+.modal-content {
+  background: linear-gradient(to bottom right, #ffffff, #f9f9f9);
+  border-radius: 16px;
+  font-family: monospace;
+  padding: 30px 25px;
+  width: 95%;
+  max-width: 500px;
+  position: relative;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-content h3 {
+  font-size: 22px;
+  margin-bottom: 25px;
+  text-align: center;
+  color: #333;
+}
+
+/* Bouton de fermeture */
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  font-size: 22px;
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.close-btn:hover {
+  transform: rotate(90deg);
+  color: #333;
+}
+
+/* Inputs et Textarea */
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  background-color: #fefefe;
+  transition: border 0.3s ease;
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus {
+  border-color: #6d9b3d;
+  outline: none;
+}
+
+/* Aperçu image */
+.preview-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.preview-img:hover {
+  transform: scale(1.03);
+}
+
+/* Supprimer l'image */
+.btn-supprimer-img {
+  background: #e63946;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-supprimer-img:hover {
+  background: #c92a39;
+}
+
+/* Boutons du formulaire */
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.cancel-btn,
+.confirm-btn {
+  flex: 1;
+  padding: 12px 0;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cancel-btn {
+  background: #f5f5f5;
+  border: 1px solid #ccc;
+  color: #333;
+}
+
+.cancel-btn:hover {
+  background: #e0e0e0;
+}
+
+.confirm-btn {
+  background-color: #6d9b3d;
+  color: white;
+  border: none;
+}
+
+.confirm-btn:hover {
+  background-color: #5c8333;
+}
+
+
+.modal-content select {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  background-color: #fefefe;
+  transition: border 0.3s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px;
+}
+
+.modal-content select:focus {
+  border-color: #6d9b3d;
+  outline: none;
+}
+/* Style pour l'éditeur de contenu */
+.content-editor {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: #fefefe;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.content-editor .ql-editor {
+  height: 300px; /* Ajuste la hauteur comme tu le souhaites */
+  font-size: 14px;
+  color: #333;
+  padding: 15px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+/* Pour ajuster les boutons de l'éditeur */
+.content-editor .ql-toolbar {
+  border-radius: 8px 8px 0 0;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+}
+
+.content-editor .ql-toolbar .ql-formats {
+  margin-left: 0;
+}
+/* Assurez-vous que le fond de l'éditeur est blanc et que la couleur du texte est correcte */
+.ql-editor {
+  background-color: #ffffff !important;
+  color: #333333;
+  font-family: 'Segoe UI', sans-serif; /* Choisir une police souhaitée */
+}
+
+/* Applique une taille de texte plus lisible */
+.ql-editor p {
+  font-size: 14px;
+}
+
+/* Pour personnaliser les boutons de style dans l'éditeur */
+.ql-toolbar {
+  background-color: #f5f5f5 !important;
+  border: 1px solid #ccc;
+}
+
+.ql-toolbar .ql-formats {
+  margin-left: 0;
+}
+
+/* Ajouter des styles pour les boutons de formatage si nécessaire */
+.ql-picker-label,
+.ql-picker-item {
+  font-size: 14px;
+}
+
+/* Gérer l'alignement du texte */
+.ql-align-center {
+  text-align: center;
+}
+
+.ql-align-right {
+  text-align: right;
+}
+
+.ql-align-justify {
+  text-align: justify;
+}

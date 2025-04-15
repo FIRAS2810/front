@@ -1,0 +1,222 @@
+<app-header></app-header>
+
+<!-- Section principale avec image et texte -->
+<div class="banner">
+  <!-- Image d'arrière-plan indépendante -->
+  <img src="banniere.png" class="bg-banner" alt="background" />
+
+  <div class="container content">
+    <div class="row align-items-center">
+      <!-- Texte à gauche -->
+      <div class="col-md-6 text-content">
+        <h1>
+          SMBSA <span class="highlight">maamoura</span>, cœur
+          <span class="highlight">agricole</span>
+        </h1>
+        <p>
+          Depuis 1965, nous accompagnons les agriculteurs et <br>
+          pêcheurs de Nabeul avec des services essentiels : collecte de <br>
+          lait, fournitures agricoles, stockage et accompagnement.
+        </p>
+        <button class="btn btn-brown" type="button">Devenir Membre</button>
+        <button class="btn btn-link" type="button">En Savoir Plus <i class="fas fa-arrow-right"></i></button>
+      </div>
+
+      <!-- Image plante à droite -->
+      <div class="col-md-6 image-side" style="margin-top: 56px;">
+        <img src="plante-shadow.png" class="plant-image" alt="Plante" />
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Section Nouveautés -->
+<!-- Section Nouveautés avec Carousel -->
+<section class="nouveautes-section" style="margin-bottom: -80px;">
+  <div class="container">
+    <h2 class="section-title">Nouveautés</h2>
+
+    <p-carousel [value]="nouveautes" [numVisible]="3" [numScroll]="1" [circular]="true" [autoplayInterval]="0000"
+      [responsiveOptions]="[
+          { breakpoint: '1024px', numVisible: 3, numScroll: 3 },
+          { breakpoint: '768px', numVisible: 2, numScroll: 1 },
+          { breakpoint: '560px', numVisible: 1, numScroll: 1 }
+        ]">
+      <ng-template pTemplate="item" let-nouveaute>
+        <div class="card nouveaute-card">
+
+          <!-- Image ou Fichier -->
+          <ng-container *ngIf="nouveaute.typeFichier === 'IMAGE'; else fichierBlock">
+            <img [src]="nouveaute.image" class="image-style" alt="Image nouveauté" />
+
+          </ng-container>
+
+          <ng-template #fichierBlock>
+            <img src="annoncement.jpg" class="image-style" alt="fichier pdf" />
+            <a style="text-align: center; margin-top: 10px;" *ngIf="nouveaute.typeFichier === 'PDF'" [href]="'data:application/pdf;base64,' + nouveaute.fichierPdf"
+              [download]="nouveaute.nomFichier">
+              Télécharger le PDF
+            </a>
+          </ng-template>
+
+
+          <div class="card-body">
+            <h5 class="card-title" *ngIf="nouveaute.typeFichier === 'IMAGE'">
+              {{ nouveaute.nomFichier }}
+            </h5>
+
+            <button *ngIf="nouveaute.typeFichier === 'IMAGE'" class="btn-details " (click)="voirDetailsNouv(nouveaute)">
+              <i class="pi pi-eye"></i> Voir Détails
+            </button>
+
+
+            <p class="date"><b style="font-size: medium; color: black;">Publié le {{ nouveaute.datePublication }}</b>
+            </p>
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
+</section>
+
+
+<!-- Nos Services -->
+<section class="services-section">
+  <h2 class="section-title">Nos Services</h2>
+  <div class="service-cards">
+    <div class="service-card">
+      <i class="fas fa-glass-whiskey"></i>
+      <h4>Collecte et vente de lait</h4>
+      <p>Service professionnel de collecte et de commercialisation du lait.</p>
+      <button class="btn-links" type="button">+ En Savoir Plus </button>
+    </div>
+    <div class="service-card">
+      <i class="fas fa-leaf"></i>
+      <h4>Fournitures agricoles</h4>
+      <p>Accès aux meilleurs approvisionnements agricoles.</p>
+      <button class="btn-links" type="button">+ En Savoir Plus </button>
+    </div>
+    <div class="service-card">
+      <i class="fas fa-tractor"></i>
+      <h4>Matériel agricole</h4>
+      <p>Location et vente de matériel agricole moderne.</p>
+      <button class="btn-links" type="button">+ En Savoir Plus </button>
+    </div>
+    <div class="service-card">
+      <i class="fas fa-user-cog"></i>
+      <h4>Accompagnement</h4>
+      <p>Formation et assistance technique personnalisée.</p>
+      <button class="btn-links" type="button">+ En Savoir Plus </button>
+    </div>
+  </div>
+</section>
+
+<!-- Pourquoi nous rejoindre -->
+<section class="reasons-section">
+  <div class="reasons-cards">
+
+    <h2 class="section-title">Pourquoi nous rejoindre?</h2>
+
+    <div class="reasons-list">
+      <div class="reason">
+        <i class="fas fa-tools"></i>
+        <h5>Services Exclusifs</h5>
+        <p>Accès à une gamme complète de services agricoles professionnels</p>
+      </div>
+      <div class="reason">
+        <i class="fas fa-coins"></i>
+        <h5>Avantages Financiers</h5>
+        <p>Tarifs préférentiels et support financier pour nos membres</p>
+      </div>
+      <div class="reason">
+        <i class="fas fa-users"></i>
+        <h5>Communauté</h5>
+        <p>Rejoignez une communauté de +100 membres actifs</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- Section Comment adhérer -->
+<section class="adhesion-section">
+  <div class="containe">
+    <h2 class="adhesion-title">Comment adhérer à <span class="highlight">SMBSA</span></h2>
+
+    <div class="steps-wrapper">
+      <div class="step" *ngFor="let step of steps">
+        <div class="icon-circle">
+          <i [class]="step.icon"></i>
+        </div>
+        <div class="text-step">
+          <h5>{{ step.title }}</h5>
+          <p>{{ step.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section Investissement -->
+<section class="invest-section" id="invest">
+  <div class="containerr invest-content text-center">
+    <p class="intro-text">
+      Investissez dans SMBSA, investissez dans votre agricole <br />
+      boostez votre <span class="green-bold">productivité</span>,
+      <span class="green-bold">récoltes</span> and
+      <span class="green-bold">opportunités</span>
+    </p>
+
+    <button class="btn btn-brown mt-3" type="button" (click)="ouvrirFormulaire()">Demande d'adhésion</button>
+
+    <!-- Formulaire modal -->
+    <app-demande-adhesion [show]="showForm" (fermer)="fermerFormulaire()"></app-demande-adhesion>
+
+    <div class="advantages mt-4">
+      <div class="advantage">
+        <i class="fas fa-check"></i>
+        <span>Création de compte rapide</span>
+      </div>
+      <div class="advantage">
+        <i class="fas fa-check"></i>
+        <span>Participez à un réseau solide de producteurs</span>
+      </div>
+      <div class="advantage">
+        <i class="fas fa-check"></i>
+        <span>Rejoignez plus de 100 adhérents!</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<div class="popup-overlay" *ngIf="selectedNouveaute" (click)="closeDetails()"
+  style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 9999; display: flex; justify-content: center; align-items: center;">
+
+  <div class="popup-card" (click)="$event.stopPropagation()"
+    style="background: white; padding: 30px; border-radius: 10px; width: 400px; max-width: 90%;">
+
+    <button class="close-btn" (click)="closeDetails()"
+      style="float: right; background: none; border: none; font-size: 20px; color: purple;">
+      ✖
+    </button>
+
+    <h3 style="margin-bottom: 10px;">note :</h3>
+
+    <p style="word-wrap: break-word; white-space: pre-wrap; font-size: 16px;">
+      {{ selectedNouveaute.description }}
+    </p>
+
+    <p style="margin-top: 15px; font-size: 14px; color: gray;">
+      Publié le : {{ selectedNouveaute.datePublication }}
+    </p>
+
+  </div>
+</div>
+
+<app-footer></app-footer>
