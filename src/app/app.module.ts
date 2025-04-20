@@ -30,6 +30,9 @@ import { NouveautesComponent } from './components/admin/nouveautes/nouveautes.co
 import { EditorModule } from 'primeng/editor';
 import { PaginatorModule } from 'primeng/paginator';
 import { FooterComponent } from './components/footer/footer.component';
+import { AdherentsComponent } from './components/admin/adherents/adherents.component';
+import { QuillModule } from 'ngx-quill';
+import { DescriptionSmbsaComponent } from './components/admin/gerer_page/description-smbsa/description-smbsa.component';
 
 
 
@@ -47,6 +50,8 @@ import { FooterComponent } from './components/footer/footer.component';
     ProfilAdherentComponent,
     NouveautesComponent,
     FooterComponent,
+    AdherentsComponent,
+    DescriptionSmbsaComponent,
     
     
     
@@ -69,7 +74,8 @@ import { FooterComponent } from './components/footer/footer.component';
     FontAwesomeModule,
     CarouselModule,
     EditorModule,
-    PaginatorModule
+    PaginatorModule,
+    QuillModule.forRoot()
    
   ],
   providers: [],

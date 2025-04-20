@@ -10,7 +10,7 @@
       <!-- Texte à gauche -->
       <div class="col-md-6 text-content">
         <h1>
-          SMBSA <span class="highlight">maamoura</span>, cœur
+          SMBSA <span class="highlight">Ennouhoudh</span>, cœur
           <span class="highlight">agricole</span>
         </h1>
         <p>
@@ -18,9 +18,26 @@
           pêcheurs de Nabeul avec des services essentiels : collecte de <br>
           lait, fournitures agricoles, stockage et accompagnement.
         </p>
-        <button class="btn btn-brown" type="button">Devenir Membre</button>
-        <button class="btn btn-link" type="button">En Savoir Plus <i class="fas fa-arrow-right"></i></button>
-      </div>
+        <button class="btn btn-brown" type="button" (click)="scrollToInvest()">Devenir Membre</button>
+        <button class="btn btn-link" type="button" (click)="openPopup()">En Savoir Plus <i class="fas fa-arrow-right"></i></button>
+
+     <!-- ✅ POPUP de Description SMBSA -->
+<div class="popup-overlay" *ngIf="showPopup" (click)="closePopup()">
+  <div class="popup-content" (click)="$event.stopPropagation()">
+    <button class="popup-close" (click)="closePopup()">✖</button>
+
+    <!-- Logo centré -->
+    <img src="Logo.png" alt="SMBSA Logo" class="popup-logo" />
+
+    <!-- Contenu HTML dynamique -->
+    <div class="popup-html" [innerHTML]="htmlContent"></div>
+  </div>
+</div>
+
+      
+    </div>
+
+
 
       <!-- Image plante à droite -->
       <div class="col-md-6 image-side" style="margin-top: 56px;">
@@ -55,8 +72,11 @@
 
           <ng-template #fichierBlock>
             <img src="annoncement.jpg" class="image-style" alt="fichier pdf" />
+            <h5 class="card-title" *ngIf="nouveaute.typeFichier === 'PDF'">
+              {{ nouveaute.titre }}
+            </h5>
             <a style="text-align: center; margin-top: 10px;" *ngIf="nouveaute.typeFichier === 'PDF'" [href]="'data:application/pdf;base64,' + nouveaute.fichierPdf"
-              [download]="nouveaute.nomFichier">
+              [download]="nouveaute.titre">
               Télécharger le PDF
             </a>
           </ng-template>
@@ -64,7 +84,7 @@
 
           <div class="card-body">
             <h5 class="card-title" *ngIf="nouveaute.typeFichier === 'IMAGE'">
-              {{ nouveaute.nomFichier }}
+              {{ nouveaute.titre }}
             </h5>
 
             <button *ngIf="nouveaute.typeFichier === 'IMAGE'" class="btn-details " (click)="voirDetailsNouv(nouveaute)">
@@ -144,7 +164,7 @@
 <!-- Section Comment adhérer -->
 <section class="adhesion-section">
   <div class="containe">
-    <h2 class="adhesion-title">Comment adhérer à <span class="highlight">SMBSA</span></h2>
+    <h2 class="adhesion-title">Comment adhérer à <span class="highlight">SMBSA Ennouhoudh</span></h2>
 
     <div class="steps-wrapper">
       <div class="step" *ngFor="let step of steps">
@@ -195,27 +215,32 @@
 
 
 
-<div class="popup-overlay" *ngIf="selectedNouveaute" (click)="closeDetails()"
-  style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 9999; display: flex; justify-content: center; align-items: center;">
+<!-- ✅ POPUP DÉTAIL NOUVEAUTÉ -->
+<div class="popup-overlay" *ngIf="selectedNouveaute" (click)="closeDetails()">
+  <div class="popup-nouveaute" (click)="$event.stopPropagation()">
+    <button class="close-btn" (click)="closeDetails()">✖</button>
 
-  <div class="popup-card" (click)="$event.stopPropagation()"
-    style="background: white; padding: 30px; border-radius: 10px; width: 400px; max-width: 90%;">
+    <h2 class="popup-title">{{ selectedNouveaute.titre }}</h2>
 
-    <button class="close-btn" (click)="closeDetails()"
-      style="float: right; background: none; border: none; font-size: 20px; color: purple;">
-      ✖
-    </button>
+    <div class="popup-content">
+      <!-- Image -->
+      <img *ngIf="selectedNouveaute.typeFichier === 'IMAGE'" 
+           [src]="selectedNouveaute.image"
+           class="popup-image"
+           alt="Image nouveauté" />
 
-    <h3 style="margin-bottom: 10px;">note :</h3>
+      <!-- PDF -->
+      <a *ngIf="selectedNouveaute.typeFichier === 'PDF'" 
+         [href]="'data:application/pdf;base64,' + selectedNouveaute.fichierPdf"
+         target="_blank"
+         class="btn-pdf">
+         📄 Ouvrir le PDF
+      </a>
 
-    <p style="word-wrap: break-word; white-space: pre-wrap; font-size: 16px;">
-      {{ selectedNouveaute.description }}
-    </p>
+      <!-- Description -->
+      <p class="popup-description">{{ selectedNouveaute.description }}</p>
 
-    <p style="margin-top: 15px; font-size: 14px; color: gray;">
-      Publié le : {{ selectedNouveaute.datePublication }}
-    </p>
-
+    </div>
   </div>
 </div>
 

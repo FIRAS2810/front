@@ -4,6 +4,7 @@
   margin-left: 5px;
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   position: relative; 
+  overflow-x: hidden;
 }
 
 .fil-cherch {
@@ -102,6 +103,7 @@ th{
   .demande-table {
     width: 100%;
     border-collapse: collapse;
+    overflow-x: hidden;
   }
   
   .demande-table th,
@@ -146,38 +148,72 @@ th{
     text-align: center;
   }
   
-  .btn-delete {
+
+  .lib-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    color: #2c3e50;
+  }
+  
+  .lib-button:hover {
+    background: #e9ecef;
+    border-color: #ced4da;
+  }
+  
+  .lib-button.active {
+    background: #e2e6ea;
+    border-color: #d4d8dd;
+  }
+  
+  .lib-dropdown {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 5px);
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    min-width: 100px;
+    z-index: 1000;
+    padding: 8px 0;
+  }
+  
+  .lib-menu-item {
+    width: 100%;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     background: none;
     border: none;
-    font-size: 18px;
-    color: #222;
     cursor: pointer;
-    transition: 0.2s;
-    margin-left: 10px;
-  }
-  
-  .btn-delete:hover {
-    color: red;
-  }
-  
-  .btn-accept {
-    padding: 6px 20px;
-    border: 1.5px solid #000000;
-    background-color: transparent;
-    color: #222;
-    border-radius: 20px;
+    color: #6d9b3d;
     font-size: 14px;
-    cursor: pointer;
-    transition: 0.3s ease;
+    transition: all 0.2s;
   }
   
-  .btn-accept:hover {
-    background-color: #6d9b3d;
-    color: white;
-    border-color: #6d9b3d;
+  .lib-menu-item:hover {
+    background: #f8f9fa;
   }
   
- 
+  .lib-menu-item i {
+    width: 18px;
+    font-size: 14px;
+    color: #6d9b3d;
+  }
+  
+  .lib-menu-item.text-danger i {
+    color: #dc3545;
+  }
+  
 
 
 
@@ -325,3 +361,29 @@ th{
   td{
     font-family: monospace;
   }
+
+
+
+  ::ng-deep .popup-box {
+    border-radius: 20px !important;
+    padding-top: 30px !important;
+  }
+  
+  ::ng-deep .popup-title {
+    font-size: 22px !important;
+    color: #1b4332 !important;
+    font-weight: bold;
+  }
+  
+  ::ng-deep .popup-confirm-btn {
+    border-radius: 8px !important;
+    padding: 8px 20px !important;
+    font-weight: 600;
+  }
+  
+  ::ng-deep .popup-cancel-btn {
+    border-radius: 8px !important;
+    font-weight: 500;
+    color: #333 !important;
+  }
+  

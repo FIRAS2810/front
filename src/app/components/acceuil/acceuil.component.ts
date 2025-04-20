@@ -1,54 +1,62 @@
 import { Component, OnInit } from '@angular/core';
 import { NouveauteDTO, NouveauteService } from '../../services/nouveaute.service';
+import { DescriptionService } from '../../services/description.service';
 
 @Component({
   selector: 'app-acceuil',
   templateUrl: './acceuil.component.html',
-  styleUrl: './acceuil.component.css'
+  styleUrls: ['./acceuil.component.css']
 })
 export class AcceuilComponent implements OnInit {
-
+  // === Nouveautés ===
   nouveautes: NouveauteDTO[] = [];
+  selectedNouveaute: any = null;
 
-  selectedNouveaute: any = null; // IMPORTANT
-
-voirDetailsNouv(nouveaute: any) {
-  console.log("Clicked nouveaute:", nouveaute); // Juste pour vérifier dans la console
-  this.selectedNouveaute = nouveaute;
-}
-
-closeDetails() {
-  this.selectedNouveaute = null;
-}
-
-
-  
-  constructor(private nouveauteService: NouveauteService){
-    
+  voirDetailsNouv(nouveaute: any) {
+    console.log("Clicked nouveaute:", nouveaute);
+    this.selectedNouveaute = nouveaute;
   }
 
-  ngOnInit(): void {
-    this.nouveauteService.getAllNouveautes().subscribe({
+  closeDetails() {
+    this.selectedNouveaute = null;
+  }
+
+  // === Description SMBSA ===
+  showPopup = false;
+  htmlContent = '';
+
+  openPopup() {
+    // Recharge le contenu à chaque clic
+    this.descriptionService.getDescription().subscribe({
       next: (data) => {
-        this.nouveautes = data
-          .sort((a, b) => new Date(b.datePublication).getTime() - new Date(a.datePublication).getTime()) // ⬅️ tri décroissant
-          .map(n => ({
-            ...n,
-            image: n.typeFichier === 'IMAGE'
-              ? `data:image/png;base64,${n.fichierBase64}`
-              : 'assets/annoncement.jpg',
-            fichierPdf: n.fichierBase64
-          }));
+        this.htmlContent = data.contenuHtml || '';
+        this.showPopup = true;
+      },
+      error: (err) => {
+        console.error("Erreur récupération description :", err);
       }
     });
   }
   
-  
 
-  voirDetails(nouveaute: NouveauteDTO) {
-    alert(`Description : ${nouveaute.description}`);
+  closePopup() {
+    this.showPopup = false;
   }
-  // Étapes pour adhérer
+
+  // === Formulaire d'adhésion ===
+  showForm = false;
+
+  ouvrirFormulaire() {
+    this.showForm = true;
+    document.body.style.overflow = 'hidden';
+  }
+
+  fermerFormulaire() {
+    this.showForm = false;
+    document.body.style.overflow = 'auto';
+  }
+
+  // === Étapes d’adhésion ===
   steps = [
     {
       icon: 'fas fa-user-plus',
@@ -76,20 +84,45 @@ closeDetails() {
       description: 'Vous êtes désormais membre de SMBSA et pouvez profiter de tous les avantages de la communauté. 🎉'
     }
   ];
-  
 
-  // Méthode pour voir les détails de la nouveauté
-  
-
-  showForm = false;
-
-  ouvrirFormulaire() {
-    this.showForm = true;
-    document.body.style.overflow = 'hidden'; // Bloquer le scroll
+  // === Scroll vers investissement ===
+  scrollToInvest() {
+    const target = document.getElementById('invest');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
   }
-  
-  fermerFormulaire() {
-    this.showForm = false;
-    document.body.style.overflow = 'auto'; // Rétablir le scroll
+
+  // === Constructeur et chargement ===
+  constructor(
+    private nouveauteService: NouveauteService,
+    private descriptionService: DescriptionService
+  ) {}
+
+  ngOnInit(): void {
+    // Récupérer les nouveautés
+    this.nouveauteService.getAllNouveautes().subscribe({
+      next: (data) => {
+        this.nouveautes = data
+          .sort((a, b) => new Date(b.datePublication).getTime() - new Date(a.datePublication).getTime())
+          .map(n => ({
+            ...n,
+            image: n.typeFichier === 'IMAGE'
+              ? `data:image/png;base64,${n.fichierBase64}`
+              : 'assets/annoncement.jpg',
+            fichierPdf: n.fichierBase64
+          }));
+      }
+    });
+
+    // Récupérer le contenu HTML de la description SMBSA
+    this.descriptionService.getDescription().subscribe({
+      next: (data) => {
+        this.htmlContent = data.contenuHtml || '';
+      },
+      error: (err) => {
+        console.error("Erreur de récupération de la description SMBSA :", err);
+      }
+    });
   }
 }

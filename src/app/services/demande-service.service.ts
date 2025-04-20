@@ -16,7 +16,8 @@ export interface DemandeDTO {
   dateDecision?: string;
   justificatifBase64?: string;
   etat: string;
-  
+  sexe?: string;
+  showDropdown?: boolean;
 }
 
 

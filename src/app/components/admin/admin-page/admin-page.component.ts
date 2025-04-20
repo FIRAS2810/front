@@ -9,6 +9,7 @@ import { DemandeServiceService } from '../../../services/demande-service.service
 })
 export class AdminPageComponent {
   isSidebarClosed: boolean = false;
+  isSubMenuOpen: boolean = false;
   
   nombreDemandesEnAttente: number = 0;
 
@@ -28,5 +29,9 @@ export class AdminPageComponent {
 
   toggleSidebar() {
     this.isSidebarClosed = !this.isSidebarClosed;
+  }
+
+  toggleSubMenu() {
+    this.isSubMenuOpen = !this.isSubMenuOpen;
   }
 }

@@ -65,33 +65,102 @@ imagePopupSrc: string = '';
   }
 
   accepterDemande(id: number): void {
-    this.demandeService.changerStatutDemande(id, 'ACCEPTEE').subscribe({
-      next: () => {
-        console.log('✅ Demande acceptée');
-        Swal.fire('Succès', 'La demande a été acceptée !', 'success');
+    const demande = this.demandes.find(d => d.id === id);
+  
+    Swal.fire({
+      title: 'Confirmer l\'acceptation',
+      text: `Êtes-vous sûr de vouloir accepter la demande de ${demande?.nom} ${demande?.prenom} ?`,
+      icon: 'success',
+      iconHtml: '✔️',
+      showCancelButton: true,
+      confirmButtonColor: '#4e8e35',
+      cancelButtonColor: '#e0e0e0',
+      confirmButtonText: 'Confirmer',
+      cancelButtonText: 'Annuler',
+      customClass: {
+        title: 'popup-title',
+        popup: 'popup-box',
+        confirmButton: 'popup-confirm-btn',
+        cancelButton: 'popup-cancel-btn',
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.demandeService.changerStatutDemande(id, 'ACCEPTEE').subscribe({
+          next: () => {
+            demande!.showDropdown = false;
+            Swal.fire('Acceptée', 'La demande a été acceptée.', 'success');
+            this.loadDemandes();
+          },
+          error: () => {
+            Swal.fire('Erreur', 'Une erreur est survenue.', 'error');
+          }
+        });
+      }
+    });
+  }
+  
 
-        this.loadDemandes(); // Recharger la liste
-      },
-      error: (err) => {
-        console.error('❌ Erreur lors de l’acceptation', err);
-      }
-    });
-  }
-  
   refuserDemande(id: number): void {
-    this.demandeService.changerStatutDemande(id, 'REFUSEE').subscribe({
-      next: () => {
-        console.log('🛑 Demande refusée');
-        Swal.fire('Refusée', 'La demande a été refusée.', 'warning');
-        this.loadDemandes();
-      },
-      error: (err) => {
-        console.error('❌ Erreur lors du refus', err);
-        Swal.fire('Erreur', 'Une erreur s’est produite lors du refus.', 'error');
+    const demande = this.demandes.find(d => d.id === id);
+  
+    Swal.fire({
+      title: 'Confirmer le refus',
+      text: `Êtes-vous sûr de vouloir refuser la demande de ${demande?.nom} ${demande?.prenom} ?`,
+      icon: 'error',
+      iconHtml: '❌',
+      showCancelButton: true,
+      confirmButtonColor: '#e63946',
+      cancelButtonColor: '#e0e0e0',
+      confirmButtonText: 'Confirmer',
+      cancelButtonText: 'Annuler',
+      customClass: {
+        title: 'popup-title',
+        popup: 'popup-box',
+        confirmButton: 'popup-confirm-btn',
+        cancelButton: 'popup-cancel-btn',
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.demandeService.changerStatutDemande(id, 'REFUSEE').subscribe({
+          next: () => {
+            demande!.showDropdown = false;
+            Swal.fire('Refusée', 'La demande a été refusée.', 'warning');
+            this.loadDemandes();
+          },
+          error: () => {
+            Swal.fire('Erreur', 'Une erreur est survenue.', 'error');
+          }
+        });
       }
     });
   }
   
+
+  scrollToButton(id: number) {
+    const element = document.getElementById('dropdown-' + id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  
+  
+  toggleDropdown(demande: any): void {
+    // Fermer tous les autres dropdowns
+    this.demandes.forEach(d => {
+      if (d.id !== demande.id) d.showDropdown = false;
+    });
+  
+    // Inverser le dropdown actuel
+    demande.showDropdown = !demande.showDropdown;
+  
+    // Scroll automatique si dropdown affiché
+    if (demande.showDropdown) {
+      setTimeout(() => {
+        const element = document.getElementById('dropdown-' + demande.id);
+        element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
+  }
   
   
 

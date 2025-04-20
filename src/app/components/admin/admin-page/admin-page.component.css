@@ -204,3 +204,40 @@
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   }
   
+
+  .submenu-parent {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: white;
+    background-color: #5c8a34;
+    margin-bottom: 10px;
+  }
+  
+  .submenu-items {
+    padding-left: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .submenu-items a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border-radius: 6px;
+    color: white;
+    transition: background 0.3s;
+    background-color: #5c8a34;
+    font-size: 14px;
+    text-decoration: none;
+  }
+  
+  .submenu-items a:hover {
+    background-color: #3e661f;
+  }
+  

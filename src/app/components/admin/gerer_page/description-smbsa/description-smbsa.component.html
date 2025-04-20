@@ -1,0 +1,16 @@
+<div class="description-container">
+    <div class="description-editor">
+      <div class="description-header">
+        <h2>📝 Modifier la description SMBSA</h2>
+        <button class="save-btn" (click)="saveDescription()">💾 Enregistrer</button>
+      </div>
+  
+      <quill-editor
+        [(ngModel)]="textContent"
+        [style]="{ height: '600px' }" 
+        theme="snow"
+        class="editor-style">
+      </quill-editor>
+    </div>
+  </div>
+  

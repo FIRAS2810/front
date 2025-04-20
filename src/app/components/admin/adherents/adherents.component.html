@@ -1,0 +1,90 @@
+<div class="adherents-container">
+  <h2 class="title">Liste des adhérents</h2>
+  <input type="text" placeholder="    Rechercher par nom ou email..." class="search-input" />
+  
+  <table class="adherents-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nom et Prénom</th>
+        <th>CIN</th>
+        <th>Tel</th>
+        <th>État</th>
+        <th>Montant d’adhésion</th>
+        <th>N° d’actions</th>
+        <th>Date d'adhésion</th>
+        <th>Date de fin</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let adherent of adherents; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>
+          <img [src]="adherent.photo" 
+               class="avatar" 
+               alt="profil"
+               (click)="showDetails(adherent)" />
+          {{ adherent.nom }} {{ adherent.prenom }}
+        </td>
+        <td>{{ adherent.cin }}</td>
+        <td>{{ adherent.tel }}</td>
+        <td>{{ adherent.etat }}</td>
+        <td>{{ adherent.montant }} DT</td>
+        <td>{{ adherent.nbActions }}</td>
+        <td>{{ adherent.dateAdhesion | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ adherent.dateFin | date: 'dd/MM/yyyy' }}</td>
+        <td class="dropdown-wrapper">
+          <!-- Le dropdown reste inchangé -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Popup Détails Adhérent -->
+<div class="popup-overlay" *ngIf="selectedAdherent" (click)="closePopup()">
+<div class="popup-card" (click)="$event.stopPropagation()">
+  <button class="close-btn" (click)="closePopup()">✖</button>
+
+  <div class="profile-header">
+    <img [src]="selectedAdherent.photo" class="popup-avatar" />
+    <h3 class="user-name">{{ selectedAdherent.nom }} {{ selectedAdherent.prenom }}</h3>
+  </div>
+
+  <div class="detail-item">
+    <i class="fa-solid fa-id-card icon-vert"></i>
+    {{ selectedAdherent.cin }}
+  </div>
+
+  <div class="detail-item">
+    <i class="fa-solid fa-envelope icon-vert"></i>
+    {{ selectedAdherent.email }}
+  </div>
+
+  <div class="detail-item">
+    <i class="fa-solid fa-phone icon-vert"></i>
+    {{ selectedAdherent.tel }}
+  </div>
+
+  <div class="detail-item">
+    <i class="fa-solid fa-coins icon-vert"></i>
+    Montant adhésion: {{ selectedAdherent.montant }} DT
+  </div>
+
+  <div class="detail-item">
+    <i class="fa-solid fa-calendar-days icon-vert"></i>
+    Adhésion: {{ selectedAdherent.dateAdhesion | date: 'dd/MM/yyyy' }}
+  </div>
+
+  <div class="detail-item">
+    <i class="fa-solid fa-calendar-xmark icon-vert"></i>
+    Fin: {{ selectedAdherent.dateFin | date: 'dd/MM/yyyy' }}
+  </div>
+
+  <div class="detail-item">
+    <i class="fa-solid fa-circle-info icon-vert"></i>
+    Statut: {{ selectedAdherent.etat }}
+  </div>
+</div>
+</div>

@@ -1,0 +1,54 @@
+.description-container {
+    padding: 40px 30px;
+    background-color: #ffffff; /* ✅ Fond blanc plein écran */
+    min-height: 100vh;
+  }
+  
+  .description-editor {
+    max-width: 1200px; /* ✅ Plus large */
+    margin: auto;
+    width: 100%;
+  }
+  
+  .description-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+  
+  .description-header h2 {
+    font-size: 26px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    margin: 0;
+  }
+  
+  .editor-style {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    height: 600px; /* ✅ Plus grand */
+    width: 100%;
+    font-size: 16px;
+    padding: 10px;
+
+  }
+  
+  .save-btn {
+    background-color: #4e8e35;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+  }
+  
+  .save-btn:hover {
+    background-color: #3d6e28;
+  }
+  

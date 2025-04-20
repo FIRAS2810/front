@@ -12,6 +12,10 @@ import { ProfilAdherentComponent } from './components/adherent/profil-adherent/p
 import { AdherentGuard } from './guards/adherent.guard';
 import { NouveautesComponent } from './components/admin/nouveautes/nouveautes.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { AdherentsComponent } from './components/admin/adherents/adherents.component';
+import { DescriptionSmbsaComponent } from './components/admin/gerer_page/description-smbsa/description-smbsa.component';
+
+
 
 const routes: Routes = [{ path: '', component:AcceuilComponent },
   { path: 'header', component:HeaderComponent },
@@ -22,6 +26,9 @@ const routes: Routes = [{ path: '', component:AcceuilComponent },
       
       { path: 'demandes', component: DemandesComponent },
       { path: 'nouveautes', component: NouveautesComponent },
+      { path: 'adherents', component: AdherentsComponent },
+      { path: 'description-smbsa', component: DescriptionSmbsaComponent },
+
     
     
     ]},

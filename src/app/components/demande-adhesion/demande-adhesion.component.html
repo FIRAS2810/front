@@ -20,7 +20,21 @@
       </div>
 
       <div class="form-row">
-        <label for="birthdate">Date de naissance</label>
+        <label>Sexe*</label>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" [(ngModel)]="formData.sexe" name="sexe" value="Homme" required />
+            Homme
+          </label>
+          <label class="radio-option">
+            <input type="radio" [(ngModel)]="formData.sexe" name="sexe" value="Femme" required />
+            Femme
+          </label>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label for="birthdate">Date de naissance*</label>
         <input type="date" id="birthdate" style="font-family: monospace;" [(ngModel)]="formData.dateNaissance" name="dateNaissance" />
       </div>
 
@@ -73,3 +87,29 @@
     </form>
   </div>
 </div>
+
+
+<!-- ✅ POPUP DE CONFIRMATION APRÈS ENVOI -->
+<div class="confirmation-popup" *ngIf="showConfirmation">
+  <div class="confirmation-content">
+    <button class="close-confirmation" (click)="closeConfirmation()">✖</button>
+    <div class="icon-circle">
+      <i class="fas fa-question" style="color: white;"></i>
+    </div>
+    <h2>Formulaire Complété!</h2>
+    <p>
+      Votre formulaire a été soumis avec succès.<br />
+      Vous pouvez maintenant l'imprimer ou le télécharger.
+    </p>
+
+    <div class="action-buttons">
+      <button class="btn brown" (click)="printForm()">
+        <i class="fas fa-print"></i> Imprimer
+      </button>
+      <button class="btn green" (click)="downloadForm()">
+        <i class="fas fa-download"></i> Télécharger
+      </button>
+    </div>
+  </div>
+</div>
+

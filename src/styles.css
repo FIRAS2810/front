@@ -5,3 +5,13 @@
 /* Styles de PrimeNG */
 @import 'primeng/resources/themes/lara-light-indigo/theme.css'; /* Choisis un thème parmi ceux fournis par PrimeNG */
 @import 'primeng/resources/primeng.min.css';
+.ql-font-kumbh {
+    font-family: 'Kumbh Sans', sans-serif;
+  }
+  .ql-font-open-sans {
+    font-family: 'Open Sans', sans-serif;
+  }
+  .ql-font-montserrat {
+    font-family: 'Montserrat', sans-serif;
+  }
+  
