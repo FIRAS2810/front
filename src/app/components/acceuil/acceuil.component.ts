@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NouveauteDTO, NouveauteService } from '../../services/nouveaute.service';
 import { DescriptionService } from '../../services/description.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-acceuil',
@@ -11,6 +13,19 @@ export class AcceuilComponent implements OnInit {
   // === Nouveautés ===
   nouveautes: NouveauteDTO[] = [];
   selectedNouveaute: any = null;
+
+  htmlContent: SafeHtml = '';
+ // Ton contenu HTML depuis le backend
+
+  
+  constructor(
+    private nouveauteService: NouveauteService,
+    private descriptionService: DescriptionService,private sanitizer: DomSanitizer
+  ) {}
+
+  getSafeHtml(content: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(content);
+  }
 
   voirDetailsNouv(nouveaute: any) {
     console.log("Clicked nouveaute:", nouveaute);
@@ -23,13 +38,14 @@ export class AcceuilComponent implements OnInit {
 
   // === Description SMBSA ===
   showPopup = false;
-  htmlContent = '';
+  
 
   openPopup() {
-    // Recharge le contenu à chaque clic
     this.descriptionService.getDescription().subscribe({
       next: (data) => {
-        this.htmlContent = data.contenuHtml || '';
+        const rawHtml = data.contenuHtml || '';
+        const corrected = rawHtml.replace(/<\/(strong|span)>(?=[^\s<])/g, '</$1> ');
+        this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(corrected);
         this.showPopup = true;
       },
       error: (err) => {
@@ -37,6 +53,7 @@ export class AcceuilComponent implements OnInit {
       }
     });
   }
+  
   
 
   closePopup() {
@@ -94,13 +111,9 @@ export class AcceuilComponent implements OnInit {
   }
 
   // === Constructeur et chargement ===
-  constructor(
-    private nouveauteService: NouveauteService,
-    private descriptionService: DescriptionService
-  ) {}
+  
 
   ngOnInit(): void {
-    // Récupérer les nouveautés
     this.nouveauteService.getAllNouveautes().subscribe({
       next: (data) => {
         this.nouveautes = data
@@ -114,15 +127,17 @@ export class AcceuilComponent implements OnInit {
           }));
       }
     });
-
-    // Récupérer le contenu HTML de la description SMBSA
+  
     this.descriptionService.getDescription().subscribe({
       next: (data) => {
-        this.htmlContent = data.contenuHtml || '';
+        const rawHtml = data.contenuHtml || '';
+        const corrected = rawHtml.replace(/<\/(strong|span)>(?=[^\s<])/g, '</$1> ');
+        this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(corrected);
       },
       error: (err) => {
         console.error("Erreur de récupération de la description SMBSA :", err);
       }
     });
   }
+  
 }

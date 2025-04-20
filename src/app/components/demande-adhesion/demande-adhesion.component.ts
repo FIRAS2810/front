@@ -1,36 +1,50 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DemandeAdhesionService } from '../../services/demande-adhesion.service';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-demande-adhesion',
   templateUrl: './demande-adhesion.component.html',
   styleUrls: ['./demande-adhesion.component.css']
 })
-export class DemandeAdhesionComponent {
+export class DemandeAdhesionComponent implements OnInit {
   @Input() show: boolean = false;
   @Output() fermer = new EventEmitter<void>();
 
   showConfirmation = false;
-
-  formData: any = {
-    cin: '',
-    nom: '',
-    prenom: '',
-    telephone: '',
-    email: '',
-    adresse: '',
-    activite: '',
-    dateNaissance: '',
-    sexe: ''
-  };
-
+  showPDF: any;
+  demandeForm!: FormGroup;
   fichier: File | null = null;
-showPDF: any;
-formDataForPDF: any;
+  maxDateNaissance: string = '';
 
-  constructor(private demandeService: DemandeAdhesionService) {}
+  constructor(
+    private fb: FormBuilder,
+    private demandeService: DemandeAdhesionService
+  ) {}
+
+  ngOnInit(): void {
+    const today = new Date();
+    const annee = today.getFullYear() - 18;
+    const mois = (today.getMonth() + 1).toString().padStart(2, '0');
+    const jour = today.getDate().toString().padStart(2, '0');
+    this.maxDateNaissance = `${annee}-${mois}-${jour}`;
+
+    this.demandeForm = this.fb.group({
+      cin: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
+      nom: ['', Validators.required],
+      prenom: ['', Validators.required],
+      sexe: ['', Validators.required],
+      dateNaissance: ['', Validators.required],
+      telephone: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
+      email: ['', [Validators.required, this.validateEmailFormat.bind(this)]],
+      adresse: ['', Validators.required],
+      activite: ['', Validators.required],
+    });
+  }
 
   handleFileUpload(event: any) {
     this.fichier = event.target.files[0];
@@ -41,25 +55,60 @@ formDataForPDF: any;
   }
 
   confirm() {
+    if (this.demandeForm.invalid) {
+      this.demandeForm.markAllAsTouched();
+      Swal.fire({
+        icon: 'warning',
+        title: 'Champs invalides',
+        text: 'Veuillez remplir correctement tous les champs.',
+        confirmButtonColor: '#f39c12'
+      });
+      return;
+    }
+
+    const birthDate = new Date(this.demandeForm.value.dateNaissance);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+
+    if (age < 18) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Âge invalide',
+        text: 'Vous devez avoir au moins 18 ans.',
+        confirmButtonColor: '#f39c12'
+      });
+      return;
+    }
+
     if (!this.fichier) {
-      alert("Veuillez sélectionner un fichier justificatif.");
+      Swal.fire({
+        icon: 'warning',
+        title: 'Fichier manquant',
+        text: 'Veuillez sélectionner un fichier justificatif.',
+        confirmButtonColor: '#f39c12'
+      });
       return;
     }
 
     const form = new FormData();
-    Object.entries(this.formData).forEach(([key, value]) => {
+    Object.entries(this.demandeForm.value).forEach(([key, value]) => {
       form.append(key, value as string);
     });
     form.append('fichier', this.fichier);
 
     this.demandeService.soumettreDemande(form).subscribe({
       next: () => {
-        this.show = false;
         this.showConfirmation = true;
       },
-      error: (err) => {
-        console.error("❌ Erreur lors de la soumission :", err);
-        alert("Une erreur est survenue lors de la soumission.");
+      error: () => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Erreur',
+          text: 'Une erreur est survenue lors de la soumission.',
+          confirmButtonColor: '#dc3545'
+        });
       }
     });
   }
@@ -69,70 +118,55 @@ formDataForPDF: any;
   }
 
   async downloadForm() {
-    console.log("⬇️ CLICK: Download bouton cliqué !");
     const doc = await this.createStyledPDF();
-    doc.save(`demande_adhesion_${this.formData.nom}_${this.formData.prenom}.pdf`);
+    const data = this.demandeForm.value;
+    doc.save(`demande_adhesion_${data.nom}_${data.prenom}.pdf`);
   }
-  
+
   async printForm() {
-    console.log("🖨 CLICK: Print bouton cliqué !");
     const doc = await this.createStyledPDF();
     doc.autoPrint();
     window.open(doc.output('bloburl'), '_blank');
   }
-  
 
   private async createStyledPDF(): Promise<jsPDF> {
     const doc = new jsPDF();
-  
-    // Titre sans logo
+    const data = this.demandeForm.value;
+
     doc.setFontSize(16);
     doc.text('Demande d’adhésion', 75, 25);
-  
     doc.setFontSize(12);
     doc.text('Informations du demandeur :', 20, 50);
-  
+
     autoTable(doc, {
       startY: 55,
       head: [['Champ', 'Valeur']],
       body: [
-        ['CIN', this.formData.cin],
-        ['Nom', this.formData.nom],
-        ['Prénom', this.formData.prenom],
-        ['Sexe', this.formData.sexe],
-        ['Date de naissance', this.formData.dateNaissance],
-        ['Téléphone', this.formData.telephone],
-        ['Email', this.formData.email],
-        ['Adresse', this.formData.adresse],
-        ['Activité', this.formData.activite],
+        ['CIN', data.cin],
+        ['Nom', data.nom],
+        ['Prénom', data.prenom],
+        ['Sexe', data.sexe],
+        ['Date de naissance', data.dateNaissance],
+        ['Téléphone', data.telephone],
+        ['Email', data.email],
+        ['Adresse', data.adresse],
+        ['Activité', data.activite],
       ],
       theme: 'grid',
       styles: { fontSize: 10 },
     });
-  
+
     const pageHeight = doc.internal.pageSize.height;
     doc.text("Signature du demandeur :", 20, pageHeight - 30);
     doc.line(20, pageHeight - 28, 90, pageHeight - 28);
-  
+
     return doc;
   }
-  
 
-
-  private loadImage(url: string): Promise<string> {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const ctx = canvas.getContext('2d');
-        ctx?.drawImage(img, 0, 0);
-        resolve(canvas.toDataURL('image/png'));
-      };
-      img.src = url;
-    });
+  validateEmailFormat(control: any) {
+    const email = control.value;
+    const stricterRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    return stricterRegex.test(email) ? null : { emailInvalid: true };
   }
   
 }

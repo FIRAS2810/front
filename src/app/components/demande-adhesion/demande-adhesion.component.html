@@ -3,98 +3,109 @@
     <button class="close-btn" (click)="closeForm()">✖</button>
     <h2 class="title"><i class="fas fa-file-alt"></i> Completer ce formulaire</h2>
 
-    <form (ngSubmit)="confirm()" enctype="multipart/form-data">
+    <form [formGroup]="demandeForm" (ngSubmit)="confirm()" enctype="multipart/form-data">
       <div class="form-row">
         <label for="cin">CIN*</label>
-        <input id="cin" type="text" [(ngModel)]="formData.cin" name="cin" required />
+        <input type="text" formControlName="cin"
+          [ngClass]="{'is-invalid': demandeForm.get('cin')?.invalid && demandeForm.get('cin')?.touched}"
+          class="form-control" />
+
       </div>
 
       <div class="form-row">
         <label for="nom">Nom*</label>
-        <input id="nom" type="text" [(ngModel)]="formData.nom" name="nom" required />
+        <input id="nom" type="text" formControlName="nom" required
+          [ngClass]="{ 'is-invalid': demandeForm.get('nom')?.invalid && demandeForm.get('nom')?.touched }" />
       </div>
 
       <div class="form-row">
         <label for="prenom">Prenom*</label>
-        <input id="prenom" type="text" [(ngModel)]="formData.prenom" name="prenom" required />
+        <input id="prenom" type="text" formControlName="prenom" required
+          [ngClass]="{ 'is-invalid': demandeForm.get('prenom')?.invalid && demandeForm.get('prenom')?.touched }" />
       </div>
 
       <div class="form-row">
         <label>Sexe*</label>
         <div class="radio-group">
           <label class="radio-option">
-            <input type="radio" [(ngModel)]="formData.sexe" name="sexe" value="Homme" required />
+            <input type="radio" formControlName="sexe" value="Homme" />
             Homme
           </label>
           <label class="radio-option">
-            <input type="radio" [(ngModel)]="formData.sexe" name="sexe" value="Femme" required />
+            <input type="radio" formControlName="sexe" value="Femme" />
             Femme
           </label>
         </div>
       </div>
 
+
       <div class="form-row">
         <label for="birthdate">Date de naissance*</label>
-        <input type="date" id="birthdate" style="font-family: monospace;" [(ngModel)]="formData.dateNaissance" name="dateNaissance" />
+        <input type="date" id="birthdate" [max]="maxDateNaissance" formControlName="dateNaissance"
+          style="font-family: monospace;" required />
       </div>
 
       <div class="form-row">
         <label>TEL*</label>
-        <input type="text" [(ngModel)]="formData.telephone" name="telephone" required />
+        <input type="text" formControlName="telephone" class="form-control"
+          [ngClass]="{'is-invalid': demandeForm.get('telephone')?.invalid && demandeForm.get('telephone')?.touched}" />
       </div>
 
       <div class="form-row">
         <label>E-mail*</label>
-        <input type="email" [(ngModel)]="formData.email" name="email" required />
+        <input type="email" formControlName="email"
+          [ngClass]="{ 'is-invalid': demandeForm.get('email')?.invalid && demandeForm.get('email')?.touched }"
+          class="form-control" />
+        
       </div>
 
       <div class="form-row">
         <label>Adresse*</label>
-        <select [(ngModel)]="formData.adresse" name="adresse" required>
-          <option value="" disabled selected>Choisissez une ville</option>
+        <select formControlName="adresse" required>
+          <option value="" disabled>Choisissez une ville</option>
           <option>Beni khiar</option>
           <option>Diar ben salem</option>
           <option>Mamamoura</option>
           <option>Dar chaaben</option>
-          <option>Somaa </option>
+          <option>Somaa</option>
         </select>
       </div>
-      
 
       <div class="form-row">
         <label>Activité*</label>
-        <select [(ngModel)]="formData.activite" name="activite" required>
-          <option value="" disabled selected>Choisissez une activité</option>
+        <select formControlName="activite" required>
+          <option value="" disabled>Choisissez une activité</option>
           <option>Agriculteur</option>
           <option>Élevage de bétail</option>
           <option>Apiculture</option>
-          <option>Aviculture </option>
+          <option>Aviculture</option>
           <option>Pêche maritime</option>
           <option>Autre</option>
         </select>
       </div>
-      
 
       <div class="form-row">
         <label>Justificatif d’activité*</label>
-        <input type="file" (change)="handleFileUpload($event)" required accept="image/*"/>
+        <input type="file" (change)="handleFileUpload($event)" required accept="image/*" />
       </div>
 
       <div class="form-buttons">
         <button class="cancel-btn" type="button" (click)="closeForm()">Annuler</button>
-        <button class="confirm-btn" type="submit">Envoyer</button>
+        <button class="confirm-btn" type="submit" *ngIf="demandeForm.valid && fichier">
+          Envoyer
+        </button>
+
       </div>
     </form>
   </div>
 </div>
-
 
 <!-- ✅ POPUP DE CONFIRMATION APRÈS ENVOI -->
 <div class="confirmation-popup" *ngIf="showConfirmation">
   <div class="confirmation-content">
     <button class="close-confirmation" (click)="closeConfirmation()">✖</button>
     <div class="icon-circle">
-      <i class="fas fa-question" style="color: white;"></i>
+      <i class="fas fa-check" style="color: white;"></i>
     </div>
     <h2>Formulaire Complété!</h2>
     <p>
@@ -112,4 +123,3 @@
     </div>
   </div>
 </div>
-

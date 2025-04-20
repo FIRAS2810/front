@@ -7,7 +7,7 @@ import { AcceuilComponent } from './components/acceuil/acceuil.component';
 import { HeaderComponent } from './components/header/header.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminPageComponent } from './components/admin/admin-page/admin-page.component';
 import { DemandeAdhesionComponent } from './components/demande-adhesion/demande-adhesion.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -33,6 +33,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { AdherentsComponent } from './components/admin/adherents/adherents.component';
 import { QuillModule } from 'ngx-quill';
 import { DescriptionSmbsaComponent } from './components/admin/gerer_page/description-smbsa/description-smbsa.component';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 
 
@@ -75,8 +76,9 @@ import { DescriptionSmbsaComponent } from './components/admin/gerer_page/descrip
     CarouselModule,
     EditorModule,
     PaginatorModule,
-    QuillModule.forRoot()
-   
+    ReactiveFormsModule,
+    QuillModule.forRoot(),
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

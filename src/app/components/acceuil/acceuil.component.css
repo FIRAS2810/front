@@ -884,26 +884,58 @@ p {
 
 /* === Contenu du Popup === */
 .popup-content {
-  background: #fff;
-  padding: 30px 35px;
-  width: 100%;
   max-width: 750px;
+  width: 100%;
+  padding: 30px 30px;
+  background: #fff;
   border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
   position: relative;
-  max-height: 95vh;
-  overflow-y: auto;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  white-space: normal;         /* ✅ Permet retour à la ligne */
+  word-wrap: break-word;       /* ✅ Coupe les mots si trop longs */
+  overflow: visible;           /* ❌ Enlève le scroll */
 }
+
+
 
 /* ✅ On masque le scroll */
 .popup-content::-webkit-scrollbar {
-  width: 0;
+  width: 6px;
 }
 
 .popup-content::-webkit-scrollbar-thumb {
-  background: transparent;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
+
+.popup-html {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 10px;
+  background-color: #fef9f1; /* beige clair apaisant */
+
+  font-size: 17px;
+  line-height: 1.9;
+  color: #222;
+  text-align: justify;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  white-space: pre-line;       /* ✅ Garde les retours à la ligne normaux */
+  word-break: break-word;      /* ✅ Coupe les très longs mots proprement */
+    /* ✅ Assure le wrapping automatique */
+  hyphens: none;              /* ✅ Active césure naturelle */
+
+  all: revert;                 /* ✅ Respecte les styles inline (gras, couleur, etc.) */
+}
+
+
+
+/* ✅ Supporte la classe ql-font-monospace générée par Quill ou TinyMCE */
+.popup-html .ql-font-monospace {
+  font-family: monospace !important;
+}
+
+
 
 /* === Bouton fermeture === */
 .popup-close {
