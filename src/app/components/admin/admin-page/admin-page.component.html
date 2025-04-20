@@ -31,11 +31,7 @@
         <span *ngIf="!isSidebarClosed">Adhérents</span>
       </a>
 
-      <a routerLink="/admin-page/nouveautes" routerLinkActive="active">
-        <i class="fas fa-credit-card"></i>
-        <span *ngIf="!isSidebarClosed">Les nouveautés</span>
-      </a>
-
+      
       <!-- Menu déroulant Gérer page -->
       <div class="submenu-parent" (click)="toggleSubMenu()">
         <i class="fas fa-cog"></i>
@@ -48,7 +44,7 @@
 
       <!-- Sous-menus -->
       <div class="submenu-items" *ngIf="isSubMenuOpen">
-        <a routerLink="/admin-page/actualites" routerLinkActive="active">
+        <a routerLink="/admin-page/nouveautes" routerLinkActive="active">
           <i class="fas fa-newspaper"></i>
           <span *ngIf="!isSidebarClosed">Les actualités</span>
         </a>
