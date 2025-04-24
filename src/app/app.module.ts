@@ -34,6 +34,12 @@ import { AdherentsComponent } from './components/admin/adherents/adherents.compo
 import { QuillModule } from 'ngx-quill';
 import { DescriptionSmbsaComponent } from './components/admin/gerer_page/description-smbsa/description-smbsa.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { HistoriqueCotisationComponent } from './components/adherent/historique-cotisation/historique-cotisation.component';
+import { ParametrageComponentComponent } from './components/admin/parametrage-component/parametrage-component.component';
+import { TransfertsComponent } from './components/adherent/transferts/transferts.component';
+import { ValidationTransfertsComponentComponent } from './components/admin/validation-transferts-component/validation-transferts-component.component';
+import { HistoriqueTransfertsComponent } from './components/adherent/historique-transferts/historique-transferts.component';
+import { NouveauteDetailsComponent } from './components/nouveaute-details/nouveaute-details.component';
 
 
 
@@ -53,6 +59,12 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     FooterComponent,
     AdherentsComponent,
     DescriptionSmbsaComponent,
+    HistoriqueCotisationComponent,
+    ParametrageComponentComponent,
+    TransfertsComponent,
+    ValidationTransfertsComponentComponent,
+    HistoriqueTransfertsComponent,
+    NouveauteDetailsComponent,
     
     
     

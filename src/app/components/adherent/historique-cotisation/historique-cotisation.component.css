@@ -1,0 +1,89 @@
+.historique-container {
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .titre-historique {
+    font-size: 22px;
+    margin-bottom: 25px;
+    color: #2f4858;
+    font-weight: 600;
+  }
+  
+  .cotisation-table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #fcfcfc;
+  }
+  
+  .cotisation-table td {
+    padding: 14px;
+    font-size: 15px;
+    border-bottom: 1px solid #eaeaea;
+    color: #34495e;
+    font-family: 'Courier New', Courier, monospace; /* ✅ police monospace */
+  }
+  
+  .cotisation-table th {
+    background-color: #effaf1;
+    color: #2e7d32;
+    font-weight: 600;
+    padding: 14px;
+    text-align: left;
+    border-bottom: 2px solid #cde6d5;
+    font-size: 14.5px; /* 🔁 un tout petit peu plus fin */
+    letter-spacing: 0.3px;
+  }
+  
+  .titre-historique {
+    font-size: 28px; /* 🔁 légèrement réduit */
+    margin-bottom: 20px;
+    color: #2f4858;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', sans-serif;
+  }
+  
+  
+  .montant {
+    color: #27ae60;
+    font-weight: 600;
+  }
+  
+  .badge-action {
+    display: inline-block;
+    background-color: #d1f2eb;
+    color: #1abc9c;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 25px;
+    text-align: center;
+    min-width: 40px;
+  }
+  
+  .badge-action.total {
+    background-color: #c8e6c9;
+    color: #388e3c;
+  }
+  
+  .total-row {
+    background-color: #f1fff5;
+    font-weight: bold;
+    border-top: 2px solid #a5d6a7;
+  }
+  
+  .montant-total {
+    color: #2e7d32;
+  }
+  
+  .message-vide {
+    padding: 20px;
+    font-style: italic;
+    color: #888;
+  }
+  

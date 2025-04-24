@@ -29,13 +29,7 @@ body {
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
   }
 
-  .profile-img {
-    width: 90px;
-    height: 90px;
-    background: linear-gradient(135deg, #dee2e6, #ced4da);
-    border-radius: 50%;
-    margin: auto;
-  }
+  
 
   .badge {
     font-size: 15px;
@@ -112,5 +106,39 @@ transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
 
   .btn-confirm{
-    margin-top: -8px;
+    margin-top: 5px;
   }
+
+  .photo-profil-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .photo-wrapper {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #198754;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #f8f9fa;
+  }
+  
+  .profile-img {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .profile-img:hover {
+    transform: scale(1.05);
+    filter: brightness(0.9);
+  }
+  
+  #photoUpload {
+    font-size: 13px;
+  }
+  

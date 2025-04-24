@@ -14,10 +14,17 @@ import { NouveautesComponent } from './components/admin/nouveautes/nouveautes.co
 import { FooterComponent } from './components/footer/footer.component';
 import { AdherentsComponent } from './components/admin/adherents/adherents.component';
 import { DescriptionSmbsaComponent } from './components/admin/gerer_page/description-smbsa/description-smbsa.component';
+import { HistoriqueCotisationComponent } from './components/adherent/historique-cotisation/historique-cotisation.component';
+import { ParametrageComponentComponent } from './components/admin/parametrage-component/parametrage-component.component';
+import { TransfertsComponent } from './components/adherent/transferts/transferts.component';
+import { ValidationTransfertsComponentComponent } from './components/admin/validation-transferts-component/validation-transferts-component.component';
+import { HistoriqueTransfertsComponent } from './components/adherent/historique-transferts/historique-transferts.component';
+import { NouveauteDetailsComponent } from './components/nouveaute-details/nouveaute-details.component';
 
 
 
 const routes: Routes = [{ path: '', component:AcceuilComponent },
+  { path: 'nouveautes/:id', component:NouveauteDetailsComponent },
   { path: 'header', component:HeaderComponent },
   { path: 'foter', component:FooterComponent },
   { path: 'login', component:LoginComponent },
@@ -28,8 +35,8 @@ const routes: Routes = [{ path: '', component:AcceuilComponent },
       { path: 'nouveautes', component: NouveautesComponent },
       { path: 'adherents', component: AdherentsComponent },
       { path: 'description-smbsa', component: DescriptionSmbsaComponent },
-
-    
+      { path: 'parametrage-page', component: ParametrageComponentComponent },
+      { path: 'gerer-transferts', component: ValidationTransfertsComponentComponent },
     
     ]},
       
@@ -37,7 +44,12 @@ const routes: Routes = [{ path: '', component:AcceuilComponent },
 
   { path: 'adherent-page', component:AdherentPageComponent ,canActivate: [AdherentGuard],children: [
       
-    { path: 'profil-adherent', component: ProfilAdherentComponent }]},
+    { path: 'profil-adherent', component: ProfilAdherentComponent },
+    { path: 'cotisation-adherent', component:HistoriqueCotisationComponent },
+    { path: 'transferts', component: TransfertsComponent },
+    { path: 'historique-transferts', component: HistoriqueTransfertsComponent },
+
+  ]},
   
 ];
 

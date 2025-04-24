@@ -37,5 +37,9 @@ export class NouveauteService {
   updateNouveaute(id: number, data: FormData): Observable<any> {
     return this.http.put(`${this.API}/modifier/${id}`, data, { responseType: 'text' });
   }
+
+  getNouveauteById(id: number): Observable<NouveauteDTO> {
+    return this.http.get<NouveauteDTO>(`${this.API}/${id}`);
+  }
   
 }

@@ -31,6 +31,11 @@
         <span *ngIf="!isSidebarClosed">Adhérents</span>
       </a>
 
+      <a routerLink="/admin-page/gerer-transferts" routerLinkActive="active">
+        <i class="fas fa-users"></i>
+        <span *ngIf="!isSidebarClosed">Transferts</span>
+      </a>
+
       
       <!-- Menu déroulant Gérer page -->
       <div class="submenu-parent" (click)="toggleSubMenu()">
@@ -51,6 +56,10 @@
         <a routerLink="/admin-page/description-smbsa" routerLinkActive="active">
           <i class="fas fa-file-alt"></i>
           <span *ngIf="!isSidebarClosed">Description SMBSA</span>
+        </a>
+        <a routerLink="/admin-page/parametrage-page" routerLinkActive="active">
+          <i class="fas fa-file-alt"></i>
+          <span *ngIf="!isSidebarClosed">Parametrage</span>
         </a>
       </div>
 

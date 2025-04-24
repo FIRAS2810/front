@@ -1,0 +1,59 @@
+<div class="transfert-wrapper">
+
+    <h2 class="section-title">📤 Transfert d’actions</h2>
+  
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of adherentsAffiches">
+          <td>{{ a.nom }}</td>
+          <td>{{ a.prenom }}</td>
+          <td>{{ a.email }}</td>
+          <td>
+            <button class="btn btn-success btn-sm" (click)="ouvrirFormulaire(a.cin)">Transférer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <p-paginator
+      [rows]="rowsPerPage"
+      [totalRecords]="adherents.length"
+      [rowsPerPageOptions]="[5, 10, 20]"
+      styleClass="custom-paginator"
+      (onPageChange)="changerPage($event)">
+    </p-paginator>
+  
+    <!-- Modal -->
+    <div *ngIf="showModal" class="modal-backdrop" (click)="fermerFormulaire()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <h4>Transférer des actions</h4>
+  
+        <form (ngSubmit)="envoyerTransfert()">
+          <p><strong>De :</strong> {{ monCin }}</p>
+          <p><strong>À :</strong> {{ recepteurCin }}</p>
+  
+          <div class="form-group">
+            <label>Nombre d'actions</label>
+            <input type="number" [(ngModel)]="nombreActions" name="nombreActions" required class="form-control" />
+          </div>
+  
+          <div class="form-group">
+            <label>Commentaire (facultatif)</label>
+            <textarea [(ngModel)]="commentaire" name="commentaire" class="form-control"></textarea>
+          </div>
+  
+          <button class="btn btn-primary" type="submit">Envoyer</button>
+          <button class="btn btn-secondary" (click)="fermerFormulaire()" type="button">Annuler</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

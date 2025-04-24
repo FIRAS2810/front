@@ -1,0 +1,29 @@
+<div class="nouveaute-banner">
+    <img src="NDetaills.png" alt="Banner" class="banner-bg" /> 
+      <div class="banner-overlay">
+      <img src="Logo.png" class="logo-sm" alt="Logo SMBSA" />
+      <h1 class="banner-title">{{ nouveaute?.titre }}</h1>
+      <div class="banner-meta">
+        <span><i class="pi pi-calendar"></i> {{ nouveaute?.datePublication | date:'dd MMMM yyyy' }}</span>
+        <span><i class="pi pi-briefcase"></i> SMBSA Ennouhoudh Maamoura</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="nouveaute-content">
+    <div class="nouveaute-description" [innerHTML]="nouveaute?.description"></div>
+  
+    <div class="image-container" *ngIf="!isPdf(); else pdfBlock">
+      <img [src]="'data:image/png;base64,' + nouveaute?.fichierBase64" alt="Image nouveauté" class="nouveaute-image" />
+    </div>
+  
+    <ng-template #pdfBlock>
+      <a [href]="'data:application/pdf;base64,' + nouveaute?.fichierBase64"
+         target="_blank"
+         class="pdf-link">
+        📄 Ouvrir le fichier PDF
+      </a>
+    </ng-template>
+  </div>
+  
+    <app-footer></app-footer>

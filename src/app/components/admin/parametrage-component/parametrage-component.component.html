@@ -1,0 +1,63 @@
+<div class="parametrage-container">
+
+  <!-- 📌 Formulaire -->
+  <div class="param-card">
+    <div class="param-title"><i class="fas fa-cog"></i> Paramétrage Général</div>
+
+    <form class="param-form" (ngSubmit)="enregistrer()">
+      <div class="form-group">
+        <label for="montant">💰 Montant Minimal d'Adhésion (DT)</label>
+        <input type="number" id="montant" [(ngModel)]="parametrage.montantMinimalAdhesion" name="montant" required />
+      </div>
+
+      <div class="form-group">
+        <label for="valeur">📈 Valeur d'une Action (DT)</label>
+        <input type="number" id="valeur" [(ngModel)]="parametrage.valeurAction" name="valeur" required />
+      </div>
+
+      <div class="form-group">
+        <label for="nb">🔢 Nombre d'Actions Minimales</label>
+        <input type="number" id="nb" [(ngModel)]="parametrage.nbActionsMinimales" name="nb" required />
+      </div>
+
+      <div class="form-button-wrapper">
+        <button type="submit" class="update-button">
+          💾 Enregistrer
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- 📝 Section Historique -->
+  <div class="historique-section">
+    <div class="historique-title">📝 Historique des Paramétrages</div>
+
+    <p-table
+      [value]="historique"
+      [paginator]="true"
+      [rows]="3"
+      [rowsPerPageOptions]="[3, 5, 7]"
+      [responsiveLayout]="'scroll'"
+      [style]="{ 'width': '100%' }"
+      class="historique-table"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Date</th>
+          <th>Montant Adhésion</th>
+          <th>Valeur Action</th>
+          <th>Nb Actions Min</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-h>
+        <tr>
+          <td>{{ h.dateModification | date: 'dd/MM/yyyy HH:mm' }}</td>
+          <td>{{ h.montantMinimalAdhesion }} DT</td>
+          <td>{{ h.valeurAction }} DT</td>
+          <td>{{ h.nbActionsMinimales }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

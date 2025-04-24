@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-profil-adherent',
   templateUrl: './profil-adherent.component.html',
-  styleUrl: './profil-adherent.component.css'
+  styleUrls: ['./profil-adherent.component.css']
 })
 export class ProfilAdherentComponent implements OnInit {
 
@@ -15,10 +15,12 @@ export class ProfilAdherentComponent implements OnInit {
   originalData!: AdherentProfileDTO;
   isDisabled: boolean = true;
   ancienEmail!: string;
+  bilan: any = null;
 
   constructor(private adherentService: AdherentService) {}
 
   ngOnInit(): void {
+    
     const email = localStorage.getItem('email');
 
     if (email) {
@@ -26,8 +28,17 @@ export class ProfilAdherentComponent implements OnInit {
         next: (data) => {
           console.log("Données récupérées du backend :", data);
           this.adherentData = data;
-          this.originalData = JSON.parse(JSON.stringify(data)); // copie originale
+          this.originalData = JSON.parse(JSON.stringify(data));
           this.ancienEmail = data.email;
+
+          // ✅ Appel du bilan de cotisation via AdherentService
+          this.adherentService.getBilanCotisation(data.cin).subscribe({
+            next: (res) => {
+              this.bilan = res;
+              console.log("🎯 Bilan reçu :", res);
+            },
+            error: (err) => console.error("Erreur de chargement du bilan", err)
+          });
         },
         error: (err) => {
           console.error("Erreur lors de la récupération :", err);
@@ -42,14 +53,12 @@ export class ProfilAdherentComponent implements OnInit {
     this.isDisabled = !this.isDisabled;
   }
 
-  // 🔍 Compare l'état actuel au snapshot original
   hasModifications(): boolean {
     return JSON.stringify(this.adherentData) !== JSON.stringify(this.originalData);
   }
 
   modifier() {
     if (!this.hasModifications()) {
-      // 🔔 Alerte si rien n’a changé
       Swal.fire({
         icon: 'info',
         title: 'Aucune modification',
@@ -81,10 +90,7 @@ export class ProfilAdherentComponent implements OnInit {
             confirmButtonText: 'OK'
           });
 
-          // MAJ des données originales
           this.originalData = JSON.parse(JSON.stringify(this.adherentData));
-
-          // MAJ email localStorage et variable
           localStorage.setItem('email', this.adherentData.email);
           this.ancienEmail = this.adherentData.email;
         },
@@ -93,4 +99,40 @@ export class ProfilAdherentComponent implements OnInit {
         }
       });
   }
+
+  selectedPhoto: File | null = null;
+defaultImageBase64 = ''; // si tu veux une image par défaut (genre un avatar de secours)
+
+onFileSelected(event: any) {
+  this.selectedPhoto = event.target.files[0];
+}
+
+loadProfil() {
+  this.adherentService.getMonProfil(this.adherentData.email).subscribe({
+    next: (data) => {
+      this.adherentData = data;
+    },
+    error: () => {
+      Swal.fire('Erreur', 'Impossible de charger le profil', 'error');
+    }
+  });
+}
+
+uploadPhoto() {
+  if (this.selectedPhoto) {
+    const formData = new FormData();
+    formData.append('photo', this.selectedPhoto);
+
+    this.adherentService.updatePhoto(this.adherentData.cin, formData).subscribe({
+      next: () => {
+        Swal.fire('Succès', 'Photo mise à jour avec succès', 'success');
+        this.loadProfil(); // recharge l’image
+      },
+      error: () => {
+        Swal.fire('Erreur', 'Échec de l’upload', 'error');
+      }
+    });
+  }
+}
+
 }

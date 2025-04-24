@@ -21,17 +21,19 @@
           <i class="fas fa-users"></i>
           <span *ngIf="!isSidebarClosed">Paramètres et profil</span>
         </a>
-        <a routerLink="#" routerLinkActive="active">
-          <i class="fas fa-chalkboard-teacher"></i>
-          <span *ngIf="!isSidebarClosed">Les demandes</span>
-        </a>
-        <a routerLink="/#" routerLinkActive="active">
+        
+        <a routerLink="cotisation-adherent" routerLinkActive="active">
           <i class="fas fa-credit-card"></i>
-          <span *ngIf="!isSidebarClosed">Payement</span>
+          <span *ngIf="!isSidebarClosed">Transactions</span>
         </a>
-        <a routerLink="/#" routerLinkActive="active">
+        <a routerLink="transferts" routerLinkActive="active">
           <i class="fas fa-cog"></i>
-          <span *ngIf="!isSidebarClosed">Paramètres et profil</span>
+          <span *ngIf="!isSidebarClosed">Transferts</span>
+        </a>
+
+        <a routerLink="historique-transferts" routerLinkActive="active">
+          <i class="fas fa-chalkboard-teacher"></i>
+          <span *ngIf="!isSidebarClosed">Historiques de transferts</span>
         </a>
         
       </nav>

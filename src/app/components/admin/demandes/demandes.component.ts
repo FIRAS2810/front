@@ -38,7 +38,7 @@ imagePopupSrc: string = '';
   loadDemandes(): void {
     this.demandeService.getAllDemandes().subscribe({
       next: (data) => {
-        
+        console.log("📦 Données chargées :", data); 
         this.demandes = data;
         this.allDemandes = [...data]; // ✅ COPIE complète ici
         this.loading = false;
@@ -171,24 +171,29 @@ imagePopupSrc: string = '';
     {
       label: 'Tous',
       icon: 'pi pi-list',
-      command: () => this.resetFiltreEtat()
+      command: () => this.resetFiltreEtat(),
+      items: []
     },
     {
       label: 'EN_ATTENTE',
       icon: 'pi pi-clock',
-      command: () => this.filtrerParEtat('EN_ATTENTE')
+      command: () => this.filtrerParEtat('EN_ATTENTE'),
+      items: []
     },
     {
       label: 'ACCEPTEE',
       icon: 'pi pi-check-circle',
-      command: () => this.filtrerParEtat('ACCEPTEE')
+      command: () => this.filtrerParEtat('ACCEPTEE'),
+      items: []
     },
     {
       label: 'REFUSEE',
       icon: 'pi pi-times-circle',
-      command: () => this.filtrerParEtat('REFUSEE')
+      command: () => this.filtrerParEtat('REFUSEE'),
+      items: []
     }
   ];
+  
   
   etatActif: string | null = null;
   
@@ -213,5 +218,7 @@ ouvrirPopupImage(demande: any) {
 fermerPopupImage() {
   this.imagePopupVisible = false;
 }
+
+
 
 }

@@ -1,0 +1,197 @@
+/* 🔲 Conteneur principal */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* ✅ Titre + icône */
+  h2 {
+    font-size: 24px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  
+  /* 🔽 Dropdown filtrage */
+  .dropdown .btn {
+    background: linear-gradient(90deg, #3b82f6, #2563eb);
+    color: #fff;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+    box-shadow: 0 6px 14px rgba(37, 99, 235, 0.3);
+    transition: background 0.3s ease;
+    border: none;
+  }
+  
+  .dropdown .btn:hover {
+    background: linear-gradient(90deg, #2563eb, #1d4ed8);
+  }
+  
+  .dropdown-menu {
+    border-radius: 10px;
+    padding: 8px 0;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    font-size: 14px;
+  }
+  
+  /* 📋 Table style */
+  .table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 16px;
+    overflow: hidden;
+    font-family: monospace;
+  }
+  
+  .table thead {
+    background-color: #1f2937;
+    color: #fff;
+  }
+  
+  .table th, .table td {
+    padding: 16px;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  .table tbody tr:nth-child(even) {
+    background-color: #f9fafb;
+  }
+  
+  .table tbody tr:hover {
+    background-color: #f3f4f6;
+    transition: 0.3s;
+  }
+  
+  /* 🏷️ Badges */
+  .badge {
+    padding: 6px 12px;
+    font-size: 13px;
+    border-radius: 999px;
+    font-weight: 500;
+    display: inline-block;
+  }
+  
+  .bg-warning {
+    background-color: #fde68a !important;
+    color: #92400e !important;
+  }
+  
+  .btn-success, .btn-danger {
+  font-size: 14px;
+  padding: 8px 18px;
+  font-weight: 600;
+  border-radius: 10px;
+  margin: 2px 6px; /* ✅ plus d’espace horizontal */
+  min-width: 100px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-success:hover {
+  background-color: #16a34a;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+}
+
+  
+  .btn-success {
+    background-color: #22c55e;
+    color: #fff;
+  }
+  
+  .btn-success:hover {
+    background-color: #16a34a;
+  }
+  
+  .btn-danger {
+    background-color: #ef4444;
+    color: #fff;
+  }
+  
+  .btn-danger:hover {
+    background-color: #dc2626;
+  }
+  
+  .fst-italic {
+    color: #6b7280;
+    font-style: italic;
+  }
+  
+  /* ⏬ Pagination optionnel */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 6px;
+  }
+  
+  .pagination button {
+    border: none;
+    background-color: #e5e7eb;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .pagination button.active {
+    background-color: #2563eb;
+    color: white;
+  }
+  
+  /* ✅ Style du bouton filtre */
+.btn-filtre {
+    background-color: #3b82f6;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .btn-filtre:hover {
+    background-color: #2563eb;
+  }
+  
+  /* ✅ Style dropdown menu */
+  .custom-dropdown {
+    min-width: 220px;
+    padding: 6px 0;
+    border-radius: 10px;
+    font-size: 14px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  }
+  
+  .custom-dropdown .dropdown-item {
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #374151;
+    transition: background-color 0.2s;
+  }
+  
+  .custom-dropdown .dropdown-item:hover {
+    background-color: #f3f4f6;
+    color: #111827;
+  }
+  

@@ -1,0 +1,32 @@
+<div class="historique-container">
+    <h2 class="titre-historique"> Historique des cotisations</h2>
+  
+    <table class="cotisation-table" *ngIf="historique.length > 0; else aucunPaiement">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Date</th>
+          <th>Montant</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of historique; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ c.datePaiement | date: 'dd MMMM yyyy' }}</td>
+          <td><span class="montant">{{ c.montantVerse.toFixed(3) }} DT</span></td>
+          <td><span class="badge-action">{{ c.nombreActions }}</span></td>
+        </tr>
+        <tr class="total-row">
+          <td colspan="2"><strong>Total</strong></td>
+          <td><strong class="montant-total">{{ getTotalMontant().toFixed(3) }} DT</strong></td>
+          <td><strong class="badge-action total">{{ getTotalActions() }}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <ng-template #aucunPaiement>
+      <p class="message-vide">Aucun paiement enregistré pour cet adhérent.</p>
+    </ng-template>
+  </div>
+  

@@ -1,11 +1,12 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Table } from 'primeng/table';
+import { AdherentService, AdherentTableDTO } from '../../../services/adherent.service';
 
 interface Adherent {
-  id: number;
+  cin: string;
   nom: string;
   prenom: string;
-  cin: string;
   tel: string;
   email: string;
   etat: string;
@@ -13,11 +14,21 @@ interface Adherent {
   dateFin: string;
   montant: number;
   nbActions: number;
-  photoProfilBase64: string;
   sexe: string;
-  showDropdown?: boolean;
-  photo: string; // Ajout de la propriété manquante
+  photoProfilBase64?: string;
+
+  photo?: string;
+  
 }
+
+export interface BilanCotisationDTO {
+  montantTotalVerse: number;
+  nombreTotalActions: number;
+  montantRestant: number;
+  adhesionComplete: boolean;
+  dateDernierVersement?: string; // LocalDate => string
+}
+
 
 @Component({
   selector: 'app-adherents',
@@ -25,72 +36,93 @@ interface Adherent {
   styleUrls: ['./adherents.component.css']
 })
 export class AdherentsComponent implements OnInit {
-  private readonly apiUrl = 'http://localhost:8080/api/adherents'; // Définition de apiUrl
-  adherents: Adherent[] = [];
-  selectedAdherent: Adherent | null = null;
+suspendre(_t22: any) {
+throw new Error('Method not implemented.');
+}
+  @ViewChild('dt') table!: Table;
 
-  constructor(private http: HttpClient) {}
+  adherents: Adherent[] = [];
+  allAdherents: Adherent[] = [];
+  selectedAdherent: Adherent | null = null;
+  loading: boolean = true;
+  bilan: BilanCotisationDTO | null = null;
+
+  dropdownVisibleForCin: string | null = null;
+
+
+
+  private readonly apiUrl = 'http://localhost:8080/api/adherents';
+
+  constructor(private http: HttpClient, private adherentService: AdherentService) {}
 
   ngOnInit(): void {
     this.loadAdherents();
-    document.addEventListener('click', this.closeAllDropdowns);
-  }
-
-  ngOnDestroy(): void {
-    document.removeEventListener('click', this.closeAllDropdowns);
   }
 
   loadAdherents(): void {
-    this.http.get<Adherent[]>(`${this.apiUrl}/tous`).subscribe(data => {
-      this.adherents = data.map(adherent => ({
-        ...adherent,
-        photo: adherent.photoProfilBase64 
+    this.adherentService.getAllAdherents().subscribe({
+      next: data => {
+        this.adherents = data.map(adherent => ({
+          ...adherent,
+          photo: (adherent.photoProfilBase64 && adherent.photoProfilBase64.trim() !== '')
           ? `data:image/jpeg;base64,${adherent.photoProfilBase64}`
           : this.getDefaultAvatar(adherent.sexe),
-        dateFin: adherent.dateFin,
-        montant: adherent.montant || 0,
-        nbActions: adherent.nbActions || 0
-      }));
+        
+          montant: adherent.montant || 0,
+          nbActions: adherent.nbActions || 0
+        }));
+        this.allAdherents = [...this.adherents];
+        this.loading = false;
+      },
+      error: () => this.loading = false
     });
   }
 
   getDefaultAvatar(sexe: string): string {
-    return sexe === 'FEMME' 
-      ? 'assets/avatar-femme.png' 
-      : 'assets/avatar-homme.png';
+    return sexe === 'Femme' ? 'fatma.jpg' : 'avatar.jpg';
+  }
+
+  onGlobalSearch(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.table.filterGlobal(input.value, 'contains');
   }
 
   showDetails(adherent: Adherent): void {
     this.selectedAdherent = adherent;
+this.bilan = null;
+
+this.adherentService.getBilanCotisation(adherent.cin).subscribe({
+  next: (data) => this.bilan = data
+});
+
   }
 
   closePopup(): void {
     this.selectedAdherent = null;
   }
 
-  // Gestion des dropdowns
   toggleDropdown(adherent: Adherent): void {
-    adherent.showDropdown = !adherent.showDropdown;
+    if (this.dropdownVisibleForCin === adherent.cin) {
+      this.dropdownVisibleForCin = null; // Si déjà ouvert → fermer
+    } else {
+      this.dropdownVisibleForCin = adherent.cin; // Sinon → ouvrir pour cet adhérent
+    }
   }
+  
 
-  @HostListener('document:click')
-  closeAllDropdowns(): void {
-    this.adherents.forEach(a => a.showDropdown = false);
-  }
-
-  // Actions
   update(adherent: Adherent): void {
-    // Implémentez la logique de mise à jour
+    alert(`🔧 Update ${adherent.nom}`);
   }
 
   desactiver(adherent: Adherent): void {
     if (confirm(`Désactiver ${adherent.nom} ${adherent.prenom} ?`)) {
-      this.http.patch(`${this.apiUrl}/${adherent.id}/desactiver`, {})
-        .subscribe(() => this.loadAdherents());
+      this.http.patch(`${this.apiUrl}/${adherent.cin}/desactiver`, {}).subscribe(() => {
+        this.loadAdherents();
+      });
     }
   }
 
   envoyerMessage(adherent: Adherent): void {
-    // Implémentez l'envoi de message
+    alert(`📧 Message à ${adherent.email}`);
   }
 }

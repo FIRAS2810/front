@@ -10,10 +10,7 @@
   </div>
 
   <!-- Bouton filtre -->
-  <p-splitButton 
-    label="Filtrer par état" 
-    icon="pi pi-filter" 
-    [model]="etatOptions"
+  <p-splitButton label="Filtrer par état" icon="pi pi-filter" [model]="etatOptions"
     class="filter-btn p-button-sm p-button-success">
   </p-splitButton>
 </div>
@@ -41,7 +38,7 @@
     <tr>
       <td>{{ i + 1 }}</td>
       <td (click)="openPopup(demande)">
-        <img src="avatar.jpg" class="avatar" />
+        <img [src]="demande.sexe === 'Femme' ? 'fatma.jpg' : 'avatar.jpg'" class="avatar" />
         {{ demande.nom }} {{ demande.prenom }}
       </td>
       <td>{{ demande.cinPersonne}}</td>
@@ -72,20 +69,17 @@
 
       <td class="dropdown-wrapper">
         <div class="dropdown" [attr.id]="'dropdown-' + demande.id">
-          <button 
-            class="lib-button"
-            (click)="toggleDropdown(demande)"
-            [class.active]="demande.showDropdown"
-            [disabled]="demande.etat !== 'EN_ATTENTE'"
-          >
+          <button class="lib-button" (click)="toggleDropdown(demande)" [class.active]="demande.showDropdown"
+            [disabled]="demande.etat !== 'EN_ATTENTE'">
             <span>Actions</span>
-            <i class="fas fa-chevron-down"></i>
+            <i class="fas" [ngClass]="{
+    'fa-chevron-down': demande.etat === 'EN_ATTENTE',
+    'fa-lock': demande.etat !== 'EN_ATTENTE'
+  }"></i>
           </button>
-      
-          <div 
-            class="lib-dropdown" 
-            *ngIf="demande.showDropdown"
-          >
+
+
+          <div class="lib-dropdown" *ngIf="demande.showDropdown">
             <button class="lib-menu-item" (click)="accepterDemande(demande.id)">
               <i class="fas fa-check-circle text-success"></i>
               <span>Accepter</span>
@@ -97,8 +91,8 @@
           </div>
         </div>
       </td>
-      
-      
+
+
   </ng-template>
 
   <ng-template pTemplate="emptymessage">
@@ -114,9 +108,10 @@
     <button class="close-btn" (click)="closePopup()">✖</button>
 
     <div class="profile-header">
-      <img src="avatar.jpg" class="popup-avatar" />
+      <img [src]="selectedDemande.sexe === 'Femme' ? 'fatma.jpg' : 'avatar.jpg'" class="popup-avatar" />
       <h3 class="user-name">{{ selectedDemande.nom }} {{ selectedDemande.prenom }}</h3>
     </div>
+
 
     <div class="detail-item">
       <i class="fa-solid fa-id-card icon-vert"></i>
@@ -127,7 +122,7 @@
       <i class="fa-solid fa-venus-mars icon-vert"></i>
       {{ selectedDemande.sexe }}
     </div>
-    
+
 
     <div class="detail-item">
       <i class="fa-solid fa-envelope icon-vert"></i>

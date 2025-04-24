@@ -1,0 +1,58 @@
+<div class="container py-4">
+    <div class="card">
+        <div class="card-header bg-light fw-bold">
+            <i class="bi bi-arrow-left-right"></i> Historique des transferts
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-sm table-bordered m-0 text-center align-middle">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Autre membre</th>
+                        <th>Nb actions</th>
+                        <th>Commentaire</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let t of transfertsPage">
+                        <td>{{ t.dateTransfert | date:'dd/MM/yyyy HH:mm' }}</td>
+
+                        <!-- Vérification si l'adhérent connecté est vendeur ou acheteur -->
+                        <!-- Type : Entrant / Sortant -->
+                        <td>
+                            <span [ngClass]="{ 
+        'text-success': t.vendeurNom !== nomUtilisateur, 
+        'text-danger': t.vendeurNom === nomUtilisateur }">
+                                {{ t.vendeurNom === nomUtilisateur ? 'Sortant' : 'Entrant' }}
+                            </span>
+                        </td>
+
+                        <!-- Autre membre -->
+                        <td>
+                            {{ t.vendeurNom === nomUtilisateur ? t.acheteurNom : t.vendeurNom }}
+                        </td>
+
+
+                        <td>{{ t.nombreActions }}</td>
+                        <td>{{ t.commentaire || '---' }}</td>
+
+                        <td>
+                            <span class="badge" [ngClass]="{
+                                    'bg-warning text-dark': t.statut === 'EN_ATTENTE',
+                                    'bg-success': t.statut === 'VALIDE',
+                                    'bg-danger': t.statut === 'REFUSE'
+                                  }">
+                                {{ t.statut.toLowerCase() | titlecase }}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p-paginator [rows]="rowsPerPage" [totalRecords]="transferts.length" [rowsPerPageOptions]="[5, 10, 20]"
+                styleClass="custom-paginator" (onPageChange)="changerPage($event)">
+            </p-paginator>
+        </div>
+    </div>
+</div>
