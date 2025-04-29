@@ -1,0 +1,109 @@
+<div class="dashboard-container" *ngIf="!loading">
+
+  <!-- 🔵 Chiffre d’affaires -->
+  <!-- <div class="main-highlight">
+    <div class="highlight-card">
+      <h2>Chiffre d'affaires</h2>
+      <p class="highlight-value">{{ stats.chiffreAffaires | number:'1.0-2' }} DT</p>
+    </div>
+  </div> -->
+
+  <div class="kpi-header">
+    <div class="ca-block">
+      <h4>Chiffre d'affaire total</h4>
+      <h1>{{ stats.totalCA | number:'1.0-0' }} DT</h1>
+      <p class="variation positive">+{{ stats.croissancePourcent }}% ce mois</p>
+    </div>
+
+    <div class="kpi-cards">
+      <div class="kpi-card">
+        <h5>Total CA</h5>
+        <p>{{ stats.totalCA | number:'1.1-1' }} DT</p>
+      </div>
+      <div class="kpi-card">
+        <h5>Actions Recus</h5>
+        <p>{{ stats.nombreActionsTransferees }}</p>
+      </div>
+      <div class="kpi-card">
+        <h5>Actions Vendues</h5>
+        <p>{{ stats.nombreActionsVendues }}</p>
+      </div>
+
+      <div class="kpi-card">
+        <h5>Prévision Annuelle</h5>
+        <p>{{ stats.previsionCA | number:'1.0-0' }} DT</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 🟢 Cartes secondaires -->
+  <div class="small-cards">
+    <div class="small-card">
+      <h4>Reste Cotisation</h4>
+      <p>{{ stats.resteCotisation | number:'1.0-2' }} DT</p>
+    </div>
+    <div class="small-card">
+      <h4>Adhérents Actifs</h4>
+      <p>{{ stats.nbAdherents }}</p>
+    </div>
+    <div class="small-card">
+      <h4>Valeur Part</h4>
+      <p>{{ stats.valeurPart }} DT</p>
+    </div>
+   
+<!-- Carte des demandes totales -->
+<div class="small-card">
+  <h4>Demandes Totales Recues</h4>
+  <p>{{ stats.nbAdhesions }}</p>
+  
+  <!-- Pop-up affiché au hover -->
+ <!-- Card pop-up avec état des demandes -->
+<div class="popup">
+  <div class="popup-content">
+    <h4>État des demandes</h4>
+    <div class="popup-details">
+      <div class="detail valid">
+        <span class="icon"></span>
+        <span>Validés</span>
+        <span>{{ stats.nbDemandesValidees }}</span>
+      </div>
+      <div class="detail refuse">
+        <span class="icon"></span>
+        <span>Refusés</span>
+        <span>{{ stats.nbDemandesRefusees }}</span>
+      </div>
+      <div class="detail pending">
+        <span class="icon"></span>
+        <span>En attente</span>
+        <span>{{ stats.nbDemandesEnAttente }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+
+
+
+  </div>
+
+  <!-- 🟣 Graphiques -->
+  <div class="charts">
+    <div class="chart-card">
+      <p-chart type="doughnut" [data]="repartitionSexe"></p-chart>
+      <h4>Répartition par genre</h4>
+    </div>
+    <div class="chart-card">
+      <p-chart type="bar" [data]="repartitionAgeBar" [options]="optionsBar"></p-chart>
+      <h4>Répartition par âge</h4>
+    </div>
+  </div>
+
+
+
+</div>
+
+<div *ngIf="loading" class="loading">Chargement...</div>

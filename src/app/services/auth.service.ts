@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { jwtDecode } from 'jwt-decode'; // ✅ Correct
+import { AdherentService } from './adherent.service';
 
 
 export interface LoginRequest {
@@ -22,7 +23,7 @@ export class AuthService {
 
   private apiUrl = 'http://localhost:8080/api/auth'; // Backend URL
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private adherentService:AdherentService) {}
 
   login(email: string, motDePasse: string): Observable<LoginResponse> {
     const loginRequest: LoginRequest = { email, motDePasse };
@@ -31,11 +32,15 @@ export class AuthService {
 
   getCinConnecte(): string | null {
     const token = localStorage.getItem('token');
+    
     if (!token) return null;
-
+  
     const decoded: any = jwtDecode(token);
-    return decoded.cin || null; // Assure-toi que le champ s'appelle bien 'cin' dans le token
+    
+  
+    return decoded.cin || null; 
   }
+  
 
 
   getEmailFromToken(): string | null {
@@ -46,5 +51,11 @@ export class AuthService {
     return decoded.sub || decoded.email || null;
   }
   
+  getCinFromBackend(): Observable<string> {
+    const email = this.getEmailFromToken();
+    return this.adherentService.getMonProfil(email!).pipe(
+      map(profile => profile.cin) 
+    );
+  }
   
 }

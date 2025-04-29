@@ -1,0 +1,27 @@
+<div class="demission-card">
+    <h2 class="demission-title">📤 Demande de Démission</h2>
+  
+    <form [formGroup]="demissionForm" (ngSubmit)="envoyerDemande()">
+      <div class="form-field">
+        <label for="motif">✍️ Motif de la démission :</label>
+        <textarea
+          id="motif"
+          formControlName="motif"
+          placeholder="Expliquez pourquoi vous quittez la société..."
+          rows="5"
+          class="textarea"
+        ></textarea>
+      </div>
+  
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="submit-btn"
+          [disabled]="!demissionForm.valid"
+        >
+          🔴 Envoyer ma demande
+        </button>
+      </div>
+    </form>
+  </div>
+  

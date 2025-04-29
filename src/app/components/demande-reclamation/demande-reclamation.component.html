@@ -1,0 +1,25 @@
+<div class="reclamation-form-container">
+    <h2>📩 Réclamation d’exclusion</h2>
+  
+    <form [formGroup]="reclamationForm" (ngSubmit)="submitReclamation()">
+      <div class="form-group">
+        <label for="cin">CIN :</label>
+        <input id="cin" formControlName="cin" type="text" placeholder="Entrez votre CIN (8 chiffres)" />
+      </div>
+  
+      <div class="form-group">
+        <label for="motif">Motif :</label>
+        <textarea id="motif" formControlName="motif" placeholder="Expliquez pourquoi vous contestez votre exclusion..." rows="4"></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label for="date-reclamation">Date :</label>
+        <input id="date-reclamation" formControlName="dateReclamation" type="date" [value]="currentDate" readonly />
+      </div>
+  
+      <div class="form-actions">
+        <button type="submit" [disabled]="!reclamationForm.valid">📨 Envoyer</button>
+      </div>
+    </form>
+  </div>
+  

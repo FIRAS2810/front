@@ -17,6 +17,9 @@ export interface TransfertActionResponseDTO {
   statut: string;
   vendeurNom: string;
   acheteurNom: string;
+  cinAcheteur: string;
+  cinVendeur: string;
+  statutVendeur: string;
 }
 
 @Injectable({
@@ -42,6 +45,7 @@ export class TransfertServiceService {
     return this.http.get(`${this.API}/historique/${cin}`);
   }
 
+  
   getTousTransferts(): Observable<any[]> {
     return this.http.get<any[]>(`http://localhost:8080/api/transferts/tous`);
   }
@@ -67,8 +71,23 @@ export class TransfertServiceService {
     return this.http.get<any[]>(`${this.API}/transferts-adherent/${cin}`);
   }
   
+  getTousPourAdmin(): Observable<TransfertActionResponseDTO[]> {
+    return this.http.get<TransfertActionResponseDTO[]>(`${this.API}/admin/tous`);
+  }
   
-
+  
+  accepterParVendeur(id: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.patch(`${this.API}/${id}/accepter-par-vendeur`, {}, { headers });
+  }
+  
+  refuserParVendeur(id: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.patch(`${this.API}/${id}/refuser-par-vendeur`, {}, { headers });
+  }
+  
   
   
   

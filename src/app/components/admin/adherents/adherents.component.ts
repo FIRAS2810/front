@@ -49,6 +49,11 @@ throw new Error('Method not implemented.');
 
   dropdownVisibleForCin: string | null = null;
 
+  showCotisationPopup: boolean = false;
+  adherentPourCotisation: Adherent | null = null;
+  montantCotisation: number | null = null;
+
+
 
 
   private readonly apiUrl = 'http://localhost:8080/api/adherents';
@@ -125,4 +130,73 @@ this.adherentService.getBilanCotisation(adherent.cin).subscribe({
   envoyerMessage(adherent: Adherent): void {
     alert(`📧 Message à ${adherent.email}`);
   }
+
+  ouvrirPopupCotisation(adherent: Adherent): void {
+    this.adherentPourCotisation = adherent;
+    this.montantCotisation = null;
+    this.showCotisationPopup = true;
+    this.dropdownVisibleForCin = null;
+  }
+  
+  fermerPopupCotisation(): void {
+    this.showCotisationPopup = false;
+    this.adherentPourCotisation = null;
+    this.montantCotisation = null;
+  }
+  
+  ajouterCotisation(): void {
+    if (this.adherentPourCotisation && this.montantCotisation && this.montantCotisation > 0) {
+      this.http.post(`http://localhost:8080/api/cotisations/ajouter/${this.adherentPourCotisation.cin}?montantVerse=${this.montantCotisation}`, {})
+        .subscribe({
+          next: () => {
+            this.fermerPopupCotisation();
+            this.loadAdherents(); // 🔄 recharge la liste
+            alert('✅ Cotisation ajoutée avec succès');
+          },
+          error: () => {
+            alert('❌ Erreur lors de l\'ajout de cotisation');
+          }
+        });
+    } else {
+      alert('⚠️ Veuillez entrer un montant valide');
+    }
+  }
+
+  signalerDeces(adherent: Adherent): void {
+    console.log('Adhérent sélectionné:', adherent);  // Vérifier l'adhérent sélectionné
+    if (adherent.etat === 'DÉCÉDÉ') {
+      console.log('Cet adhérent est déjà décédé, pas besoin de signaler le décès.');
+    }
+  
+    if (confirm(`⚠️ Confirmer le décès de ${adherent.nom} ${adherent.prenom} ?`)) {
+      console.log('Décès confirmé pour:', adherent.cin);
+      this.http.patch(`${this.apiUrl}/signaler-deces/${adherent.cin}`, {}).subscribe({
+        next: () => {
+          alert('✅ Décès signalé avec succès.');
+          this.loadAdherents(); // Recharge la table pour mettre à jour les données
+        },
+        error: () => {
+          alert('❌ Erreur lors du signalement du décès.');
+        }
+      });
+    }
+  }
+  
+  
+  signalerExclusionTemporaire(adherent: Adherent): void {
+    if (confirm(`⚠️ Confirmer l'exclusion temporaire de ${adherent.nom} ${adherent.prenom} ?`)) {
+      this.http.patch(`${this.apiUrl}/exclure-temporairement/${adherent.cin}`, {}).subscribe({
+        next: () => {
+          alert('✅ Exclusion temporaire appliquée.');
+          this.loadAdherents(); // 🔁 recharge la liste
+        },
+        error: () => {
+          alert('❌ Erreur lors de l’exclusion.');
+        }
+      });
+    }
+  }
+  
+  
+  
 }

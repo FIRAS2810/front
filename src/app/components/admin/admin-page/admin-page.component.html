@@ -16,7 +16,7 @@
 
     <!-- Navigation -->
     <nav class="nav-links">
-      <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a routerLink="/admin-page/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <i class="fas fa-home"></i>
         <span *ngIf="!isSidebarClosed">Tableau de bord</span>
       </a>
@@ -40,7 +40,7 @@
       <!-- Menu déroulant Gérer page -->
       <div class="submenu-parent" (click)="toggleSubMenu()">
         <i class="fas fa-cog"></i>
-        <span *ngIf="!isSidebarClosed">Gérer page</span>
+        <span *ngIf="!isSidebarClosed">Gérer </span>
         <i *ngIf="!isSidebarClosed" class="fas" [ngClass]="{
             'fa-chevron-down': isSubMenuOpen,
             'fa-chevron-right': !isSubMenuOpen
@@ -63,9 +63,18 @@
         </a>
       </div>
 
-      <a routerLink="/stats" routerLinkActive="active">
+      <a routerLink="/admin-page/reclamations" routerLinkActive="active">
         <i class="fas fa-chart-bar"></i>
-        <span *ngIf="!isSidebarClosed">Statistique</span>
+        <span *ngIf="!isSidebarClosed">Reclamations</span>
+      </a>
+
+      <a routerLink="/admin-page/demissions" routerLinkActive="active">
+        <i class="fas fa-chart-bar"></i>
+        <span *ngIf="!isSidebarClosed">Demissions</span>
+      </a>
+      <a routerLink="/admin-page/compte-attente" routerLinkActive="active">
+        <i class="fas fa-chart-bar"></i>
+        <span *ngIf="!isSidebarClosed">Comptes en attentes</span>
       </a>
     </nav>
   </aside>

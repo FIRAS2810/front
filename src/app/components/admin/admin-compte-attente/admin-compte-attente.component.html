@@ -1,0 +1,35 @@
+<div class="container">
+  <h2 class="title">📄 Comptes en attente</h2>
+
+  <p-table [value]="comptesAttente" [paginator]="true" [rows]="5" [responsiveLayout]="'scroll'">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>CIN</th>
+        <th>Nom Complet</th>
+        <th>Montant Total</th>
+        <th>Nombre d'Actions</th>
+        <th>Statut de Règlement</th>
+        <th>Type</th>
+        <th>Valeur Unitaire</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-compte>
+      <tr>
+        <td>{{ compte.cinAdherent }}</td> <!-- CIN -->
+        <td>{{ compte.nomComplet }}</td> <!-- Nom Complet -->
+        <td>{{ compte.montantTotal }}</td> <!-- Montant Total -->
+        <td>{{ compte.nombreActions }}</td> <!-- Nombre d'Actions -->
+        <td>{{ compte.statutReglement }}</td> <!-- Statut de Règlement -->
+        <td>{{ compte.type }}</td> <!-- Type (Démission, Exclusion, etc.) -->
+        <td>{{ compte.valeurUnitaire }}</td> <!-- Valeur Unitaire -->
+        <td>
+          <button *ngIf="compte.statutReglement === 'NON_RÉGLÉ'" (click)="marquerCommeRegle(compte.id)">
+            ✔ Marquer comme Réglé
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

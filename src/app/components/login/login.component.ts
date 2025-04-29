@@ -27,7 +27,7 @@ onLogin() {
 
       // Redirige l'utilisateur en fonction de son rôle
       if (response.role === 'ADMIN') {
-        this.router.navigate(['/admin-page']);
+        this.router.navigate(['/admin-acceuil']);
       } else {
         this.router.navigate(['/adherent-page/profil-adherent']);
       }

@@ -9,7 +9,6 @@
   </div>
 </div>
 
-
 <p-table #dt [value]="adherents" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 15]"
   [globalFilterFields]="['nom', 'prenom', 'tel']" [responsiveLayout]="'scroll'" [loading]="loading">
   <ng-template pTemplate="header">
@@ -17,7 +16,6 @@
       <th>#</th>
       <th>Nom et Prénom</th>
       <th>CIN</th>
-      <!-- <th>Téléphone</th> -->
       <th>Email</th>
       <th>État</th>
       <th>Montant</th>
@@ -29,37 +27,45 @@
     <tr>
       <td>{{ i + 1 }}</td>
       <td (click)="showDetails(adherent)">
-        <img 
-  [src]="adherent.photoProfilBase64 ? 'data:image/jpeg;base64,' + adherent.photoProfilBase64 : getDefaultAvatar(adherent.sexe)" 
-  class="avatar" />
-
+        <img
+          [src]="adherent.photoProfilBase64 ? 'data:image/jpeg;base64,' + adherent.photoProfilBase64 : getDefaultAvatar(adherent.sexe)"
+          class="avatar" />
         {{ adherent.nom }} {{ adherent.prenom }}
       </td>
       <td>{{ adherent.cin }}</td>
-      <!-- <td>{{ adherent.tel }}</td> -->
       <td>{{ adherent.email }}</td>
       <td>{{ adherent.etat }}</td>
       <td>{{ adherent.montant }} DT</td>
       <td class="dropdown-wrapper">
-        <div class="dropdown">
+        <div class="dropdown" *ngIf="adherent.etat !== 'DÉCÉDÉ' && adherent.etat !== 'EXCLU'">
           <button class="lib-button" (click)="toggleDropdown(adherent)">
             Actions <i class="fas fa-chevron-down"></i>
           </button>
-      
-          <div class="lib-dropdown" *ngIf="dropdownVisibleForCin === adherent.cin" [ngClass]="{ 'open-up': i  >= adherents.length - 2 }">
+          <div class="lib-dropdown" *ngIf="dropdownVisibleForCin === adherent.cin">
             <button class="lib-menu-item text-danger" (click)="desactiver(adherent)">
               <i class="fas fa-user-slash"></i> Désactiver
             </button>
             <button class="lib-menu-item text-warning" (click)="suspendre(adherent)">
               <i class="fas fa-ban"></i> Suspendre
             </button>
-            
+            <button class="lib-menu-item text-info" (click)="ouvrirPopupCotisation(adherent)">
+              <i class="fas fa-plus-circle"></i> Ajouter Cotisation
+            </button>
+            <!-- Afficher le bouton "Signaler Décès" seulement si l'adhérent n'est pas décédé -->
+            <button class="lib-menu-item text-danger" (click)="signalerDeces(adherent)"
+              [disabled]="adherent.etat === 'INACTIF'">
+              <i class="fas fa-skull-crossbones"></i> Signaler Décès
+            </button>
+
+            <button class="lib-menu-item text-warning" (click)="signalerExclusionTemporaire(adherent)"
+            [disabled]="adherent.etat === 'INACTIF'">
+              <i class="fas fa-user-lock"></i> Exclure
+            </button>
+
+
           </div>
         </div>
       </td>
-      
-      
-      
     </tr>
   </ng-template>
 
@@ -81,39 +87,49 @@
     <div class="detail-item"><i class="fa-solid fa-id-card icon-vert"></i>{{ selectedAdherent.cin }}</div>
     <div class="detail-item"><i class="fa-solid fa-envelope icon-vert"></i>{{ selectedAdherent.email }}</div>
     <div class="detail-item"><i class="fa-solid fa-phone icon-vert"></i>{{ selectedAdherent.tel }}</div>
-    <div class="detail-item"><i class="fa-solid fa-coins icon-vert"></i>Montant : {{ selectedAdherent.montant }} DT</div>
-    <div class="detail-item"><i class="fa-solid fa-calendar-days icon-vert"></i>Adhésion : {{ selectedAdherent.dateAdhesion | date: 'dd/MM/yyyy' }}</div>
-    <!-- <div class="detail-item"><i class="fa-solid fa-calendar-xmark icon-vert"></i>Fin : {{ selectedAdherent.dateFin | date: 'dd/MM/yyyy' }}</div> -->
+    <div class="detail-item"><i class="fa-solid fa-coins icon-vert"></i>Montant : {{ selectedAdherent.montant }} DT
+    </div>
+    <div class="detail-item"><i class="fa-solid fa-calendar-days icon-vert"></i>Adhésion : {{
+      selectedAdherent.dateAdhesion | date: 'dd/MM/yyyy' }}</div>
     <div class="detail-item"><i class="fa-solid fa-circle-info icon-vert"></i>Statut : {{ selectedAdherent.etat }}</div>
     <div class="detail-item" *ngIf="bilan">
-      <i class="fa-solid fa-coins icon-vert"></i>
-      Total versé : {{ bilan.montantTotalVerse }} DT
+      <i class="fa-solid fa-coins icon-vert"></i> Total versé : {{ bilan.montantTotalVerse }} DT
     </div>
-    
     <div class="detail-item" *ngIf="bilan">
-      <i class="fa-solid fa-layer-group icon-vert"></i>
-      Actions : {{ bilan.nombreTotalActions }}
+      <i class="fa-solid fa-layer-group icon-vert"></i> Actions : {{ bilan.nombreTotalActions }}
     </div>
-    
     <div class="detail-item" *ngIf="bilan">
-      <i class="fa-solid fa-hourglass-half icon-vert"></i>
-      Reste à payer : {{ bilan.montantRestant }} DT
+      <i class="fa-solid fa-hourglass-half icon-vert"></i> Reste à payer : {{ bilan.montantRestant }} DT
     </div>
-
-    <!-- ✅ État d'adhésion -->
-<div class="detail-item" *ngIf="bilan">
-  <i class="fa-solid fa-shield-check icon-vert"></i>
-  <span [ngClass]="bilan.adhesionComplete ? 'text-success' : 'text-danger'">
-    {{ bilan.adhesionComplete ? 'Adhésion Complète ✅' : 'Adhésion Incomplète ❌' }}
-  </span>
+    <div class="detail-item" *ngIf="bilan">
+      <i class="fa-solid fa-shield-check icon-vert"></i>
+      <span [ngClass]="bilan.adhesionComplete ? 'text-success' : 'text-danger'">
+        {{ bilan.adhesionComplete ? 'Adhésion Complète ✅' : 'Adhésion Incomplète ❌' }}
+      </span>
+    </div>
+    <div class="detail-item" *ngIf="bilan?.dateDernierVersement">
+      <i class="fa-solid fa-calendar-check icon-vert"></i> Dernier paiement : {{ bilan?.dateDernierVersement |
+      date:'dd/MM/yyyy' }}
+    </div>
+  </div>
 </div>
 
-    
-    <div class="detail-item" *ngIf="bilan?.dateDernierVersement">
-      <i class="fa-solid fa-calendar-check icon-vert"></i>
-      Dernier paiement : {{ bilan?.dateDernierVersement| date:'dd/MM/yyyy' }}
+<!-- ✅ POPUP COTISATION EN DEHORS -->
+<div class="popup-overlay" *ngIf="showCotisationPopup" (click)="fermerPopupCotisation()">
+  <div class="popup-card" (click)="$event.stopPropagation()">
+    <button class="close-btn" (click)="fermerPopupCotisation()">✖</button>
+    <h3 class="user-name">Ajouter une cotisation</h3>
+    <div class="detail-item">
+      <i class="fas fa-user icon-vert"></i>
+      {{ adherentPourCotisation?.nom }} {{ adherentPourCotisation?.prenom }}
     </div>
-    
-
+    <div class="detail-item">
+      <i class="fas fa-coins icon-vert"></i>
+      <input type="number" [(ngModel)]="montantCotisation" placeholder="Montant (DT)"
+        style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ccc;" />
+    </div>
+    <div class="detail-item" style="justify-content: center">
+      <button class="lib-button" (click)="ajouterCotisation()">💾 Enregistrer</button>
+    </div>
   </div>
 </div>

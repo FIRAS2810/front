@@ -18,18 +18,26 @@ itemsPerPage: number = 5;
 
   constructor(private transfertService: TransfertServiceService) {}
 
+  rowsPerPage = 5;
+
+changerNombreParPage() {
+  this.setPage(1);
+}
+
+
   ngOnInit(): void {
     this.chargerTransferts();
   }
 
   chargerTransferts() {
-    this.transfertService.getTousTransfertsAvecNoms().subscribe(data => {
+    this.transfertService.getTousPourAdmin().subscribe(data => {
       if (this.etatSelectionne === 'TOUS') {
         this.transferts = data;
       } else {
         this.transferts = data.filter(t => t.statut === this.etatSelectionne);
       }
     });
+    
     
   }
 

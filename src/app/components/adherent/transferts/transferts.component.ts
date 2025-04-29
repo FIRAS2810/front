@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
-import { TransfertActionRequestDTO, TransfertServiceService } from '../../../services/transfert-service.service';
+import { TransfertActionRequestDTO, TransfertActionResponseDTO, TransfertServiceService } from '../../../services/transfert-service.service';
 import { AdherentService, AdherentTableDTO } from '../../../services/adherent.service';
 import { AuthService } from '../../../services/auth.service';
 import { PaginatorState } from 'primeng/paginator';
@@ -11,20 +11,22 @@ import { PaginatorState } from 'primeng/paginator';
   styleUrls: ['./transferts.component.css']
 })
 export class TransfertsComponent implements OnInit {
-
-  email: string = '';
-  monCin: string = '';
-  adherents: AdherentTableDTO[] = [];
-  adherentsAffiches: AdherentTableDTO[] = [];
+  email = '';
+  monCin = '';
+  vendeurs: AdherentTableDTO[] = [];
+  vendeursAffiches: AdherentTableDTO[] = [];
 
   showModal = false;
-  recepteurCin: string = '';
-  nombreActions: number = 1;
-  commentaire: string = '';
+  vendeurSelectionneCin = '';
+  nombreActions = 1;
+  commentaire = '';
 
-  // Pagination
+  demandesRecues: TransfertActionResponseDTO[] = [];
+  mesDemandes: TransfertActionResponseDTO[] = [];
+
   rowsPerPage = 5;
   currentPage = 0;
+  searchTerm = '';
 
   constructor(
     private authService: AuthService,
@@ -36,29 +38,22 @@ export class TransfertsComponent implements OnInit {
     this.email = this.authService.getEmailFromToken()!;
     this.adherentService.getMonProfil(this.email).subscribe(profil => {
       this.monCin = profil.cin;
+
       this.adherentService.getAllAdherents().subscribe(all => {
-        this.adherents = all.filter(a => a.cin !== this.monCin);
-        this.paginer(); // ✅ afficher la première page
+        this.vendeurs = all.filter(a => a.cin !== this.monCin);
+        this.paginer();
       });
+
+      this.transfertService.getHistoriqueAdherent(this.monCin).subscribe((result: TransfertActionResponseDTO[]) => {
+        this.demandesRecues = result.filter(d => d.cinVendeur === this.monCin && d.statut === 'EN_ATTENTE');
+        this.mesDemandes = result.filter(d => d.cinAcheteur === this.monCin);
+      });
+      
     });
   }
 
-  changerPage(event: PaginatorState) {
-    console.log("📦 Page changée :", event);
-    this.currentPage = event.page ?? 0;
-    this.rowsPerPage = event.rows ?? 5;
-    this.paginer();
-  }
-
-  paginer(): void {
-    const start = this.currentPage * this.rowsPerPage;
-    const end = start + this.rowsPerPage;
-    console.log(`🎯 Affichage de l’index ${start} à ${end}`);
-    this.adherentsAffiches = this.adherents.slice(start, end);
-  }
-
   ouvrirFormulaire(cin: string) {
-    this.recepteurCin = cin;
+    this.vendeurSelectionneCin = cin;
     this.showModal = true;
   }
 
@@ -70,21 +65,64 @@ export class TransfertsComponent implements OnInit {
 
   envoyerTransfert() {
     const dto: TransfertActionRequestDTO = {
-      cinVendeur: this.monCin,
-      cinAcheteur: this.recepteurCin,
+      cinVendeur: this.vendeurSelectionneCin,
+      cinAcheteur: this.monCin,
       nombreActions: this.nombreActions,
       commentaire: this.commentaire
     };
 
     this.transfertService.demanderTransfert(dto).subscribe({
       next: () => {
-        Swal.fire('✅ Transfert envoyé', '', 'success');
+        Swal.fire('✅ Demande envoyée', '', 'success');
         this.fermerFormulaire();
+        this.ngOnInit();
       },
       error: (err) => {
-        Swal.fire('❌ Erreur', err.error || 'Impossible d\'envoyer le transfert', 'error');
+        Swal.fire('❌ Erreur', err.error || 'Erreur lors de l\'envoi', 'error');
       }
     });
   }
 
+  accepterDemande(id: number) {
+  this.transfertService.accepterParVendeur(id).subscribe({
+    next: () => {
+      Swal.fire('✅ Accepté', 'Vous avez accepté cette demande.', 'success');
+      
+    },
+    error: (err) => {
+      Swal.fire('❌ Refus automatique', err.error, 'error');
+      
+    }
+  });
+}
+
+
+  refuserDemande(id: number) {
+    this.transfertService.refuserParVendeur(id).subscribe(() => {
+      Swal.fire('❌ Refusée', '', 'info');
+      this.ngOnInit();
+    });
+  }
+
+  changerPage(event: PaginatorState) {
+    this.currentPage = event.page ?? 0;
+    this.rowsPerPage = event.rows ?? 5;
+    this.searchTerm.trim() === '' ? this.paginer() : this.filtrerVendeurs();
+  }
+
+  paginer(): void {
+    const start = this.currentPage * this.rowsPerPage;
+    this.vendeursAffiches = this.vendeurs.slice(start, start + this.rowsPerPage);
+  }
+
+  filtrerVendeurs(): void {
+    const term = this.searchTerm.trim().toLowerCase();
+    const filtered = this.vendeurs.filter(a =>
+      a.nom.toLowerCase().includes(term) ||
+      a.prenom.toLowerCase().includes(term) ||
+      a.email.toLowerCase().includes(term)
+    );
+    this.currentPage = 0;
+    this.vendeursAffiches = filtered.slice(0, this.rowsPerPage);
+  }
 }

@@ -1,0 +1,31 @@
+<div class="container">
+    <h2 class="title">📋 Réclamations des adhérents exclus</h2>
+  
+    <p-table [value]="reclamations" [paginator]="true" [rows]="5">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>CIN</th>
+          <th>Motif</th>
+          <th>Date</th>
+          <th>Statut</th>
+          <th>Jours Restants</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+  
+      <ng-template pTemplate="body" let-rec>
+        <tr>
+          <td>{{ rec.cin }}</td>
+          <td>{{ rec.motif }}</td>
+          <td>{{ rec.dateReclamation | date:'dd/MM/yyyy' }}</td>
+          <td><span [class]="badgeColor(rec.statut)">{{ rec.statut }}</span></td>
+          <td *ngIf="rec.statut === 'EN_ATTENTE'">{{ joursRestants(rec.dateReclamation) }} j</td>
+          <td>
+            <button *ngIf="rec.statut === 'EN_ATTENTE'" class="btn btn-success btn-sm" (click)="traiter(rec.id, true)">✔ Accepter</button>
+            <button *ngIf="rec.statut === 'EN_ATTENTE'" class="btn btn-danger btn-sm" (click)="traiter(rec.id, false)">✖ Refuser</button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  

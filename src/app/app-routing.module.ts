@@ -20,6 +20,13 @@ import { TransfertsComponent } from './components/adherent/transferts/transferts
 import { ValidationTransfertsComponentComponent } from './components/admin/validation-transferts-component/validation-transferts-component.component';
 import { HistoriqueTransfertsComponent } from './components/adherent/historique-transferts/historique-transferts.component';
 import { NouveauteDetailsComponent } from './components/nouveaute-details/nouveaute-details.component';
+import { DemandeReclamationComponent } from './components/demande-reclamation/demande-reclamation.component';
+import { TraiterReclamationsComponent } from './components/admin/traiter-reclamations/traiter-reclamations.component';
+import { DemandeDemissionComponent } from './components/adherent/demande-demission/demande-demission.component';
+import { AdminDemissionComponent } from './components/admin/admin-demission/admin-demission.component';
+import { AdminCompteAttenteComponent } from './components/admin/admin-compte-attente/admin-compte-attente.component';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import { AdminAcceuilComponent } from './components/admin-acceuil/admin-acceuil.component';
 
 
 
@@ -29,6 +36,8 @@ const routes: Routes = [{ path: '', component:AcceuilComponent },
   { path: 'foter', component:FooterComponent },
   { path: 'login', component:LoginComponent },
   { path: 'register', component:RegisterComponent },
+  { path: 'demande-reclamation', component:DemandeReclamationComponent },
+  { path: 'admin-acceuil', component:AdminAcceuilComponent,canActivate: [AdminGuard] },
   { path: 'admin-page', component:AdminPageComponent ,canActivate: [AdminGuard],children: [
       
       { path: 'demandes', component: DemandesComponent },
@@ -37,6 +46,10 @@ const routes: Routes = [{ path: '', component:AcceuilComponent },
       { path: 'description-smbsa', component: DescriptionSmbsaComponent },
       { path: 'parametrage-page', component: ParametrageComponentComponent },
       { path: 'gerer-transferts', component: ValidationTransfertsComponentComponent },
+      { path: 'reclamations', component:TraiterReclamationsComponent  },
+      { path: 'demissions', component:AdminDemissionComponent  },
+      { path: 'compte-attente', component: AdminCompteAttenteComponent },
+      { path: 'dashboard', component: AdminDashboardComponent },
     
     ]},
       
@@ -48,6 +61,8 @@ const routes: Routes = [{ path: '', component:AcceuilComponent },
     { path: 'cotisation-adherent', component:HistoriqueCotisationComponent },
     { path: 'transferts', component: TransfertsComponent },
     { path: 'historique-transferts', component: HistoriqueTransfertsComponent },
+    { path: 'demission', component: DemandeDemissionComponent },
+    
 
   ]},
   

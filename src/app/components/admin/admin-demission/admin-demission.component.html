@@ -1,0 +1,28 @@
+<div class="container">
+    <h2 class="title">📄 Demandes de démission</h2>
+  
+    <p-table [value]="demandes" [paginator]="true" [rows]="5">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>CIN</th>
+          <th>Motif</th>
+          <th>Date</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-demande>
+        <tr>
+          <td>{{ demande.cin }}</td>
+          <td>{{ demande.motif }}</td>
+          <td>{{ demande.dateDemande | date: 'dd/MM/yyyy' }}</td>
+          <td><span [class]="'badge ' + badgeColor(demande.statut)">{{ demande.statut }}</span></td>
+          <td *ngIf="demande.statut === 'EN_ATTENTE'">
+            <button class="btn btn-success btn-sm" (click)="traiterDemande(demande.id, true)">✔ Accepter</button>
+            <button class="btn btn-danger btn-sm" (click)="traiterDemande(demande.id, false)">✖ Refuser</button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  

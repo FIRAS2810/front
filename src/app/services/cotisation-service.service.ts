@@ -15,4 +15,9 @@ export class CotisationServiceService {
     return this.http.get<any[]>(`${this.API}/cotisations/par-email/${email}`);
 
   }
+
+  ajouterCotisation(cin: string, montant: number): Observable<any> {
+    return this.http.post(`${this.API}/cotisations/ajouter/${cin}?montantVerse=${montant}`, null);
+  }
+  
 }

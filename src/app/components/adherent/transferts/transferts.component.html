@@ -1,59 +1,71 @@
 <div class="transfert-wrapper">
 
-    <h2 class="section-title">📤 Transfert d’actions</h2>
-  
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Prénom</th>
-          <th>Email</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let a of adherentsAffiches">
-          <td>{{ a.nom }}</td>
-          <td>{{ a.prenom }}</td>
-          <td>{{ a.email }}</td>
-          <td>
-            <button class="btn btn-success btn-sm" (click)="ouvrirFormulaire(a.cin)">Transférer</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  
-    <p-paginator
-      [rows]="rowsPerPage"
-      [totalRecords]="adherents.length"
-      [rowsPerPageOptions]="[5, 10, 20]"
-      styleClass="custom-paginator"
-      (onPageChange)="changerPage($event)">
-    </p-paginator>
-  
-    <!-- Modal -->
-    <div *ngIf="showModal" class="modal-backdrop" (click)="fermerFormulaire()">
-      <div class="modal-content" (click)="$event.stopPropagation()">
-        <h4>Transférer des actions</h4>
-  
-        <form (ngSubmit)="envoyerTransfert()">
-          <p><strong>De :</strong> {{ monCin }}</p>
-          <p><strong>À :</strong> {{ recepteurCin }}</p>
-  
-          <div class="form-group">
-            <label>Nombre d'actions</label>
-            <input type="number" [(ngModel)]="nombreActions" name="nombreActions" required class="form-control" />
-          </div>
-  
-          <div class="form-group">
-            <label>Commentaire (facultatif)</label>
-            <textarea [(ngModel)]="commentaire" name="commentaire" class="form-control"></textarea>
-          </div>
-  
-          <button class="btn btn-primary" type="submit">Envoyer</button>
-          <button class="btn btn-secondary" (click)="fermerFormulaire()" type="button">Annuler</button>
-        </form>
-      </div>
+  <!-- 🔵 Demander un transfert -->
+  <h2>📥 Demander un transfert</h2>
+  <input type="text" [(ngModel)]="searchTerm" (input)="filtrerVendeurs()" placeholder="🔍 Rechercher..." class="form-control mb-2"/>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nom</th><th>Email</th><th>CIN</th><th>Actions totales</th><th>Demander</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of vendeursAffiches">
+        <td>{{ a.nom }} {{ a.prenom }}</td>
+        <td>{{ a.email }}</td>
+        <td>{{ a.cin }}</td>
+        <td>{{ a.nombreActionsCotisees + a.nombreActionsRecues - a.nombreActionsVendues }}</td>
+        <td><button class="btn btn-primary btn-sm" (click)="ouvrirFormulaire(a.cin)">Demander</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal -->
+  <div *ngIf="showModal" class="modal-backdrop" (click)="fermerFormulaire()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h4>Demande de transfert</h4>
+      <form (ngSubmit)="envoyerTransfert()">
+        <p>De : <b>{{ monCin }}</b></p>
+        <p>À : <b>{{ vendeurSelectionneCin }}</b></p>
+        <input type="number" [(ngModel)]="nombreActions" name="nombreActions" required min="1" class="form-control mb-2"/>
+        <textarea [(ngModel)]="commentaire" name="commentaire" class="form-control" placeholder="Commentaire"></textarea>
+        <div class="mt-2">
+          <button type="submit" class="btn btn-success">Envoyer</button>
+          <button type="button" class="btn btn-secondary" (click)="fermerFormulaire()">Annuler</button>
+        </div>
+      </form>
     </div>
   </div>
+
+  <!-- 🟠 Demandes à valider (vendeur) -->
+  <hr/>
+  <h2>📨 Demandes reçues</h2>
+  <table class="table table-bordered" *ngIf="demandesRecues.length > 0">
+    <thead>
+      <tr><th>Acheteur</th><th>Date</th><th>Nombre</th><th>Commentaire</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let d of demandesRecues">
+        <td>{{ d.acheteurNom }}</td>
+        <td>{{ d.dateTransfert | date:'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ d.nombreActions }}</td>
+        <td>{{ d.commentaire }}</td>
+        <td>
+          <ng-container *ngIf="d.statut === 'EN_ATTENTE' && d.statutVendeur === 'EN_ATTENTE'; else badgeEtat">
+            <button class="btn btn-success btn-sm me-2" (click)="accepterDemande(d.id)">✅ Accepter</button>
+            <button class="btn btn-danger btn-sm" (click)="refuserDemande(d.id)">❌ Refuser</button>
+          </ng-container>
+          <ng-template #badgeEtat>
+            <span class="text-muted fst-italic">Réponse envoyée</span>
+          </ng-template>
+        </td>
+        
+        
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="demandesRecues.length === 0">Aucune demande à traiter.</p>
+
   
+</div>

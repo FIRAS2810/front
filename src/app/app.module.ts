@@ -40,6 +40,15 @@ import { TransfertsComponent } from './components/adherent/transferts/transferts
 import { ValidationTransfertsComponentComponent } from './components/admin/validation-transferts-component/validation-transferts-component.component';
 import { HistoriqueTransfertsComponent } from './components/adherent/historique-transferts/historique-transferts.component';
 import { NouveauteDetailsComponent } from './components/nouveaute-details/nouveaute-details.component';
+import { DemandeReclamationComponent } from './components/demande-reclamation/demande-reclamation.component';
+import { TraiterReclamationsComponent } from './components/admin/traiter-reclamations/traiter-reclamations.component';
+import { DemandeDemissionComponent } from './components/adherent/demande-demission/demande-demission.component';
+import { AdminDemissionComponent } from './components/admin/admin-demission/admin-demission.component';
+import { AdminCompteAttenteComponent } from './components/admin/admin-compte-attente/admin-compte-attente.component';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import { ChartModule } from 'primeng/chart';
+import { AdminAcceuilComponent } from './components/admin-acceuil/admin-acceuil.component';
+
 
 
 
@@ -65,6 +74,14 @@ import { NouveauteDetailsComponent } from './components/nouveaute-details/nouvea
     ValidationTransfertsComponentComponent,
     HistoriqueTransfertsComponent,
     NouveauteDetailsComponent,
+    DemandeReclamationComponent,
+    TraiterReclamationsComponent,
+    DemandeDemissionComponent,
+    AdminDemissionComponent,
+    AdminCompteAttenteComponent,
+    AdminDashboardComponent,
+    AdminAcceuilComponent,
+    
     
     
     
@@ -90,6 +107,7 @@ import { NouveauteDetailsComponent } from './components/nouveaute-details/nouvea
     PaginatorModule,
     ReactiveFormsModule,
     QuillModule.forRoot(),
+    ChartModule
     
   ],
   providers: [],

@@ -1,144 +1,93 @@
 body {
-    font-family: monospace;
-    margin: 0;
-    padding: 0;
-    
-   
+  font-family: monospace;
+  background-color: #f8f9fa;
 }
 
 .container {
-    border-radius: 20px;
-    padding: 26px;
-    min-height: 90vh;  /* toute la hauteur de l'écran */
-    width: 95%;
-    margin-top: -19px;
+  border-radius: 12px;
+  padding: 26px;
+  min-height: 90vh;
+  width: 95%;
 }
 
-/* reste du css inchangé */
-
-
-  .card {
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
-    transition: box-shadow 0.3s ease-in-out;
-    background-color: #ffffff;
-    
-  }
-
-  .card:hover {
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
-  }
-
-  
-
-  .badge {
-    font-size: 15px;
-    padding: 6px 12px;
-    border-radius: 50px;
-  }
-
-  .badge.bg-light {
-    background-color: #ecf0f1;
-    color: #28a745;
-    font-weight: 600;
-  }
-
-  .floating-label {
-    position: relative;
-  }
-
-  .floating-label input {
-font-size: 14px;
-padding: 0.60rem 0.74rem 0.3rem 2.1rem;
-border-radius: 8px;
-border: 1px solid #ccc;
-transition: border-color 0.2s ease, box-shadow 0.2s ease;
+/* Cartes */
+.card {
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
 }
 
+.badge {
+  font-size: 14px;
+  padding: 6px 12px;
+}
 
-  .floating-label label {
-    position: absolute;
-    top: 12px;
-    left: 2.4rem;
-    font-size: 14px;
-    color: #888;
-    pointer-events: none;
-    transition: all 0.2s ease;
-  }
+/* Floating Labels */
+.floating-label {
+  position: relative;
+}
 
-  .floating-label input:focus {
-    border-color: #198754;
-    box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.1);
-  }
+.floating-label input {
+  padding-left: 2rem;
+  font-size: 14px;
+  border-radius: 8px;
+}
 
-  .floating-label input:focus + label,
-  .floating-label input:not(:placeholder-shown) + label {
-    top: -8px;
-    left: 2.2rem;
-    font-size: 12px;
-    color: #198754;
-    background: #fff;
-    padding: 0 4px;
-  }
+.floating-label label {
+  position: absolute;
+  top: 12px;
+  left: 2rem;
+  font-size: 13px;
+  color: #888;
+  transition: 0.2s ease;
+  pointer-events: none;
+}
 
-  .input-icon i {
-    position: absolute;
-    top: 50%;
-    left: 12px;
-    transform: translateY(-50%);
-    color: #6c757d;
-  }
+.floating-label input:focus + label,
+.floating-label input:not(:placeholder-shown) + label {
+  top: -8px;
+  left: 1.9rem;
+  font-size: 11px;
+  color: #198754;
+  background: white;
+  padding: 0 4px;
+}
 
-  h6 {
-    font-weight: 700;
-    color: #2c3e50;
-  }
+.input-icon i {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #6c757d;
+}
 
-  .btn-success {
-    background: linear-gradient(135deg, #28a745, #218838);
-    border: none;
-  }
+/* Photo */
+.photo-profil-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .alert-light {
-    background: #fff;
-    border: 1px solid #e3e6ea;
-    font-size: 13px;
-  }
+.photo-wrapper {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #e9ecef;
+  border: 3px solid #198754;
+}
 
-  .btn-confirm{
-    margin-top: 5px;
-  }
-
-  .photo-profil-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .photo-wrapper {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    border: 3px solid #198754;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    background-color: #f8f9fa;
-  }
-  
-  .profile-img {
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .profile-img:hover {
-    transform: scale(1.05);
-    filter: brightness(0.9);
-  }
-  
-  #photoUpload {
-    font-size: 13px;
-  }
-  
+.profile-img {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+label {
+  font-weight: 500;
+  color: #2b2b2b;
+}
+input.form-control:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+}

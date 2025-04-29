@@ -28,8 +28,12 @@ export interface AdherentTableDTO {
   dateAdhesion: string;
   dateFin: string;
   montant: number;
+  montantRestant: number;
   nbActions: number;
   photoProfilBase64?: string;
+  nombreActionsCotisees: number;
+  nombreActionsRecues: number;
+  nombreActionsVendues: number;
 }
 
 

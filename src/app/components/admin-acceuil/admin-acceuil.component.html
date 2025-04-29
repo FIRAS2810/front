@@ -1,0 +1,46 @@
+<div class="top-bar">
+    <div class="right-section">
+      <i class="bi bi-bell"></i>
+      <button   class="logout-btn" (click)="onLogout()" >Log out</button>
+    </div>
+  </div>
+  
+  <div class="main-container">
+    <h2 class="title">Bienvenue</h2>
+    <p class="subtitle">Sélectionnez Votre Tableau de Bord</p>
+  
+    <div class="dashboard-options">
+      <!-- Adhérents -->
+      <div class="dashboard-card">
+        <div class="card-header-line"></div>
+        <div class="card-icon">
+          <i class="bi bi-people-fill"></i>
+        </div>
+        <h3>Tableau de Bord Adhérants</h3>
+        <p class="card-description">
+          Gérez les adhérents, consultez les statistiques et supervisez toutes les activités du système
+        </p>
+        <a routerLink="/admin-page/dashboard" class="btn-dashboard">
+          Accéder au Dashboard <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+  
+      <!-- Bénéficiaires -->
+      <div class="dashboard-card">
+        <div class="card-header-line"></div>
+        <div class="card-icon">
+          <i class="bi bi-people-fill"></i>
+        </div>
+        <h3>Tableau de Bord Bénéficiaires</h3>
+        <p class="card-description">
+          Gérez les bénéficiaires, suivez les prestations et accédez aux rapports détaillés
+        </p>
+        <a routerLink="/dashboard-beneficiaires" class="btn-dashboard">
+          Accéder au Dashboard <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  
+    <p class="footer-text">Sélectionnez un tableau de bord pour commencer votre session</p>
+  </div>
+  

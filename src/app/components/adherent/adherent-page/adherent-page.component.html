@@ -1,57 +1,61 @@
 <div class="admin-container">
-    <!-- Sidebar -->
-    <aside class="sidebar" [class.closed]="isSidebarClosed">
+  <!-- Sidebar -->
+  <aside class="sidebar" [class.closed]="isSidebarClosed">
+
+    <!-- Toggle menu button -->
+    <button class="toggle-btn" (click)="toggleSidebar()">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Logo uniquement si le menu est ouvert -->
+    <div class="logo-section custom-navbar" *ngIf="!isSidebarClosed">
+      <img src="admin-logo.jpg" alt="Logo" class="logo-img" />
+      <p class="brand-name">Espace Adhérent</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-links">
       
-      <!-- Toggle menu button -->
-      <button class="toggle-btn" (click)="toggleSidebar()">
-        <i class="fas fa-bars"></i>
-      </button>
-  
-      <!-- Logo uniquement si le menu est ouvert -->
-      <div class="logo-section custom-navbar" *ngIf="!isSidebarClosed">
-        <img src="admin-logo.jpg" alt="Logo" class="logo-img" />
-        <p class="brand-name" >USER</p>
-      </div>
+      <a routerLink="profil-adherent" routerLinkActive="active">
+        <i class="fas fa-user"></i>
+        <span *ngIf="!isSidebarClosed">Mon Profil</span>
+      </a>
 
-  
-      <!-- Navigation -->
-      <nav class="nav-links  ">
-          
-        <a routerLink="profil-adherent" routerLinkActive="active">
-          <i class="fas fa-users"></i>
-          <span *ngIf="!isSidebarClosed">Paramètres et profil</span>
-        </a>
-        
-        <a routerLink="cotisation-adherent" routerLinkActive="active">
-          <i class="fas fa-credit-card"></i>
-          <span *ngIf="!isSidebarClosed">Transactions</span>
-        </a>
-        <a routerLink="transferts" routerLinkActive="active">
-          <i class="fas fa-cog"></i>
-          <span *ngIf="!isSidebarClosed">Transferts</span>
-        </a>
+      <a routerLink="cotisation-adherent" routerLinkActive="active">
+        <i class="fas fa-wallet"></i>
+        <span *ngIf="!isSidebarClosed">Mes Cotisations</span>
+      </a>
 
-        <a routerLink="historique-transferts" routerLinkActive="active">
-          <i class="fas fa-chalkboard-teacher"></i>
-          <span *ngIf="!isSidebarClosed">Historiques de transferts</span>
-        </a>
-        
-      </nav>
-    </aside>
-  
-    <!-- Main content -->
-    <div class="main-content">
-      <header class="top-bar">
-        <div class="notification">
-          <i class="fas fa-bell"></i>
-          <span class="badge">{{ nombreDemandesEnAttente }}</span>
-        </div>
-        <button class="logout-btn" (click)="onLogout()">Deconexion </button>
-      </header>
-  
-      <div class="router-outlet">
-        <router-outlet></router-outlet>
+      <a routerLink="transferts" routerLinkActive="active">
+        <i class="fas fa-exchange-alt"></i>
+        <span *ngIf="!isSidebarClosed">Demandes de Transfert</span>
+      </a>
+
+      <a routerLink="historique-transferts" routerLinkActive="active">
+        <i class="fas fa-history"></i>
+        <span *ngIf="!isSidebarClosed">Historique des Transferts</span>
+      </a>
+
+      <a routerLink="demission" routerLinkActive="active">
+        <i class="fas fa-door-open"></i>
+        <span *ngIf="!isSidebarClosed">Demande de Démission</span>
+      </a>
+
+    </nav>
+  </aside>
+
+  <!-- Main content -->
+  <div class="main-content">
+    <header class="top-bar">
+      <div class="notification">
+        <i class="fas fa-bell"></i>
+        <span class="badge">{{ nombreDemandesEnAttente }}</span>
       </div>
+      <button class="logout-btn" (click)="onLogout()">Déconnexion</button>
+    </header>
+
+    <div class="router-outlet">
+      <router-outlet></router-outlet>
     </div>
   </div>
-  
+</div>

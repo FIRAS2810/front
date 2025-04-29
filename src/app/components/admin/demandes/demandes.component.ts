@@ -168,31 +168,12 @@ imagePopupSrc: string = '';
 
 
   etatOptions = [
-    {
-      label: 'Tous',
-      icon: 'pi pi-list',
-      command: () => this.resetFiltreEtat(),
-      items: []
-    },
-    {
-      label: 'EN_ATTENTE',
-      icon: 'pi pi-clock',
-      command: () => this.filtrerParEtat('EN_ATTENTE'),
-      items: []
-    },
-    {
-      label: 'ACCEPTEE',
-      icon: 'pi pi-check-circle',
-      command: () => this.filtrerParEtat('ACCEPTEE'),
-      items: []
-    },
-    {
-      label: 'REFUSEE',
-      icon: 'pi pi-times-circle',
-      command: () => this.filtrerParEtat('REFUSEE'),
-      items: []
-    }
+    { label: 'Tous', icon: 'pi pi-list', command: () => this.resetFiltreEtat() },
+    { label: 'EN_ATTENTE', icon: 'pi pi-clock', command: () => this.filtrerParEtat('EN_ATTENTE') },
+    { label: 'ACCEPTEE', icon: 'pi pi-check-circle', command: () => this.filtrerParEtat('ACCEPTEE') },
+    { label: 'REFUSEE', icon: 'pi pi-times-circle', command: () => this.filtrerParEtat('REFUSEE') }
   ];
+  
   
   
   etatActif: string | null = null;
