@@ -271,3 +271,16 @@ p-chart ::ng-deep canvas {
 .detail.pending .icon {
   background-color: #ff9800; /* Orange */
 }
+.variation {
+  font-weight: 500;
+  margin-top: 5px;
+  font-size: 16px;
+}
+
+.text-success {
+  color: #2e7d32; /* Vert foncé */
+}
+
+.text-danger {
+  color: #c62828; /* Rouge foncé */
+}

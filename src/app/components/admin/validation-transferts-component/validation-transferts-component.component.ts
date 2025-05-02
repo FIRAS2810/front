@@ -14,15 +14,13 @@ export class ValidationTransfertsComponentComponent implements OnInit {
   etatSelectionne: string = 'TOUS'; // par défaut
 
 page: number = 1;
-itemsPerPage: number = 5;
+
 
   constructor(private transfertService: TransfertServiceService) {}
 
   rowsPerPage = 5;
 
-changerNombreParPage() {
-  this.setPage(1);
-}
+
 
 
   ngOnInit(): void {
@@ -89,20 +87,6 @@ changerNombreParPage() {
   
 
   
-
-get transfertsPage() {
-  const start = (this.page - 1) * this.itemsPerPage;
-  return this.transferts.slice(start, start + this.itemsPerPage);
-}
-
-get totalPages() {
-  const pages = Math.ceil(this.transferts.length / this.itemsPerPage);
-  return Array(pages).fill(0).map((_, i) => i + 1);
-}
-
-setPage(p: number) {
-  this.page = p;
-}
 
 
 }

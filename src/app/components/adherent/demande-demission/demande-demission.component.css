@@ -1,87 +1,96 @@
 .demission-card {
-    max-width: 650px;
-    margin: 60px auto;
-    padding: 40px;
-    background: linear-gradient(to bottom right, #ffffff, #f9f9f9);
-    border-radius: 16px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-    font-family: 'Segoe UI', sans-serif;
-  }
-  
-  .demission-title {
-    text-align: center;
-    font-size: 26px;
-    font-weight: 600;
-    margin-bottom: 30px;
-    color: #b71c1c;
-    position: relative;
-  }
-  
-  .demission-title::after {
-    content: '';
-    display: block;
-    width: 70px;
-    height: 4px;
-    background-color: #b71c1c;
-    margin: 10px auto 0;
-    border-radius: 4px;
-  }
-  
-  .form-field {
-    margin-bottom: 25px;
-  }
-  
-  .form-field label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: #333;
-    font-size: 15px;
-  }
-  
-  .textarea {
-    width: 100%;
-    padding: 12px 14px;
-    font-size: 15px;
-    border: 1.5px solid #ccc;
-    border-radius: 10px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    resize: vertical;
-    min-height: 120px;
-  }
-  
-  .textarea:focus {
-    border-color: #b71c1c;
-    box-shadow: 0 0 0 3px rgba(183, 28, 28, 0.15);
-    outline: none;
-  }
-  
-  .form-actions {
-    text-align: center;
-    margin-top: 30px;
-  }
-  
-  .submit-btn {
-    background-color: #b71c1c;
-    color: white;
-    padding: 12px 32px;
-    font-size: 17px;
-    font-weight: 500;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 6px 12px rgba(183, 28, 28, 0.25);
-  }
-  
-  .submit-btn:hover {
-    background-color: #8e0000;
-    transform: translateY(-2px);
-  }
-  
-  .submit-btn:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-    box-shadow: none;
-  }
-  
+  max-width: 580px;
+  margin: 60px auto;
+  padding: 36px 32px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', sans-serif;
+  transition: 0.3s ease;
+  animation: fadeIn 0.6s ease;
+ font-family: 'Courier New', Courier, monospace
+}
+
+.demission-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #b71c1c;
+  text-align: center;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.demission-title::after {
+  content: '';
+  width: 70px;
+  height: 3px;
+  background-color: #b71c1c;
+  border-radius: 2px;
+  display: block;
+  margin: 8px auto 0;
+}
+
+.form-field {
+  margin-bottom: 28px;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #444;
+  font-size: 15px;
+}
+
+.textarea {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  border: 1.5px solid #ccc;
+  border-radius: 10px;
+  background-color: #fafafa;
+  transition: all 0.3s ease;
+  resize: vertical;
+  min-height: 200px;
+}
+
+.textarea:focus {
+  border-color: #b71c1c;
+  box-shadow: 0 0 0 3px rgba(183, 28, 28, 0.1);
+  background-color: #fff;
+  outline: none;
+}
+
+.form-actions {
+  text-align: center;
+}
+
+.submit-btn {
+  background-color: #b71c1c;
+  color: white;
+  padding: 12px 26px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(183, 28, 28, 0.25);
+  transition: all 0.25s ease;
+}
+
+.submit-btn:hover {
+  background-color: #990000;
+  transform: translateY(-2px);
+}
+
+.submit-btn:disabled {
+  background-color: #e0e0e0;
+  color: #666;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

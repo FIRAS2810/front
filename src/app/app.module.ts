@@ -48,8 +48,9 @@ import { AdminCompteAttenteComponent } from './components/admin/admin-compte-att
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { ChartModule } from 'primeng/chart';
 import { AdminAcceuilComponent } from './components/admin-acceuil/admin-acceuil.component';
-
-
+import { RenitialiserMdpComponent } from './components/renitialiser-mdp/renitialiser-mdp.component';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -81,6 +82,7 @@ import { AdminAcceuilComponent } from './components/admin-acceuil/admin-acceuil.
     AdminCompteAttenteComponent,
     AdminDashboardComponent,
     AdminAcceuilComponent,
+    RenitialiserMdpComponent,
     
     
     
@@ -107,10 +109,12 @@ import { AdminAcceuilComponent } from './components/admin-acceuil/admin-acceuil.
     PaginatorModule,
     ReactiveFormsModule,
     QuillModule.forRoot(),
-    ChartModule
+    ChartModule,
+    ToastModule,
+    
     
   ],
-  providers: [],
+  providers:[MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

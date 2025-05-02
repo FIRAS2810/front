@@ -27,6 +27,7 @@ import { AdminDemissionComponent } from './components/admin/admin-demission/admi
 import { AdminCompteAttenteComponent } from './components/admin/admin-compte-attente/admin-compte-attente.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { AdminAcceuilComponent } from './components/admin-acceuil/admin-acceuil.component';
+import { RenitialiserMdpComponent } from './components/renitialiser-mdp/renitialiser-mdp.component';
 
 
 
@@ -37,6 +38,7 @@ const routes: Routes = [{ path: '', component:AcceuilComponent },
   { path: 'login', component:LoginComponent },
   { path: 'register', component:RegisterComponent },
   { path: 'demande-reclamation', component:DemandeReclamationComponent },
+  { path: 'renitialiser-mdp', component:RenitialiserMdpComponent },
   { path: 'admin-acceuil', component:AdminAcceuilComponent,canActivate: [AdminGuard] },
   { path: 'admin-page', component:AdminPageComponent ,canActivate: [AdminGuard],children: [
       

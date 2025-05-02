@@ -1,6 +1,6 @@
 <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2 class="text-success" style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', sans-serif; font-size: 26px;"><i class="bi bi-clipboard-check"></i> Transferts</h2>
+      <h2  style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', sans-serif; font-weight: bold; font-size: 28px;"><i class="bi bi-clipboard-check"></i> Transferts</h2>
   
       <div class="dropdown">
         <button class="btn btn-filtre dropdown-toggle" style="font-family: monospace; font-size: 16px;" type="button" data-bs-toggle="dropdown">
@@ -16,57 +16,63 @@
       
     </div>
   
-    <table class="table table-striped table-bordered text-center align-middle">
-      <thead class="table-dark">
-        <tr>
-          <th>Vendeur</th>
-          <th>Acheteur</th>
-          <th>Nb Actions</th>
-          <th>Commentaire</th>
-          <th>Date</th>
-          <th>Statut</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let t of transfertsPage">
-          <td>{{ t.vendeurNom }}</td>
-          <td>{{ t.acheteurNom }}</td>
-          <td>{{ t.nombreActions }}</td>
-          <td>{{ t.commentaire || '---' }}</td>
-          <td>{{ t.dateTransfert | date:'dd/MM/yyyy HH:mm' }}</td>
-          <td>
-            <span class="badge"
-                  [ngClass]="{
-                    'bg-warning text-dark': t.statut === 'EN_ATTENTE',
-                    'bg-success': t.statut === 'VALIDE',
-                    'bg-danger': t.statut === 'REFUSE'
-                  }">
-              {{ t.statut === 'EN_ATTENTE' ? 'En attente' : (t.statut === 'VALIDE' ? 'Validé' : 'Refusé') }}
-            </span>
-          </td>
-          <td>
-            <ng-container *ngIf="t.statut === 'EN_ATTENTE'; else badgeEtat">
-              <button class="btn btn-success btn-sm me-1" (click)="valider(t.id)">Valider</button>
-              <button class="btn btn-danger btn-sm" (click)="refuser(t.id)">Refuser</button>
-            </ng-container>
-            <ng-template #badgeEtat>
-              <span class="text-muted fst-italic">Action non disponible</span>
-            </ng-template>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <p-table [value]="transferts"
+         [paginator]="true"
+         [rows]="rowsPerPage"
+         [rowsPerPageOptions]="[1, 10, 15, 20]"
+         [responsiveLayout]="'scroll'"
+         
+         [globalFilterFields]="['vendeurNom', 'acheteurNom', 'statut']"
+         class="custom-p-table text-center align-middle">
+  
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Vendeur</th>
+      <th>Acheteur</th>
+      <th>Nb Actions</th>
+      <th>Commentaire</th>
+      <th>Date</th>
+      <th>Statut</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
 
-    <div class="pagination">
-        <button (click)="page > 1 && setPage(page - 1)">«</button>
-        <button *ngFor="let p of totalPages" 
-                [class.active]="p === page" 
-                (click)="setPage(p)">
-          {{ p }}
-        </button>
-        <button (click)="page < totalPages.length && setPage(page + 1)">»</button>
-      </div>
-      
+  <ng-template pTemplate="body" let-t>
+    <tr>
+      <td>{{ t.vendeurNom }}</td>
+      <td>{{ t.acheteurNom }}</td>
+      <td>{{ t.nombreActions }}</td>
+      <td>{{ t.commentaire || '---' }}</td>
+      <td>{{ t.dateTransfert | date:'dd/MM/yyyy HH:mm' }}</td>
+      <td>
+        <span class="badge"
+              [ngClass]="{
+                'bg-warning text-dark': t.statut === 'EN_ATTENTE',
+                'bg-success': t.statut === 'VALIDE',
+                'bg-danger': t.statut === 'REFUSE'
+              }">
+          {{ t.statut === 'EN_ATTENTE' ? 'En attente' : (t.statut === 'VALIDE' ? 'Validé' : 'Refusé') }}
+        </span>
+      </td>
+      <td>
+        <ng-container *ngIf="t.statut === 'EN_ATTENTE'; else badgeEtat">
+          <button class="btn btn-success btn-sm me-1" (click)="valider(t.id)">Valider</button>
+          <button class="btn btn-danger btn-sm" (click)="refuser(t.id)">Refuser</button>
+        </ng-container>
+        <ng-template #badgeEtat>
+          <span class="text-muted fst-italic">Action non disponible</span>
+        </ng-template>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="7">Aucun transfert trouvé.</td>
+    </tr>
+  </ng-template>
+
+</p-table>
+
   </div>
   

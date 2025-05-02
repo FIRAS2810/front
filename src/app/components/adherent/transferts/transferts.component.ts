@@ -28,6 +28,9 @@ export class TransfertsComponent implements OnInit {
   currentPage = 0;
   searchTerm = '';
 
+  vue: 'DEMANDER' | 'RECU' = 'DEMANDER';
+
+
   constructor(
     private authService: AuthService,
     private adherentService: AdherentService,

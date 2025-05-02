@@ -23,6 +23,8 @@ export interface DashboardStatsDTO {
    nbDemandesValidees: number;
   nbDemandesRefusees: number;
   nbDemandesEnAttente: number;
+  caActuel : number;
+  caPrecedent :number;
 
 }
 

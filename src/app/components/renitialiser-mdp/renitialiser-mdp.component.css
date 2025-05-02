@@ -1,0 +1,63 @@
+/* Conteneur global centré */
+.card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px 30px;
+    max-width: 500px;
+    margin: 80px auto;
+    font-family: 'Segoe UI', sans-serif;
+    transition: 0.3s ease;
+  }
+  
+  /* Titre principal */
+  h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #b71c1c;
+    margin-bottom: 30px;
+    font-weight: bold;
+  }
+  
+  /* Labels */
+  label {
+    display: block;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  
+  /* Champs d'entrée */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  .p-inputtext {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 15px;
+    margin-bottom: 20px;
+    transition: 0.3s;
+  }
+  
+  /* Focus */
+  .p-inputtext:focus {
+    border-color: #6d9b3d;
+    box-shadow: 0 0 5px rgba(109, 155, 61, 0.4);
+  }
+  
+  /* Bouton de soumission */
+  .p-button {
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 10px 20px;
+  }
+  
+  /* Message Toast */
+  :host ::ng-deep .p-toast .p-toast-message {
+    border-radius: 10px;
+    font-size: 15px;
+  }
+  

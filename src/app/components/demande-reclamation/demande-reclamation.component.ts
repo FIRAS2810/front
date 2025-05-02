@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReclamationServiceService } from '../../services/reclamation-service.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-demande-reclamation',
@@ -13,7 +14,7 @@ export class DemandeReclamationComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private reclamationService: ReclamationServiceService
+    private reclamationService: ReclamationServiceService,private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -46,4 +47,9 @@ export class DemandeReclamationComponent implements OnInit {
     }
   }
 
+
+  retourAccueil() {
+    this.router.navigate(['/']);
+  }
+  
 }

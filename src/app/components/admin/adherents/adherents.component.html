@@ -42,27 +42,23 @@
             Actions <i class="fas fa-chevron-down"></i>
           </button>
           <div class="lib-dropdown" *ngIf="dropdownVisibleForCin === adherent.cin">
-            <button class="lib-menu-item text-danger" (click)="desactiver(adherent)">
-              <i class="fas fa-user-slash"></i> Désactiver
-            </button>
-            <button class="lib-menu-item text-warning" (click)="suspendre(adherent)">
-              <i class="fas fa-ban"></i> Suspendre
-            </button>
-            <button class="lib-menu-item text-info" (click)="ouvrirPopupCotisation(adherent)">
+            <!-- Bouton Ajouter cotisation -->
+            <button class="lib-menu-item text-info" (click)="ouvrirPopupCotisation(adherent)"
+              [disabled]="adherent.etat === 'INACTIF' || adherent.etat === 'DÉCÉDÉ' || adherent.etat === 'EXCLU'">
               <i class="fas fa-plus-circle"></i> Ajouter Cotisation
             </button>
-            <!-- Afficher le bouton "Signaler Décès" seulement si l'adhérent n'est pas décédé -->
+
+            <!-- Bouton Signaler Décès -->
             <button class="lib-menu-item text-danger" (click)="signalerDeces(adherent)"
-              [disabled]="adherent.etat === 'INACTIF'">
+              [disabled]="adherent.etat === 'INACTIF' || adherent.etat === 'DÉCÉDÉ' || adherent.etat === 'EXCLU'">
               <i class="fas fa-skull-crossbones"></i> Signaler Décès
             </button>
 
+            <!-- Bouton Exclure -->
             <button class="lib-menu-item text-warning" (click)="signalerExclusionTemporaire(adherent)"
-            [disabled]="adherent.etat === 'INACTIF'">
+              [disabled]="adherent.etat === 'INACTIF' || adherent.etat === 'DÉCÉDÉ' || adherent.etat === 'EXCLU'">
               <i class="fas fa-user-lock"></i> Exclure
             </button>
-
-
           </div>
         </div>
       </td>
@@ -87,8 +83,7 @@
     <div class="detail-item"><i class="fa-solid fa-id-card icon-vert"></i>{{ selectedAdherent.cin }}</div>
     <div class="detail-item"><i class="fa-solid fa-envelope icon-vert"></i>{{ selectedAdherent.email }}</div>
     <div class="detail-item"><i class="fa-solid fa-phone icon-vert"></i>{{ selectedAdherent.tel }}</div>
-    <div class="detail-item"><i class="fa-solid fa-coins icon-vert"></i>Montant : {{ selectedAdherent.montant }} DT
-    </div>
+    <div class="detail-item"><i class="fa-solid fa-coins icon-vert"></i>Montant : {{ selectedAdherent.montant }} DT</div>
     <div class="detail-item"><i class="fa-solid fa-calendar-days icon-vert"></i>Adhésion : {{
       selectedAdherent.dateAdhesion | date: 'dd/MM/yyyy' }}</div>
     <div class="detail-item"><i class="fa-solid fa-circle-info icon-vert"></i>Statut : {{ selectedAdherent.etat }}</div>
@@ -108,13 +103,12 @@
       </span>
     </div>
     <div class="detail-item" *ngIf="bilan?.dateDernierVersement">
-      <i class="fa-solid fa-calendar-check icon-vert"></i> Dernier paiement : {{ bilan?.dateDernierVersement |
-      date:'dd/MM/yyyy' }}
+      <i class="fa-solid fa-calendar-check icon-vert"></i> Dernier paiement : {{ bilan?.dateDernierVersement | date:'dd/MM/yyyy' }}
     </div>
   </div>
 </div>
 
-<!-- ✅ POPUP COTISATION EN DEHORS -->
+<!-- ✅ POPUP COTISATION -->
 <div class="popup-overlay" *ngIf="showCotisationPopup" (click)="fermerPopupCotisation()">
   <div class="popup-card" (click)="$event.stopPropagation()">
     <button class="close-btn" (click)="fermerPopupCotisation()">✖</button>

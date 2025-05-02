@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Table } from 'primeng/table';
-import { AdherentService, AdherentTableDTO } from '../../../services/adherent.service';
+import { AdherentService } from '../../../services/adherent.service';
+import Swal from 'sweetalert2';
 
 interface Adherent {
   cin: string;
@@ -16,9 +17,7 @@ interface Adherent {
   nbActions: number;
   sexe: string;
   photoProfilBase64?: string;
-
   photo?: string;
-  
 }
 
 export interface BilanCotisationDTO {
@@ -26,9 +25,8 @@ export interface BilanCotisationDTO {
   nombreTotalActions: number;
   montantRestant: number;
   adhesionComplete: boolean;
-  dateDernierVersement?: string; // LocalDate => string
+  dateDernierVersement?: string;
 }
-
 
 @Component({
   selector: 'app-adherents',
@@ -36,9 +34,6 @@ export interface BilanCotisationDTO {
   styleUrls: ['./adherents.component.css']
 })
 export class AdherentsComponent implements OnInit {
-suspendre(_t22: any) {
-throw new Error('Method not implemented.');
-}
   @ViewChild('dt') table!: Table;
 
   adherents: Adherent[] = [];
@@ -52,9 +47,6 @@ throw new Error('Method not implemented.');
   showCotisationPopup: boolean = false;
   adherentPourCotisation: Adherent | null = null;
   montantCotisation: number | null = null;
-
-
-
 
   private readonly apiUrl = 'http://localhost:8080/api/adherents';
 
@@ -70,9 +62,8 @@ throw new Error('Method not implemented.');
         this.adherents = data.map(adherent => ({
           ...adherent,
           photo: (adherent.photoProfilBase64 && adherent.photoProfilBase64.trim() !== '')
-          ? `data:image/jpeg;base64,${adherent.photoProfilBase64}`
-          : this.getDefaultAvatar(adherent.sexe),
-        
+            ? `data:image/jpeg;base64,${adherent.photoProfilBase64}`
+            : this.getDefaultAvatar(adherent.sexe),
           montant: adherent.montant || 0,
           nbActions: adherent.nbActions || 0
         }));
@@ -94,12 +85,11 @@ throw new Error('Method not implemented.');
 
   showDetails(adherent: Adherent): void {
     this.selectedAdherent = adherent;
-this.bilan = null;
+    this.bilan = null;
 
-this.adherentService.getBilanCotisation(adherent.cin).subscribe({
-  next: (data) => this.bilan = data
-});
-
+    this.adherentService.getBilanCotisation(adherent.cin).subscribe({
+      next: (data) => this.bilan = data
+    });
   }
 
   closePopup(): void {
@@ -107,28 +97,7 @@ this.adherentService.getBilanCotisation(adherent.cin).subscribe({
   }
 
   toggleDropdown(adherent: Adherent): void {
-    if (this.dropdownVisibleForCin === adherent.cin) {
-      this.dropdownVisibleForCin = null; // Si déjà ouvert → fermer
-    } else {
-      this.dropdownVisibleForCin = adherent.cin; // Sinon → ouvrir pour cet adhérent
-    }
-  }
-  
-
-  update(adherent: Adherent): void {
-    alert(`🔧 Update ${adherent.nom}`);
-  }
-
-  desactiver(adherent: Adherent): void {
-    if (confirm(`Désactiver ${adherent.nom} ${adherent.prenom} ?`)) {
-      this.http.patch(`${this.apiUrl}/${adherent.cin}/desactiver`, {}).subscribe(() => {
-        this.loadAdherents();
-      });
-    }
-  }
-
-  envoyerMessage(adherent: Adherent): void {
-    alert(`📧 Message à ${adherent.email}`);
+    this.dropdownVisibleForCin = this.dropdownVisibleForCin === adherent.cin ? null : adherent.cin;
   }
 
   ouvrirPopupCotisation(adherent: Adherent): void {
@@ -137,20 +106,20 @@ this.adherentService.getBilanCotisation(adherent.cin).subscribe({
     this.showCotisationPopup = true;
     this.dropdownVisibleForCin = null;
   }
-  
+
   fermerPopupCotisation(): void {
     this.showCotisationPopup = false;
     this.adherentPourCotisation = null;
     this.montantCotisation = null;
   }
-  
+
   ajouterCotisation(): void {
     if (this.adherentPourCotisation && this.montantCotisation && this.montantCotisation > 0) {
       this.http.post(`http://localhost:8080/api/cotisations/ajouter/${this.adherentPourCotisation.cin}?montantVerse=${this.montantCotisation}`, {})
         .subscribe({
           next: () => {
             this.fermerPopupCotisation();
-            this.loadAdherents(); // 🔄 recharge la liste
+            this.loadAdherents();
             alert('✅ Cotisation ajoutée avec succès');
           },
           error: () => {
@@ -163,40 +132,64 @@ this.adherentService.getBilanCotisation(adherent.cin).subscribe({
   }
 
   signalerDeces(adherent: Adherent): void {
-    console.log('Adhérent sélectionné:', adherent);  // Vérifier l'adhérent sélectionné
     if (adherent.etat === 'DÉCÉDÉ') {
-      console.log('Cet adhérent est déjà décédé, pas besoin de signaler le décès.');
+      Swal.fire('⚠️ Déjà décédé', 'Cet adhérent est déjà marqué comme décédé.', 'info');
+      return;
     }
   
-    if (confirm(`⚠️ Confirmer le décès de ${adherent.nom} ${adherent.prenom} ?`)) {
-      console.log('Décès confirmé pour:', adherent.cin);
-      this.http.patch(`${this.apiUrl}/signaler-deces/${adherent.cin}`, {}).subscribe({
-        next: () => {
-          alert('✅ Décès signalé avec succès.');
-          this.loadAdherents(); // Recharge la table pour mettre à jour les données
-        },
-        error: () => {
-          alert('❌ Erreur lors du signalement du décès.');
-        }
-      });
-    }
+    Swal.fire({
+      title: 'Signaler un décès ?',
+      html: `<strong>${adherent.nom} ${adherent.prenom}</strong> sera marqué comme <b>décédé</b>.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: '✅ Confirmer',
+      cancelButtonText: 'Annuler',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#aaa'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.http.patch(`${this.apiUrl}/signaler-deces/${adherent.cin}`, {}).subscribe({
+          next: () => {
+            Swal.fire('✅ Succès', 'Décès signalé avec succès.', 'success');
+            this.loadAdherents();
+          },
+          error: () => {
+            Swal.fire('❌ Erreur', 'Une erreur est survenue.', 'error');
+          }
+        });
+      }
+    });
   }
   
-  
+
   signalerExclusionTemporaire(adherent: Adherent): void {
-    if (confirm(`⚠️ Confirmer l'exclusion temporaire de ${adherent.nom} ${adherent.prenom} ?`)) {
-      this.http.patch(`${this.apiUrl}/exclure-temporairement/${adherent.cin}`, {}).subscribe({
-        next: () => {
-          alert('✅ Exclusion temporaire appliquée.');
-          this.loadAdherents(); // 🔁 recharge la liste
-        },
-        error: () => {
-          alert('❌ Erreur lors de l’exclusion.');
-        }
-      });
+    if (adherent.etat === 'EXCLU') {
+      Swal.fire('⚠️ Déjà exclu', 'Cet adhérent est déjà exclu.', 'info');
+      return;
     }
+  
+    Swal.fire({
+      title: 'Exclusion temporaire ?',
+      html: `Confirmez-vous l’exclusion de <strong>${adherent.nom} ${adherent.prenom}</strong> ?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: '🚫 Exclure',
+      cancelButtonText: 'Annuler',
+      confirmButtonColor: '#f0ad4e',
+      cancelButtonColor: '#aaa'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.http.patch(`${this.apiUrl}/exclure-temporairement/${adherent.cin}`, {}).subscribe({
+          next: () => {
+            Swal.fire('✅ Exclu', 'Adhérent exclu temporairement.', 'success');
+            this.loadAdherents();
+          },
+          error: () => {
+            Swal.fire('❌ Erreur', 'Une erreur est survenue.', 'error');
+          }
+        });
+      }
+    });
   }
-  
-  
   
 }

@@ -1,0 +1,30 @@
+<div class="card" style="max-width: 500px; margin: 60px auto; padding: 30px;">
+    <h2 class="text-center text-danger mb-4">🔐 Mot de passe oublié</h2>
+  
+    <!-- Étape 1 : Email -->
+    <div *ngIf="etape === 1">
+      <label for="email">📧 Email :</label>
+      <input id="email" type="email" pInputText [(ngModel)]="email" class="w-full mb-3" placeholder="Entrez votre adresse email" />
+  
+      <button pButton label="Recevoir le code" class="w-full p-button-success" (click)="envoyerCode()"></button>
+    </div>
+  
+    <!-- Étape 2 : Code + Nouveau mot de passe -->
+    <!-- Étape 2 : Entrée du code -->
+<div *ngIf="etape === 2">
+    <label for="code">🧾 Code reçu par mail :</label>
+    <input id="code" type="text" pInputText [(ngModel)]="code" placeholder="Code à 6 chiffres" />
+    <button pButton label="Valider le code" class="w-full p-button-info" (click)="verifierCode()"></button>
+  </div>
+  
+  <!-- Étape 3 : Nouveau mot de passe -->
+  <div *ngIf="etape === 3">
+    <label for="newPassword">🔒 Nouveau mot de passe :</label>
+    <input id="newPassword" type="password" pPassword [(ngModel)]="newPassword" />
+    <button pButton label="Réinitialiser le mot de passe" class="w-full p-button-danger" (click)="resetPassword()"></button>
+  </div>
+  
+  </div>
+  
+  <p-toast></p-toast>
+  

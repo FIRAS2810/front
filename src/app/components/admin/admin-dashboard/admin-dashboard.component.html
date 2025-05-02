@@ -12,20 +12,35 @@
     <div class="ca-block">
       <h4>Chiffre d'affaire total</h4>
       <h1>{{ stats.totalCA | number:'1.0-0' }} DT</h1>
-      <p class="variation positive">+{{ stats.croissancePourcent }}% ce mois</p>
+      <p 
+  [ngClass]="{
+    'text-success': stats.croissancePourcent >= 0,
+    'text-danger': stats.croissancePourcent < 0
+  }"
+  class="variation"
+>
+  <span *ngIf="stats.croissancePourcent >= 0">📈</span>
+  <span *ngIf="stats.croissancePourcent < 0">📉</span>
+  {{ stats.croissancePourcent | number:'1.2-2' }}% ce mois
+</p>
+
+  
     </div>
 
     <div class="kpi-cards">
       <div class="kpi-card">
-        <h5>Total CA</h5>
-        <p>{{ stats.totalCA | number:'1.1-1' }} DT</p>
+        <h5>CA Actuel ( ce mois ) </h5>
+        <p class="text-muted">{{ stats.caActuel | number:'1.0-0' }} DT</p>
+    
+      <!-- Affichage CA mois précédent -->
+      
       </div>
       <div class="kpi-card">
-        <h5>Actions Recus</h5>
-        <p>{{ stats.nombreActionsTransferees }}</p>
+        <h5>CA Precedent</h5>
+        <p class="text-muted">{{ stats.caPrecedent | number:'1.0-0' }} DT</p>
       </div>
       <div class="kpi-card">
-        <h5>Actions Vendues</h5>
+        <h5>N Transferts</h5>
         <p>{{ stats.nombreActionsVendues }}</p>
       </div>
 

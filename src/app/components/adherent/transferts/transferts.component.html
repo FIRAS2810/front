@@ -1,27 +1,85 @@
 <div class="transfert-wrapper">
 
-  <!-- 🔵 Demander un transfert -->
-  <h2>📥 Demander un transfert</h2>
-  <input type="text" [(ngModel)]="searchTerm" (input)="filtrerVendeurs()" placeholder="🔍 Rechercher..." class="form-control mb-2"/>
+  <!-- 🔘 Sélection de la vue -->
+  <div class="d-flex gap-2 mb-4">
+    <button class="btn btn-outline-success" [class.active]="vue === 'DEMANDER'" (click)="vue = 'DEMANDER'">
+      📥 Demander des actions
+    </button>
+    <button class="btn btn-outline-primary" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;" [class.active]="vue === 'RECU'" (click)="vue = 'RECU'">
+      📨 Demandes reçues
+    </button>
+  </div>
 
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Nom</th><th>Email</th><th>CIN</th><th>Actions totales</th><th>Demander</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let a of vendeursAffiches">
-        <td>{{ a.nom }} {{ a.prenom }}</td>
-        <td>{{ a.email }}</td>
-        <td>{{ a.cin }}</td>
-        <td>{{ a.nombreActionsCotisees + a.nombreActionsRecues - a.nombreActionsVendues }}</td>
-        <td><button class="btn btn-primary btn-sm" (click)="ouvrirFormulaire(a.cin)">Demander</button></td>
-      </tr>
-    </tbody>
-  </table>
+  <!-- ✅ VUE : DEMANDER TRANSFERT -->
+  <div *ngIf="vue === 'DEMANDER'">
+    <h2>📥 Demander un transfert</h2>
 
-  <!-- Modal -->
+    <div class="search-container">
+      <i class="bi bi-search search-icon"></i>
+      <input type="text" placeholder="Rechercher..." [(ngModel)]="searchTerm" (input)="filtrerVendeurs()" />
+    </div>
+
+    
+    
+    <p-table [value]="vendeursAffiches" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]" responsiveLayout="scroll">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>CIN</th>
+          <th>Actions totales</th>
+          <th>Demander</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-a>
+        <tr>
+          <td>{{ a.nom }} {{ a.prenom }}</td>
+          <td>{{ a.email }}</td>
+          <td>{{ a.cin }}</td>
+          <td>{{ a.nombreActionsCotisees + a.nombreActionsRecues - a.nombreActionsVendues }}</td>
+          <td><button class="btn btn-primary btn-sm" (click)="ouvrirFormulaire(a.cin)">Demander</button></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <!-- ✅ VUE : DEMANDES RECUES -->
+  <div *ngIf="vue === 'RECU'">
+    <h2>📨 Demandes reçues</h2>
+
+    <p-table [value]="demandesRecues" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]" responsiveLayout="scroll">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Acheteur</th>
+          <th>Date</th>
+          <th>Nombre</th>
+          <th>Commentaire</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-d>
+        <tr>
+          <td>{{ d.acheteurNom }}</td>
+          <td>{{ d.dateTransfert | date:'dd/MM/yyyy HH:mm' }}</td>
+          <td>{{ d.nombreActions }}</td>
+          <td>{{ d.commentaire }}</td>
+          <td>
+            <ng-container *ngIf="d.statut === 'EN_ATTENTE' && d.statutVendeur === 'EN_ATTENTE'; else badgeEtat">
+              <button class="btn btn-success btn-sm me-2" (click)="accepterDemande(d.id)">✅ Accepter</button>
+              <button class="btn btn-danger btn-sm" (click)="refuserDemande(d.id)">❌ Refuser</button>
+            </ng-container>
+            <ng-template #badgeEtat>
+              <span class="text-muted fst-italic">Réponse envoyée</span>
+            </ng-template>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <p *ngIf="demandesRecues.length === 0">Aucune demande à traiter.</p>
+  </div>
+
+  <!-- ✅ MODAL DE DEMANDE -->
   <div *ngIf="showModal" class="modal-backdrop" (click)="fermerFormulaire()">
     <div class="modal-content" (click)="$event.stopPropagation()">
       <h4>Demande de transfert</h4>
@@ -38,34 +96,4 @@
     </div>
   </div>
 
-  <!-- 🟠 Demandes à valider (vendeur) -->
-  <hr/>
-  <h2>📨 Demandes reçues</h2>
-  <table class="table table-bordered" *ngIf="demandesRecues.length > 0">
-    <thead>
-      <tr><th>Acheteur</th><th>Date</th><th>Nombre</th><th>Commentaire</th><th>Actions</th></tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let d of demandesRecues">
-        <td>{{ d.acheteurNom }}</td>
-        <td>{{ d.dateTransfert | date:'dd/MM/yyyy HH:mm' }}</td>
-        <td>{{ d.nombreActions }}</td>
-        <td>{{ d.commentaire }}</td>
-        <td>
-          <ng-container *ngIf="d.statut === 'EN_ATTENTE' && d.statutVendeur === 'EN_ATTENTE'; else badgeEtat">
-            <button class="btn btn-success btn-sm me-2" (click)="accepterDemande(d.id)">✅ Accepter</button>
-            <button class="btn btn-danger btn-sm" (click)="refuserDemande(d.id)">❌ Refuser</button>
-          </ng-container>
-          <ng-template #badgeEtat>
-            <span class="text-muted fst-italic">Réponse envoyée</span>
-          </ng-template>
-        </td>
-        
-        
-      </tr>
-    </tbody>
-  </table>
-  <p *ngIf="demandesRecues.length === 0">Aucune demande à traiter.</p>
-
-  
 </div>
